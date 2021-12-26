@@ -9,4 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+// parser
+char	**ft_get_tokens(char *line);
+
 #endif

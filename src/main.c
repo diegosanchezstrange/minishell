@@ -47,13 +47,13 @@ int	ft_execute(char **tokens)
 	}
 }
 
-char	**ft_get_tokens(char *line)
+/*char	**ft_get_tokens(char *line)
 {
 	char	**tokens;
 
 	tokens = ft_split(line,  ' ');
 	return (tokens);
-}
+}*/
 
 int	main()
 {
