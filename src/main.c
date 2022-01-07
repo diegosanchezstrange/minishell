@@ -59,12 +59,15 @@ int	main()
 {
 	char	**tokens;
 	char	*line;
+	char	*pwd;
 	int		status;
 
 	status = 1;
 	while (status)
 	{
-		line = readline("$ ");
+		pwd = getenv("PWD");
+		printf("\033[0;32m[%s]\033[0;33m", pwd);
+		line = readline("$ \033[0;37m");
 		tokens = ft_get_tokens(line);
 		ft_execute(tokens);
 	}
