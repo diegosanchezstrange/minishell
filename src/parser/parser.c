@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/09 16:14:39 by dsanchez          #+#    #+#             */
+/*   Updated: 2022/01/09 16:14:42 by dsanchez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_skip_spaces(t_pstatus *state)
+void	ft_skip_spaces(t_pstatus *status)
 {
-	while (state->data[state->curr] == ' ')
+	if (status->data[status->curr] == '\"' && status->state == P_D_QUOTE)
+		status->curr++;
+	while (status->data[status->curr] == ' ')
 	{
-		state->curr++;
+		status->curr++;
 	}
 }
 
@@ -28,8 +41,6 @@ char	*ft_get_token(t_pstatus *status)
 	int		start;
 
 	ft_skip_spaces(status);
-	if (status->data[status->curr] == '\"' && status->state == P_D_QUOTE)
-		status->curr++;
 	if (!status->data[status->curr])
 		return (NULL);
 	status->state = P_NEUTRAL;
@@ -42,14 +53,6 @@ char	*ft_get_token(t_pstatus *status)
 	}
 	return (ft_substr(status->data, start, status->curr - start));
 }
-
-/*char	**ft_get_tokens(char *line)
-{
-	char	**tokens;
-
-	tokens = ft_split(line,  ' ');
-	return (tokens);
-}*/
 
 char	**ft_list_to_arr(t_list *list)
 {
@@ -89,4 +92,3 @@ char	**ft_get_tokens(char *line)
 	}
 	return (ft_list_to_arr(*tokens));
 }
-

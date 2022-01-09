@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
+/*   Updated: 2022/01/09 16:14:21 by dsanchez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <minishell.h>
 #include <readline/readline.h>
+
+extern char	**environ;
 
 char	*ft_get_path(char *arg)
 {
@@ -26,12 +39,12 @@ char	*ft_get_path(char *arg)
 
 int	ft_execute(char **tokens)
 {
-	int	pid;
+	int			pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(ft_get_path(tokens[0]), tokens, NULL);
+		execve(ft_get_path(tokens[0]), tokens, environ);
 		perror(tokens[0]);
 		exit(0);
 	}
