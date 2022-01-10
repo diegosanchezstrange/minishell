@@ -75,20 +75,32 @@ char	**ft_list_to_arr(t_list *list)
 	return (res);
 }
 
-char	**ft_get_tokens(char *line)
+char	**ft_get_tokens(t_pstatus *status)
 {
-	t_pstatus	status;
 	char		*actual;
 	t_list		**tokens;
 
-	status.data = line;
-	status.curr = 0;
 	tokens = ft_calloc(1, sizeof(void *));
-	actual = ft_get_token(&status);
+	actual = ft_get_token(status);
 	while (actual != NULL)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(actual));
-		actual = ft_get_token(&status);
+		actual = ft_get_token(status);
 	}
 	return (ft_list_to_arr(*tokens));
+}
+
+t_list	**ft_get_tokens_list(t_pstatus *status)
+{
+	char		*actual;
+	t_list		**tokens;
+
+	tokens = ft_calloc(1, sizeof(void *));
+	actual = ft_get_token(status);
+	while (actual != NULL)
+	{
+		ft_lstadd_back(tokens, ft_lstnew(actual));
+		actual = ft_get_token(status);
+	}
+	return (tokens);
 }

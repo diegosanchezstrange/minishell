@@ -70,18 +70,19 @@ int	ft_execute(char **tokens)
 
 int	main()
 {
-	char	**tokens;
-	char	*line;
-	char	*pwd;
-	int		status;
+	char		**tokens;
+	t_pstatus	status;
+	char		*pwd;
+	int			state;
 
-	status = 1;
-	while (status)
+	state = 1;
+	while (state)
 	{
 		pwd = getenv("PWD");
 		printf("\033[0;32m[%s]\033[0;33m", pwd);
-		line = readline("$ \033[0;37m");
-		tokens = ft_get_tokens(line);
+		status.data = readline("$ \033[0;37m");
+		status.curr = 0;
+		tokens = ft_get_tokens(&status);
 		ft_execute(tokens);
 	}
 	return (0);
