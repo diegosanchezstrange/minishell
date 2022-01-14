@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/01/09 16:14:21 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/14 19:42:31 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ int	ft_execute(char **tokens)
 	return (tokens);
 }*/
 
+void    ft_print_tokens(char **tokens)
+{
+	if (!tokens)
+		return ;
+    while (*tokens)
+    {
+        printf("%s\n", *tokens);
+        tokens++;
+    }
+}
+
 int	main()
 {
 	char		**tokens;
@@ -83,7 +94,8 @@ int	main()
 		status.data = readline("$ \033[0;37m");
 		status.curr = 0;
 		tokens = ft_get_tokens(&status);
-		ft_execute(tokens);
+        ft_print_tokens(tokens);
+		//ft_execute(tokens);
 	}
 	return (0);
 }

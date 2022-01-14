@@ -36,6 +36,10 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
+// utils
+void	ft_skip_spaces(t_pstatus *status);
+char	**ft_resize_tokens(int num, char **tokens);
+
 // parser
 char	**ft_get_tokens(t_pstatus *status);
 
