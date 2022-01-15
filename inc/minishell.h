@@ -36,6 +36,11 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
+// parse_env_vars
+char	*ft_get_env_var(char *token, int *num);
+char	*ft_join_env_var(char *name, char *token, int i, int num);
+void	ft_extend_vars(char **token);
+
 // utils
 void	ft_skip_spaces(t_pstatus *status);
 char	**ft_resize_tokens(int num, char **tokens);

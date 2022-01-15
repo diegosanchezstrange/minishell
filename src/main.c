@@ -60,26 +60,18 @@ int	ft_execute(char **tokens)
 	}
 }
 
-/*char	**ft_get_tokens(char *line)
-{
-	char	**tokens;
-
-	tokens = ft_split(line,  ' ');
-	return (tokens);
-}*/
-
-void    ft_print_tokens(char **tokens)
+void	ft_print_tokens(char **tokens)
 {
 	if (!tokens)
 		return ;
-    while (*tokens)
-    {
-        printf("%s\n", *tokens);
-        tokens++;
-    }
+	while (*tokens)
+	{
+		printf("%s\n", *tokens);
+		tokens++;
+	}
 }
 
-int	main()
+int	main(void)
 {
 	char		**tokens;
 	t_pstatus	status;

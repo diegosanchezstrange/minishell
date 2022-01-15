@@ -12,7 +12,6 @@
 
 #include <minishell.h>
 
-
 int	ft_check_token_end(t_pstatus *status)
 {
 	if (status->data[status->curr] == ' ' && status->state == P_NEUTRAL)
@@ -46,53 +45,6 @@ char	*ft_get_token(t_pstatus *status)
 	return (ft_substr(status->data, start, status->curr - start));
 }
 
-/*char	**ft_list_to_arr(t_list *list)
-{
-	char	**res;
-	t_list	*actual;
-	int		size;
-	int		i;
-
-	size = ft_lstsize(list);
-	actual = list;
-	res = (char **) ft_calloc(size + 1, sizeof(char *));
-	i = 0;
-	while (actual != NULL)
-	{
-		res[i] = (char *)actual->content;
-		actual = actual->next;
-		i++;
-	}
-	res[i] = NULL;
-	return (res);
-}*/
-
-char	*ft_get_env_var(char *token)
-{
-	printf("var : %s\n", token);
-	return (token);
-}
-
-void	ft_extend_vars(char *token)
-{
-	int		i;
-	int		num;
-	char	*var;
-
-	i = 0;
-	num = 0;
-	//if (!ft_strchr(token, ft_strlen(token)))
-		//return ;
-	while (token[i])
-	{
-		if (token[i] == '$')
-		{
-			var = ft_get_env_var(token + i);
-		}
-		i++;
-	}
-}
-
 char	**ft_get_tokens(t_pstatus *status)
 {
 	char	*actual;
@@ -106,7 +58,7 @@ char	**ft_get_tokens(t_pstatus *status)
 	{
 		num++;
 		tokens = ft_resize_tokens(num, tokens);
-		ft_extend_vars(actual);
+		ft_extend_vars(&actual);
 		tokens[num - 1] = actual;
 		actual = ft_get_token(status);
 	}

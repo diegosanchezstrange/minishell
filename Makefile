@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
-SRCS_PARSER	= tokens.c classify_tokens.c utils.c
+SRCS_PARSER	= tokens.c classify_tokens.c utils.c parse_env_vars.c
 
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix parser/, $(SRCS_PARSER))
