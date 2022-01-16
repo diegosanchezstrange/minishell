@@ -45,6 +45,9 @@ void	ft_extend_vars(char **token);
 void	ft_skip_spaces(t_pstatus *status);
 char	**ft_resize_tokens(int num, char **tokens);
 
+// parser_quotes.c
+void	ft_parse_quotes(char **token);
+
 // parser
 char	**ft_get_tokens(t_pstatus *status);
 

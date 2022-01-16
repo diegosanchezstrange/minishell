@@ -39,12 +39,16 @@ void	ft_extend_vars(char **token)
 	int		i;
 	int		num;
 	char	*aux;
+	int		squotes;
 
 	i = 0;
 	num = 0;
+	squotes = 1;
 	while ((*token)[i])
 	{
-		if ((*token)[i] == '$')
+		if ((*token)[i] == '\'')
+			squotes++;
+		if ((*token)[i] == '$' && squotes % 2 != 0)
 		{
 			aux = ft_get_env_var((*token) + i + 1, &num);
 			*token = ft_join_env_var(aux, *token, i, num);

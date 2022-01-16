@@ -59,6 +59,7 @@ char	**ft_get_tokens(t_pstatus *status)
 		num++;
 		tokens = ft_resize_tokens(num, tokens);
 		ft_extend_vars(&actual);
+		ft_parse_quotes(&actual);
 		tokens[num - 1] = actual;
 		actual = ft_get_token(status);
 	}

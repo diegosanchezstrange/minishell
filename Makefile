@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
-SRCS_PARSER	= tokens.c classify_tokens.c utils.c parse_env_vars.c
+SRCS_PARSER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix parser/, $(SRCS_PARSER))
@@ -33,7 +33,9 @@ OS		:= $(shell uname -s)
 
 LIB_LNK	= -L ${LIBFT}
 
-INCLUDES = -I ./${LIBFT}inc -I ./inc
+HEADS	= ${shell find ./include -type f -name *.h}
+
+INCLUDES = -I${LIBFT}inc -Iinc
 
 all: ${NAME}
 
@@ -54,7 +56,7 @@ $(OBJS_DIRS):
 	@mkdir -p $(OBJS_DIRS) 2> /dev/null
 
 clean:
-		@${RM} *.a ${OBJS_DIR}/*.o *.dSYM
+		@${RM} *.a obj *.dSYM
 
 fclean:		clean
 		@${RM} ${NAME}
