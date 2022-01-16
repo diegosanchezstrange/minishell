@@ -48,7 +48,7 @@ char	**ft_resize_tokens(int num, char **tokens);
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
 
-// parser
+// lexer
 char	**ft_get_tokens(t_pstatus *status);
 
 #endif

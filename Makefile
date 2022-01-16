@@ -6,10 +6,10 @@ CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
-SRCS_PARSER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
+SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
 SRCS	= $(SRCS_MAIN) \
-		  $(addprefix parser/, $(SRCS_PARSER))
+		  $(addprefix lexer/, $(SRCS_LEXER))
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -17,7 +17,7 @@ SRCS_DIR = src
 OBJS_DIR = obj
 
 OBJS_DIRS = $(OBJS_DIR) \
-			$(addprefix $(OBJS_DIR)/, parser)
+			$(addprefix $(OBJS_DIR)/, lexer)
 
 LIBFT_NAME	= libft.a
 
@@ -32,8 +32,6 @@ RM		= rm -rf
 OS		:= $(shell uname -s)
 
 LIB_LNK	= -L ${LIBFT}
-
-HEADS	= ${shell find ./include -type f -name *.h}
 
 INCLUDES = -I${LIBFT}inc -Iinc
 
