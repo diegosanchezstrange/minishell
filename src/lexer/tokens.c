@@ -16,9 +16,9 @@ int	ft_check_token_end(t_pstatus *status, int start)
 {
 	if (status->data[status->curr] == ' ' && status->state == P_NEUTRAL)
 		return (1);
-	if (ft_strchr("<>", status->data[status->curr]) && start != status->curr)
+	if (ft_strchr("<>", status->data[status->curr]) && start != status->curr && status->state == P_NEUTRAL)
 		return (1);
-	if (ft_strchr("<>", status->data[status->curr]))
+	if (ft_strchr("<>", status->data[status->curr]) && status->state == P_NEUTRAL)
 	{
 		status->curr++;
 		return (1);

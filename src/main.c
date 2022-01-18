@@ -73,6 +73,19 @@ void	ft_print_tokens(char **tokens)
 	printf("------------------- TOKENS -------------------\n");
 }
 
+void	ft_print_tokens_list(t_list **tokens)
+{
+	if (!tokens)
+		return ;
+	printf("------------------- TOKENS -------------------\n");
+	while (*tokens)
+	{
+		printf("data: %s , type: %d\n", ((t_token *)((*tokens)->content))->data, ((t_token *)((*tokens)->content))->type);
+		*tokens = (*tokens)->next;
+	}
+	printf("------------------- TOKENS -------------------\n");
+}
+
 int	main(void)
 {
 	char		**tokens;
@@ -89,7 +102,7 @@ int	main(void)
 		status.curr = 0;
 		tokens = ft_get_tokens(&status);
         ft_print_tokens(tokens);
-		ft_parse_tokens(tokens);
+		ft_print_tokens_list(ft_parse_tokens(tokens));
 		//ft_execute(tokens);
 	}
 	return (0);

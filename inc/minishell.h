@@ -54,6 +54,6 @@ void	ft_parse_quotes(char **token);
 char	**ft_get_tokens(t_pstatus *status);
 
 // parser.c
-char	**ft_parse_tokens(char **tokens);
+t_list	**ft_parse_tokens(char **tokens);
 
 #endif
