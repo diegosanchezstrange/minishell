@@ -20,7 +20,16 @@ typedef enum e_token_type
 {
 	T_COMMAND	= 0,
 	T_ARGUMENT	= 1,
+	T_IN_REDIR	= 2,
+	T_OUT_REDIR	= 3,
+	T_PIPE		= 4
 }				t_token_type;
+
+typedef struct s_token
+{
+	char			*data;
+	t_token_type	type;
+}				t_token;
 
 typedef struct s_pstatus
 {
@@ -28,13 +37,6 @@ typedef struct s_pstatus
 	int			curr;
 	t_pstates	state;
 }				t_pstatus;
-
-typedef struct s_token
-{
-	char			*token;
-	t_token_type	type;
-	struct s_token	*next;
-}				t_token;
 
 // parse_env_vars
 char	*ft_get_env_var(char *token, int *num);
@@ -50,5 +52,8 @@ void	ft_parse_quotes(char **token);
 
 // lexer
 char	**ft_get_tokens(t_pstatus *status);
+
+// parser.c
+char	**ft_parse_tokens(char **tokens);
 
 #endif

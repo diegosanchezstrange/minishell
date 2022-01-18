@@ -12,10 +12,17 @@
 
 #include <minishell.h>
 
-int	ft_check_token_end(t_pstatus *status)
+int	ft_check_token_end(t_pstatus *status, int start)
 {
 	if (status->data[status->curr] == ' ' && status->state == P_NEUTRAL)
 		return (1);
+	if (ft_strchr("<>", status->data[status->curr]) && start != status->curr)
+		return (1);
+	if (ft_strchr("<>", status->data[status->curr]))
+	{
+		status->curr++;
+		return (1);
+	}
 	if (status->data[status->curr] == '\"' && status->state == P_NEUTRAL)
 		status->state = P_D_QUOTE;
 	else if (status->data[status->curr] == '\"' && status->state == P_D_QUOTE)
@@ -38,7 +45,7 @@ char	*ft_get_token(t_pstatus *status)
 	start = status->curr;
 	while (status->data[status->curr])
 	{
-		if (ft_check_token_end(status))
+		if (ft_check_token_end(status, start))
 			break ;
 		status->curr++;
 	}

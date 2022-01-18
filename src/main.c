@@ -64,11 +64,13 @@ void	ft_print_tokens(char **tokens)
 {
 	if (!tokens)
 		return ;
+	printf("------------------- TOKENS -------------------\n");
 	while (*tokens)
 	{
 		printf("%s\n", *tokens);
 		tokens++;
 	}
+	printf("------------------- TOKENS -------------------\n");
 }
 
 int	main(void)
@@ -87,6 +89,7 @@ int	main(void)
 		status.curr = 0;
 		tokens = ft_get_tokens(&status);
         ft_print_tokens(tokens);
+		ft_parse_tokens(tokens);
 		//ft_execute(tokens);
 	}
 	return (0);
