@@ -88,7 +88,7 @@ void	ft_print_tokens_list(t_list **tokens)
 
 int	main(void)
 {
-	char		**tokens;
+	t_list		**tokens;
 	t_pstatus	status;
 	char		*pwd;
 	int			state;
@@ -101,8 +101,8 @@ int	main(void)
 		status.data = readline("$ \033[0;37m");
 		status.curr = 0;
 		tokens = ft_get_tokens(&status);
-        ft_print_tokens(tokens);
-		ft_print_tokens_list(ft_parse_tokens(tokens));
+        ft_print_tokens_list(tokens);
+		//ft_print_tokens_list(ft_parse_tokens(tokens));
 		//ft_execute(tokens);
 	}
 	return (0);

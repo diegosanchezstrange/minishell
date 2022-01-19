@@ -18,11 +18,10 @@ typedef enum e_pstates
 
 typedef enum e_token_type
 {
-	T_COMMAND	= 0,
-	T_ARGUMENT	= 1,
-	T_IN_REDIR	= 2,
-	T_OUT_REDIR	= 3,
-	T_PIPE		= 4
+	T_ARGUMENT	= 0,
+	T_IN_REDIR	= 1,
+	T_OUT_REDIR	= 2,
+	T_PIPE		= 3
 }				t_token_type;
 
 typedef struct s_token
@@ -51,9 +50,8 @@ char	**ft_resize_tokens(int num, char **tokens);
 void	ft_parse_quotes(char **token);
 
 // lexer
-char	**ft_get_tokens(t_pstatus *status);
+t_list	**ft_get_tokens(t_pstatus *status);
 
 // parser.c
-t_list	**ft_parse_tokens(char **tokens);
 
 #endif
