@@ -25,8 +25,9 @@ char	*ft_join_env_var(char *name, char *token, int i, int num)
 
 	var = getenv(name);
 	if (!var)
-		return (token);
-	tmp = ft_strjoin(ft_substr(token, 0, i), var);
+		tmp = ft_substr(token, 0, i);
+	else
+		tmp = ft_strjoin(ft_substr(token, 0, i), var);
 	var = tmp;
 	tmp = ft_strjoin(var, ft_substr(token, i + num + 1, ft_strlen(token)));
 	free(var);
@@ -51,8 +52,10 @@ void	ft_extend_vars(char **token)
 		if ((*token)[i] == '$' && squotes % 2 != 0)
 		{
 			aux = ft_get_env_var((*token) + i + 1, &num);
-			*token = ft_join_env_var(aux, *token, i, num);
+			if (aux)
+				*token = ft_join_env_var(aux, *token, i, num);
 		}
-		i++;
+		if ((*token)[i])
+			i++;
 	}
 }

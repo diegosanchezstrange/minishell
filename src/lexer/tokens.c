@@ -77,6 +77,7 @@ t_token	*ft_get_current_token(char *actual)
 t_list	**ft_get_tokens(t_pstatus *status)
 {
 	char	*actual;
+	t_token *new;
 	t_list	**tokens;
 
 	tokens = ft_calloc(1, sizeof(void *));
@@ -85,7 +86,15 @@ t_list	**ft_get_tokens(t_pstatus *status)
 	actual = ft_get_token(status);
 	while (actual != NULL)
 	{
-		ft_lstadd_back(tokens, ft_lstnew(ft_get_current_token(actual)));
+		new = ft_get_current_token(actual);
+		printf("DATA NEW : %s\n", new->data);
+		if (ft_strlen(new->data))
+			ft_lstadd_back(tokens, ft_lstnew(new));
+		else
+		{
+			free(new->data);
+			free(new);
+		}
 		actual = ft_get_token(status);
 	}
 	return (tokens);

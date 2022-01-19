@@ -30,6 +30,14 @@ typedef struct s_token
 	t_token_type	type;
 }				t_token;
 
+typedef struct s_ast
+{
+	char			*data;
+	t_token_type	type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}				t_ast;
+
 typedef struct s_pstatus
 {
 	char		*data;
