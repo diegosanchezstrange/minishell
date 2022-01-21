@@ -24,6 +24,15 @@ typedef enum e_token_type
 	T_PIPE		= 3
 }				t_token_type;
 
+typedef enum e_node_type
+{
+	T_COMMAND_NODE	= 0,
+	T_ARGUMENT_NODE	= 1,
+	T_IN_NODE		= 2,
+	T_OUT_NODE		= 3,
+	T_PIPE_NODE		= 4
+}				t_node_type;
+
 typedef struct s_token
 {
 	char			*data;
@@ -33,7 +42,7 @@ typedef struct s_token
 typedef struct s_ast
 {
 	char			*data;
-	t_token_type	type;
+	t_node_type		type;
 	struct s_ast	*left;
 	struct s_ast	*right;
 }				t_ast;
@@ -60,6 +69,11 @@ void	ft_parse_quotes(char **token);
 // lexer
 t_list	**ft_get_tokens(t_pstatus *status);
 
+// ast
+t_ast	*ft_astnew(t_node_type type, char *content);
+void	ft_astadd_right(t_ast **tree, t_ast *new);
+
 // parser.c
+t_ast	**ft_generate_ast(t_list **tokens);
 
 #endif

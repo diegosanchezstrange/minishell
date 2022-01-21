@@ -10,8 +10,11 @@ SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
 SRCS_PARSER	= parser.c
 
+SRCS_AST	= ast_new.c ast_add_right.c
+
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix lexer/, $(SRCS_LEXER)) \
+		  $(addprefix ast/, $(SRCS_AST)) \
 		  $(addprefix parser/, $(SRCS_PARSER))
 
 OBJS	= ${SRCS:.c=.o}
@@ -21,6 +24,7 @@ OBJS_DIR = obj
 
 OBJS_DIRS = $(OBJS_DIR) \
 			$(addprefix $(OBJS_DIR)/, lexer) \
+			$(addprefix $(OBJS_DIR)/, ast) \
 			$(addprefix $(OBJS_DIR)/, parser)
 
 LIBFT_NAME	= libft.a

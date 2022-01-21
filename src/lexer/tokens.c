@@ -59,7 +59,6 @@ t_token	*ft_get_current_token(char *actual)
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
-	printf("data : %s\n", actual);
 	if (!ft_strncmp(actual, "|", ft_strlen(actual)))
 		token->type = T_PIPE;
 	else if (!ft_strncmp(actual, "<", ft_strlen(actual)))
@@ -77,7 +76,7 @@ t_token	*ft_get_current_token(char *actual)
 t_list	**ft_get_tokens(t_pstatus *status)
 {
 	char	*actual;
-	t_token *new;
+	t_token	*new;
 	t_list	**tokens;
 
 	tokens = ft_calloc(1, sizeof(void *));
@@ -87,7 +86,6 @@ t_list	**ft_get_tokens(t_pstatus *status)
 	while (actual != NULL)
 	{
 		new = ft_get_current_token(actual);
-		printf("DATA NEW : %s\n", new->data);
 		if (ft_strlen(new->data))
 			ft_lstadd_back(tokens, ft_lstnew(new));
 		else
