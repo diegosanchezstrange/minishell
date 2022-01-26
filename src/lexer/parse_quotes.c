@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-t_pstates	ft_change_state(t_pstates state, t_pstates newState)
+t_lex_states	ft_change_state(t_lex_states state, t_lex_states newState)
 {
 	if (state == P_NEUTRAL)
 		return (newState);
@@ -12,7 +12,7 @@ void	ft_parse_quotes(char **token)
 {
 	int			i;
 	char		*new;
-	t_pstates	state;
+	t_lex_states	state;
 
 	i = 0;
 	state = P_NEUTRAL;

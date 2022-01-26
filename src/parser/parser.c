@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-void	ft_fill_with_pipes(t_list *tokens, t_ast **tree)
+void	ft_structure_tree(t_list *tokens, t_ast **tree)
 {
 	t_token	*actual;
 	t_ast	*head;
@@ -16,22 +16,37 @@ void	ft_fill_with_pipes(t_list *tokens, t_ast **tree)
 				head = *tree;
 			if ((*tree)->right)
 				*tree = (*tree)->right;
+			ft_astadd_left(tree, ft_astnew(T_COMMAND_NODE, NULL));
 		}
 		tokens = tokens->next;
 	}
-	*tree = head;
-	printf("TREE : %s, %p\n", (*tree)->data, *tree);
+	if (!*tree)
+		ft_astadd_left(tree, ft_astnew(T_COMMAND_NODE, NULL));
+	else
+	{
+		if (!(*tree)->right)
+			ft_astadd_right(tree, ft_astnew(T_COMMAND_NODE, NULL));
+		*tree = head;
+	}
 }
 
-void	ft_parse_simple_commands(t_list *tokens, t_ast **tree)
+t_list	*ft_fill_tree(t_list *tokens, t_ast **tree)
 {
 	t_list	*current;
 
 	current = tokens;
-	while (current)
+	if ((*tree)->type == T_PIPE_NODE)
 	{
-		current = current->next;
+		//printf("Filling PIPE : %s\n", ((t_token *)current->content)->data);
+		current = ft_fill_tree(current, &((*tree)->left));
+		current = ft_fill_tree(current, &((*tree)->right));
 	}
+	if ((*tree)->type == T_COMMAND_NODE)
+	{
+		//printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
+		return (ft_fill_simple_command(current, tree));
+	}
+	return (tokens);
 }
 
 t_ast	**ft_generate_ast(t_list **tokens)
@@ -41,7 +56,7 @@ t_ast	**ft_generate_ast(t_list **tokens)
 	head = ft_calloc(1, sizeof(void *));
 	if (!head)
 		return (NULL);
-	ft_fill_with_pipes(*tokens, head);
-	ft_parse_simple_commands(*tokens, head);
+	ft_structure_tree(*tokens, head);
+	ft_fill_tree(*tokens, head);
 	return (head);
 }

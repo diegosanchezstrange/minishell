@@ -8,9 +8,9 @@ SRCS_MAIN	= main.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
-SRCS_PARSER	= parser.c
+SRCS_PARSER	= parser.c parse_command.c
 
-SRCS_AST	= ast_new.c ast_add_right.c
+SRCS_AST	= ast_new.c ast_add_right.c ast_add_left.c
 
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix lexer/, $(SRCS_LEXER)) \
