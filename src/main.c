@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/01/14 19:42:31 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:06:41 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,28 @@ void	ft_print_tokens_list(t_list **tokens)
 
 int	main(void)
 {
-	t_list		**tokens;
-	t_ast		**tree;
+//	t_list		**tokens;
+//	t_ast		**tree;
 	t_pstatus	status;
-	char		*pwd;
+	//char		*pwd;
 	int			state;
 
 	state = 1;
 	while (state)
 	{
-		pwd = getenv("PWD");
-		printf("\033[0;32m[%s]\033[0;33m", pwd);
-		status.data = readline("$ \033[0;37m");
+		//pwd = getenv("PWD");
+		//printf("\033[0;32m[%s]\033[0;33m", pwd);
+		status.data = readline("$ ");
+		if (status.data != NULL)
+			add_history(status.data);
 		status.curr = 0;
-		tokens = ft_get_tokens(&status);
+/*		tokens = ft_get_tokens(&status);
         //ft_print_tokens_list(tokens);
 		tree = ft_generate_ast(tokens);
 		if (*tree)
 			printf("HEAD : %s\n", (*tree)->data);
 		else
-			printf("NULL\n");
+			printf("NULL\n");*/
 		//ft_print_tokens_list(ft_parse_tokens(tokens));
 		//ft_execute(tokens);
 	}
