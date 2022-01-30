@@ -75,43 +75,60 @@ void	ft_print_tokens(char **tokens)
 
 void	ft_print_tokens_list(t_list **tokens)
 {
+	t_list	**pointer;
+
 	if (!tokens)
 		return ;
+	pointer = malloc(sizeof(void *));
+	if (!pointer)
+		return ;
+	*pointer = *tokens;
 	printf("------------------- TOKENS -------------------\n");
-	while (*tokens)
+	while (*pointer)
 	{
-		printf("data: %s , type: %d\n", ((t_token *)((*tokens)->content))->data, ((t_token *)((*tokens)->content))->type);
-		*tokens = (*tokens)->next;
+		printf("data: %s , type: %d\n", ((t_token *)((*pointer)->content))->data, ((t_token *)((*pointer)->content))->type);
+		*pointer = (*pointer)->next;
 	}
 	printf("------------------- TOKENS -------------------\n");
+	free(pointer);
+}
+
+void	ft_free_token(void *t)
+{
+	t_token	*token;
+
+	token = (t_token *)t;
+	free(token->data);
+	free(token);
 }
 
 int	main(void)
 {
-//	t_list		**tokens;
-//	t_ast		**tree;
+	t_list		**tokens;
+	//t_ast		**tree;
 	t_pstatus	status;
-	//char		*pwd;
 	int			state;
 
 	state = 1;
 	while (state)
 	{
-		//pwd = getenv("PWD");
-		//printf("\033[0;32m[%s]\033[0;33m", pwd);
 		status.data = readline("$ ");
 		if (status.data != NULL)
 			add_history(status.data);
 		status.curr = 0;
-/*		tokens = ft_get_tokens(&status);
-        //ft_print_tokens_list(tokens);
-		tree = ft_generate_ast(tokens);
-		if (*tree)
-			printf("HEAD : %s\n", (*tree)->data);
-		else
-			printf("NULL\n");*/
-		//ft_print_tokens_list(ft_parse_tokens(tokens));
-		//ft_execute(tokens);
+		status.error = 0;
+		tokens = ft_get_tokens(&status);
+		ft_print_tokens_list(tokens);
+		ft_lstclear(tokens, ft_free_token);
+		free(tokens);
+	/*if (tokens)
+		{
+			tree = ft_generate_ast(tokens);
+			if (*tree)
+				printf("HEAD : %s\n", (*tree)->data);
+			else
+				printf("NULL\n");
+		}*/
 	}
 	return (0);
 }

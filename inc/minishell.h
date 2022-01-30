@@ -11,17 +11,20 @@
 
 typedef enum e_lex_states
 {
-	P_NEUTRAL	= 0,
-	P_D_QUOTE	= 1,
-	P_S_QUOTE	= 2
+	P_ERROR			= -1,
+	P_NEUTRAL		= 0,
+	P_D_QUOTE		= 1,
+	P_S_QUOTE		= 2
 }				t_lex_states;
 
 typedef enum e_token_type
 {
-	T_ARGUMENT	= 0,
-	T_IN_REDIR	= 1,
-	T_OUT_REDIR	= 2,
-	T_PIPE		= 3
+	T_ARGUMENT		= 0,
+	T_IN_REDIR		= 1,
+	T_D_IN_REDIR	= 2,
+	T_OUT_REDIR		= 3,
+	T_D_OUT_REDIR	= 4,
+	T_PIPE			= 5
 }				t_token_type;
 
 typedef enum e_node_type
@@ -54,6 +57,8 @@ typedef struct s_pstatus
 {
 	char			*data;
 	int				curr;
+	int 			error;
+	t_token_type	type;
 	t_lex_states	state;
 }				t_pstatus;
 
