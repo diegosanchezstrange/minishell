@@ -32,7 +32,6 @@ int	ft_validate_redirs(t_pstatus *status, int *start)
 	else if (status->data[status->curr] == '<' && status->type == T_IN_REDIR)
 		status->type = T_D_IN_REDIR;
 	*start += 1;
-	//ft_skip_spaces(status);
 	return (0);
 }
 
