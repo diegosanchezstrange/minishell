@@ -6,13 +6,14 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/01/26 21:06:41 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/01/31 20:30:31 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <readline/readline.h>
 
+t_pstatus status;
 extern char	**environ;
 
 char	*ft_get_path(char *arg)
@@ -102,18 +103,39 @@ void	ft_free_token(void *t)
 	free(token);
 }
 
+/*void	my_prompt(int n)
+{
+	n = 0;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void my_signal(void)
+{
+
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, my_prompt);
+}*/
+
 int	main(void)
 {
 	t_list		**tokens;
 	t_ast		**tree;
-	t_pstatus	status;
 	int			state;
 
 	state = 1;
 	while (state)
 	{
+		//my_signal();
 		status.data = readline("$ ");
-		if (status.data != NULL)
+		if (status.data == NULL)
+		{
+			write(1, "exit", 5);
+			exit(1);
+		}
+		if (status.data)
 			add_history(status.data);
 		status.curr = 0;
 		status.error = 0;
