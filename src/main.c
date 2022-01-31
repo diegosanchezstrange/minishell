@@ -105,7 +105,7 @@ void	ft_free_token(void *t)
 int	main(void)
 {
 	t_list		**tokens;
-	//t_ast		**tree;
+	t_ast		**tree;
 	t_pstatus	status;
 	int			state;
 
@@ -119,16 +119,24 @@ int	main(void)
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
 		ft_print_tokens_list(tokens);
-		ft_lstclear(tokens, ft_free_token);
-		free(tokens);
-	/*if (tokens)
+		if (tokens)
 		{
 			tree = ft_generate_ast(tokens);
 			if (*tree)
-				printf("HEAD : %s\n", (*tree)->data);
+			{
+				printf("HEAD -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
+				(*tree) = (*tree)->right;
+				while ((*tree))
+				{
+					printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
+					(*tree) = (*tree)->right;
+				}
+			}
 			else
 				printf("NULL\n");
-		}*/
+		}
+		ft_lstclear(tokens, ft_free_token);
+		free(tokens);
 	}
 	return (0);
 }

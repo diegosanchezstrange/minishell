@@ -37,13 +37,13 @@ t_list	*ft_fill_tree(t_list *tokens, t_ast **tree)
 	current = tokens;
 	if ((*tree)->type == T_PIPE_NODE)
 	{
-		printf("Filling PIPE : %s\n", ((t_token *)current->content)->data);
+		//printf("Filling PIPE : %s\n", ((t_token *)current->content)->data);
 		current = ft_fill_tree(current, &((*tree)->left));
 		current = ft_fill_tree(current, &((*tree)->right));
 	}
 	if ((*tree)->type == T_COMMAND_NODE)
 	{
-		printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
+		//printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
 		return (ft_fill_simple_command(current, tree));
 	}
 	return (tokens);

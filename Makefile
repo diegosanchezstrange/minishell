@@ -12,9 +12,12 @@ SRCS_PARSER	= parser.c parse_command.c
 
 SRCS_AST	= ast_new.c ast_add_right.c ast_add_left.c ast_get_last_r.c ast_get_last_l.c ast_append_left.c ast_append_right.c
 
+SRCS_EXEC	= exec.c
+
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix lexer/, $(SRCS_LEXER)) \
 		  $(addprefix ast/, $(SRCS_AST)) \
+		  $(addprefix executer/, $(SRCS_EXEC)) \
 		  $(addprefix parser/, $(SRCS_PARSER))
 
 OBJS	= ${SRCS:.c=.o}
@@ -25,6 +28,7 @@ OBJS_DIR = obj
 OBJS_DIRS = $(OBJS_DIR) \
 			$(addprefix $(OBJS_DIR)/, lexer) \
 			$(addprefix $(OBJS_DIR)/, ast) \
+			$(addprefix $(OBJS_DIR)/, executer) \
 			$(addprefix $(OBJS_DIR)/, parser)
 
 LIBFT_NAME	= libft.a
