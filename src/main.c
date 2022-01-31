@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/01/31 20:30:31 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/01/31 20:59:47 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ int	ft_execute(char **tokens)
 		waitpid(pid, NULL, 0);
 		return (1);
 	}
+}
+void ft_pwd(void)
+{
+	char *path;
+
+	path = getenv("PWD");
+	write(1, path, ft_strlen(path));
+	write(1, "\n", 1);
 }
 
 void	ft_print_tokens(char **tokens)
@@ -118,7 +126,17 @@ void my_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }*/
-
+void	ft_tree_travel(t_ast **tree)
+{
+	while (*tree && (*tree)->data)
+	{
+		if (ft_strncmp((*tree)->data, "pwd", 3) == 0)
+			ft_pwd();
+		else
+			printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
+		(*tree) = (*tree)->right;
+	}
+}
 int	main(void)
 {
 	t_list		**tokens;
@@ -129,7 +147,7 @@ int	main(void)
 	while (state)
 	{
 		//my_signal();
-		status.data = readline("$ ");
+		status.data = readline(CYAN"$ ");
 		if (status.data == NULL)
 		{
 			write(1, "exit", 5);
@@ -140,19 +158,20 @@ int	main(void)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		ft_print_tokens_list(tokens);
+		//ft_print_tokens_list(tokens);
 		if (tokens)
 		{
 			tree = ft_generate_ast(tokens);
 			if (*tree)
 			{
-				printf("HEAD -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
+/*				printf("HEAD -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
 				(*tree) = (*tree)->right;
 				while ((*tree))
 				{
 					printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
 					(*tree) = (*tree)->right;
-				}
+				}*/
+			ft_tree_travel(tree);
 			}
 			else
 				printf("NULL\n");
