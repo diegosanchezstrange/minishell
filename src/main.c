@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/01/31 20:59:47 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:06:58 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ int	ft_execute(char **tokens)
 		waitpid(pid, NULL, 0);
 		return (1);
 	}
-}
-void ft_pwd(void)
-{
-	char *path;
-
-	path = getenv("PWD");
-	write(1, path, ft_strlen(path));
-	write(1, "\n", 1);
 }
 
 void	ft_print_tokens(char **tokens)

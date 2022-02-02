@@ -93,5 +93,6 @@ void	ft_astappend_r(t_ast **tree, t_ast *new);
 // parser.c
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
-
+//binaries
+void	ft_pwd(void);
 #endif
