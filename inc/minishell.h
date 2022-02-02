@@ -12,7 +12,7 @@
 # define READ_END 0
 # define WRITE_END 1
 # define CYAN	"\033[1;36m"
-
+# define NC		"\033[0m"
 typedef enum e_lex_states
 {
 	P_ERROR			= -1,
@@ -95,4 +95,7 @@ t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
 //binaries
 void	ft_pwd(void);
+void	ft_echo(t_ast *tree);
+void	ft_exit(void);
+void    ft_env(void);
 #endif

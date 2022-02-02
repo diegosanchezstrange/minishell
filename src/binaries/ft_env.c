@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/02 19:15:51 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/02 20:23:25 by mclerico         ###   ########.fr       */
+/*   Created: 2022/02/02 20:37:33 by mclerico          #+#    #+#             */
+/*   Updated: 2022/02/02 20:51:22 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-void	ft_echo(t_ast *tree)
-{
-	int		nline;
+extern char	**environ;
 
-	tree = tree->left;
-	nline = 0;
-	if (ft_strncmp((tree->data), "-n", ft_strlen(tree->data)) == 0)
+void	ft_env(void)
+{
+	int	i;
+
+	i = 0;
+	while (environ[i] != NULL)
 	{
-		nline = 1;
-		tree = tree->right;
+		printf("%s\n", environ[i]);
+		i++;
 	}
-	while (tree)
-	{
-		write(1, (tree->data), ft_strlen(tree->data));
-		tree = tree->right;
-		if (tree)
-			write(1, " ", 1);
-	}
-	if (nline == 1)
-		write(1, "\n", 1);
 }

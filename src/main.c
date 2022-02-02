@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/02 19:06:58 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:44:31 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,27 @@ void my_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }*/
+void	ft_use_builtins(t_ast *tree)
+{
+	if (ft_strncmp(tree->data, "pwd", 3) == 0)
+		ft_pwd();
+	else if (ft_strncmp(tree->data, "echo", 4) == 0)
+		ft_echo(tree);
+	else if (ft_strncmp(tree->data, "exit", 4) == 0)
+		ft_exit();
+	else if (ft_strncmp(tree->data, "env", 3) == 0)
+		ft_env();
+}
+
 void	ft_tree_travel(t_ast **tree)
 {
+	char	*cmd;
+
 	while (*tree && (*tree)->data)
 	{
-		if (ft_strncmp((*tree)->data, "pwd", 3) == 0)
-			ft_pwd();
+		cmd = (*tree)->data;
+		if (!ft_strnstr(cmd, "pwdechoexitunsetenvexport", ft_strlen(cmd)))
+			ft_use_builtins(*tree);
 		else
 			printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
 		(*tree) = (*tree)->right;
@@ -139,11 +154,11 @@ int	main(void)
 	while (state)
 	{
 		//my_signal();
-		status.data = readline(CYAN"$ ");
+		status.data = readline(CYAN"$"NC" ");
 		if (status.data == NULL)
 		{
 			write(1, "exit", 5);
-			exit(1);
+			exit(0);
 		}
 		if (status.data)
 			add_history(status.data);
