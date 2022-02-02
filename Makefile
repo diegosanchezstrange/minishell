@@ -76,5 +76,6 @@ fclean:		clean
 		@${RM} ${NAME}
 
 re:		fclean all
-
+tags :
+	ctags ${SRCS_PATHS}
 .PHONY:	clean re fclean all

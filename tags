@@ -1,0 +1,35 @@
+Mmain	src/main.c	/^int	main(void)$/
+ft_astadd_left	src/ast/ast_add_left.c	/^void	ft_astadd_left(t_ast **tree, t_ast *new)$/
+ft_astadd_right	src/ast/ast_add_right.c	/^void	ft_astadd_right(t_ast **tree, t_ast *new)$/
+ft_astappend_l	src/ast/ast_append_left.c	/^void	ft_astappend_l(t_ast **tree, t_ast *new)$/
+ft_astappend_r	src/ast/ast_append_right.c	/^void	ft_astappend_r(t_ast **tree, t_ast *new)$/
+ft_astget_last_l	src/ast/ast_get_last_l.c	/^t_ast	*ft_astget_last_l(t_ast *tree)$/
+ft_astget_last_r	src/ast/ast_get_last_r.c	/^t_ast	*ft_astget_last_r(t_ast *tree)$/
+ft_astnew	src/ast/ast_new.c	/^t_ast	*ft_astnew(t_node_type type, char *content)$/
+ft_change_state	src/lexer/parse_quotes.c	/^t_lex_states	ft_change_state(t_lex_states state, t/
+ft_check_token_end	src/lexer/tokens.c	/^int	ft_check_token_end(t_pstatus *status, int *sta/
+ft_exec_command	src/executer/exec.c	/^void	ft_exec_command(t_ast *node, int pipeRedir)$/
+ft_exec_tree	src/executer/exec.c	/^void	ft_exec_tree(t_ast *tree, int pipe)$/
+ft_execute	src/main.c	/^int	ft_execute(char **tokens)$/
+ft_extend_vars	src/lexer/parse_env_vars.c	/^void	ft_extend_vars(char **token)$/
+ft_fill_simple_command	src/parser/parse_command.c	/^t_list	*ft_fill_simple_command(t_list *tokens, t_a/
+ft_fill_tree	src/parser/parser.c	/^t_list	*ft_fill_tree(t_list *tokens, t_ast **tree)/
+ft_free_list	src/lexer/tokens.c	/^void	ft_free_list(t_list **s)$/
+ft_free_token	src/main.c	/^void	ft_free_token(void *t)$/
+ft_generate_ast	src/parser/parser.c	/^t_ast	**ft_generate_ast(t_list **tokens)$/
+ft_get_current_token	src/lexer/tokens.c	/^t_token	*ft_get_current_token(t_pstatus *status, c/
+ft_get_env_var	src/lexer/parse_env_vars.c	/^char	*ft_get_env_var(char *token, int *num)$/
+ft_get_path	src/main.c	/^char	*ft_get_path(char *arg)$/
+ft_get_token	src/lexer/tokens.c	/^char	*ft_get_token(t_pstatus **status)$/
+ft_get_tokens	src/lexer/tokens.c	/^t_list	**ft_get_tokens(t_pstatus *status)$/
+ft_join_env_var	src/lexer/parse_env_vars.c	/^char	*ft_join_env_var(char *name, char *token, int/
+ft_map_types	src/parser/parse_command.c	/^t_node_type	ft_map_types(t_token_type type)$/
+ft_parse_quotes	src/lexer/parse_quotes.c	/^void	ft_parse_quotes(char **token)$/
+ft_print_tokens	src/main.c	/^void	ft_print_tokens(char **tokens)$/
+ft_print_tokens_list	src/main.c	/^void	ft_print_tokens_list(t_list **tokens)$/
+ft_pwd	src/binaries/ft_pwd.c	/^void ft_pwd(void)$/
+ft_resize_tokens	src/lexer/utils.c	/^char	**ft_resize_tokens(int num, char **tokens)$/
+ft_skip_spaces	src/lexer/utils.c	/^void	ft_skip_spaces(t_pstatus *status)$/
+ft_structure_tree	src/parser/parser.c	/^void	ft_structure_tree(t_list *tokens, t_ast **tre/
+ft_tree_travel	src/main.c	/^void	ft_tree_travel(t_ast **tree)$/
+ft_validate_redirs	src/lexer/tokens.c	/^int	ft_validate_redirs(t_pstatus *status, int *sta/
