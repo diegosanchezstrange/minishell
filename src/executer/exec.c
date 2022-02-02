@@ -1,9 +1,28 @@
 #include <minishell.h>
 
+char	**ft_return_cmd(t_ast *node, char *cmd)
+{
+	char	**sol;
+	int		i;
+
+	sol = ft_calloc(sizeof(char *), ft_astsize_r(node) + 2);
+	sol[0] = cmd;
+	i = 1;
+	while (node)
+	{
+		sol[i] = node->data;
+		i++;
+		node = node->right;
+	}
+	sol[i] = NULL;
+	return (sol);
+}
+
 void	ft_exec_command(t_ast *node, int pipeRedir)
 {
-	int	pid;
-	int	fd[2];
+	int		pid;
+	int		fd[2];
+	char	**cmd;
 
 	if (!node)
 		return ;
@@ -11,21 +30,33 @@ void	ft_exec_command(t_ast *node, int pipeRedir)
 	pid = fork();
 	if (pid == 0)
 	{
+		cmd = ft_return_cmd(node->left, node->data);
 		//ft_mange_inputs(node->right->left);
 		close(READ_END);
 		if (pipeRedir)
 			dup2(fd[WRITE_END], 0);
 		close(fd[WRITE_END]);
+		printf("CMD : %s\n", cmd[0]);
+		printf("CMD : %s\n", cmd[1]);
+		execve(cmd[0], cmd, environ);
+		perror(cmd[0]);
+		exit(1);
 		//ft_mange_outputs(node->right->right);
 	}
 	else
 	{
-
+		close(fd[WRITE_END]);
+		if (pipeRedir)
+			dup2(fd[READ_END], 0);
+		close(fd[READ_END]);
+		waitpid(pid, NULL, 0);
 	}
 }
 
 void	ft_exec_tree(t_ast *tree, int pipe)
 {
+	printf("command : %s\n", tree->data);
+	printf("param : %s\n", tree->right->data);
 	if (tree->type == T_PIPE_NODE)
 	{
 		ft_exec_tree(tree->left, 1);

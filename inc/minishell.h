@@ -90,10 +90,15 @@ t_ast	*ft_astget_last_r(t_ast *tree);
 t_ast	*ft_astget_last_l(t_ast *tree);
 void	ft_astappend_l(t_ast **tree, t_ast *new);
 void	ft_astappend_r(t_ast **tree, t_ast *new);
+int		ft_astsize_r(t_ast *node);
 
 // parser.c
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
+
+//executor.c
+void	ft_exec_tree(t_ast *tree, int pipe);
+
 //binaries
 void	ft_pwd(void);
 void	ft_echo(t_ast *tree);

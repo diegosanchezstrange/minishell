@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/02 20:55:08 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:37:30 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,24 +164,12 @@ int	main(void)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		//ft_print_tokens_list(tokens);
+		ft_print_tokens_list(tokens);
 		if (tokens)
-		{
 			tree = ft_generate_ast(tokens);
-			if (*tree)
-			{
-/*				printf("HEAD -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
-				(*tree) = (*tree)->right;
-				while ((*tree))
-				{
-					printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
-					(*tree) = (*tree)->right;
-				}*/
-			ft_tree_travel(tree);
-			}
-			else
-				printf("NULL\n");
-		}
+			//ft_tree_travel(tree);
+		if (tree)
+			ft_exec_tree(*tree, 0);
 		ft_lstclear(tokens, ft_free_token);
 		free(tokens);
 	}
