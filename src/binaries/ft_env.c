@@ -6,12 +6,11 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:37:33 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/02 20:51:22 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:55:22 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-extern char	**environ;
 
 void	ft_env(void)
 {
