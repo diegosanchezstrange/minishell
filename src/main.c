@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/02 20:52:17 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/02 20:55:08 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <readline/readline.h>
 
 t_pstatus status;
-extern char	**environ;
 
 char	*ft_get_path(char *arg)
 {

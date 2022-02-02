@@ -6,11 +6,12 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 19:15:51 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/02 21:10:11 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/02/02 21:11:52 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
 void	ft_echo(t_ast *tree)
 {
 	int		nline;
