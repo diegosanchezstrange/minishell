@@ -97,22 +97,10 @@ void	ft_use_builtins(t_ast *tree)
 		ft_exit();
 	else if (ft_strncmp(tree->data, "env", 3) == 0)
 		ft_env();
+	else if (ft_strncmp(tree->data, "unset", 5) == 0)
+		ft_unset(tree);
 }
 
-void	ft_tree_travel(t_ast **tree)
-{
-	char	*cmd;
-
-	while (*tree && (*tree)->data)
-	{
-		cmd = (*tree)->data;
-		if (!ft_strnstr(cmd, "pwdechoexitunsetenvexport", ft_strlen(cmd)))
-			ft_use_builtins(*tree);
-		else
-			printf("ARG -- data : %s, type : %d\n", (*tree)->data, (*tree)->type);
-		(*tree) = (*tree)->right;
-	}
-}
 int	main(void)
 {
 	t_list		**tokens;

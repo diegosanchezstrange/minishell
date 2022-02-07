@@ -106,4 +106,5 @@ void	ft_pwd(void);
 void	ft_echo(t_ast *tree);
 void	ft_exit(void);
 void    ft_env(void);
+void	ft_unset(t_ast *tree);
 #endif

@@ -35,6 +35,7 @@ char	**ft_envmatrix()
 {
 	char	**environ;
 	int		i;
+	t_list	*cpy;
 
 	environ = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
 	i = 0;
@@ -43,9 +44,14 @@ char	**ft_envmatrix()
 		free(environ);
 		return NULL;
 	}
+	cpy = env;
 	while (env)
+	{
 		environ[i++] = ft_strdup(env->content);
+		env = env->next;
+	}
 	environ[i]= "\0";
+	env = cpy;
 	return (environ);
 }
 
@@ -100,7 +106,7 @@ void	ft_exec_tree(t_ast *tree, int pipe)
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
-		if (!ft_strnstr(tree->data, "cdpwdechoexitunsetenvexport", 
+		if (ft_strnstr(tree->data, "cdpwdechoexitunsetenvexport", 
 					ft_strlen(tree->data)))
 			ft_use_builtins(tree);
 		else

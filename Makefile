@@ -10,7 +10,7 @@ SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
 SRCS_PARSER	= parser.c parse_command.c
 
-SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c
+SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c ft_unset.c
 
 SRCS_AST	= ast_new.c ast_add_right.c ast_add_left.c ast_get_last_r.c ast_get_last_l.c ast_append_left.c ast_append_right.c astsize_r.c
 
