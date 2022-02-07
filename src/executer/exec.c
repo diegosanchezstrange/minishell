@@ -37,21 +37,21 @@ char	**ft_envmatrix()
 	int		i;
 	t_list	*cpy;
 
-	environ = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
+	environ = ft_calloc(ft_lstsize(g_env) + 1, sizeof(char *));
 	i = 0;
-	if (!env)
+	if (!g_env)
 	{
 		free(environ);
 		return NULL;
 	}
-	cpy = env;
-	while (env)
+	cpy = g_env;
+	while (g_env)
 	{
-		environ[i++] = ft_strdup(env->content);
-		env = env->next;
+		environ[i++] = ft_strdup(g_env->content);
+		g_env = g_env->next;
 	}
 	environ[i]= "\0";
-	env = cpy;
+	g_env = cpy;
 	return (environ);
 }
 

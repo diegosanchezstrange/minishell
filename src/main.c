@@ -40,7 +40,7 @@ void	ft_cloneenv(void)
 
 	i = 1;
 	while(environ[i] != NULL)
-		ft_lstadd_back(&env, ft_lstnew(environ[i++]));
+		ft_lstadd_back(&g_env, ft_lstnew(environ[i++]));
 }
 
 void	ft_print_tokens_list(t_list **tokens)
