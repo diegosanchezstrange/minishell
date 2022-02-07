@@ -13,8 +13,6 @@
 #include <minishell.h>
 #include <readline/readline.h>
 
-t_pstatus status;
-
 char	*ft_get_path(char *arg)
 {
 	char	*env;
@@ -36,41 +34,13 @@ char	*ft_get_path(char *arg)
 	}
 	return ("");
 }
-
-int	ft_execute(char **tokens)
+void	ft_cloneenv(void)
 {
-	int			pid;
+	int	i;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		execve(ft_get_path(tokens[0]), tokens, environ);
-		perror(tokens[0]);
-		exit(0);
-	}
-	else if (pid < 0)
-	{
-		perror("minish");
-		return (0);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
-		return (1);
-	}
-}
-
-void	ft_print_tokens(char **tokens)
-{
-	if (!tokens)
-		return ;
-	printf("------------------- TOKENS -------------------\n");
-	while (*tokens)
-	{
-		printf("%s\n", *tokens);
-		tokens++;
-	}
-	printf("------------------- TOKENS -------------------\n");
+	i = 1;
+	while(environ[i] != NULL)
+		ft_lstadd_back(&env, ft_lstnew(environ[i++]));
 }
 
 void	ft_print_tokens_list(t_list **tokens)
@@ -148,8 +118,10 @@ int	main(void)
 	t_list		**tokens;
 	t_ast		**tree;
 	int			state;
+	t_pstatus	status;
 
 	state = 1;
+	ft_cloneenv();
 	while (state)
 	{
 		//my_signal();
@@ -167,7 +139,6 @@ int	main(void)
 		ft_print_tokens_list(tokens);
 		if (tokens)
 			tree = ft_generate_ast(tokens);
-			//ft_tree_travel(tree);
 		if (tree)
 			ft_exec_tree(*tree, 0);
 		ft_lstclear(tokens, ft_free_token);

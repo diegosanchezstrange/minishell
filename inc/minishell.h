@@ -14,6 +14,7 @@
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
 extern char **environ;
+t_list	*env;
 typedef enum e_lex_states
 {
 	P_ERROR			= -1,
@@ -100,6 +101,7 @@ t_ast	**ft_generate_ast(t_list **tokens);
 void	ft_exec_tree(t_ast *tree, int pipe);
 
 //binaries
+void	ft_use_builtins(t_ast *tree);
 void	ft_pwd(void);
 void	ft_echo(t_ast *tree);
 void	ft_exit(void);

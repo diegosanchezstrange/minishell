@@ -18,16 +18,49 @@ char	**ft_return_cmd(t_ast *node, char *cmd)
 	return (sol);
 }
 
+void	ft_free_split(char **s)
+{
+	char	**str;
+
+	str = s;
+    while (*str)
+	{
+		free(*str);
+		str++;
+	}
+	free(s);
+}
+
+char	**ft_envmatrix()
+{
+	char	**environ;
+	int		i;
+
+	environ = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
+	i = 0;
+	if (!env)
+	{
+		free(environ);
+		return NULL;
+	}
+	while (env)
+		environ[i++] = ft_strdup(env->content);
+	environ[i]= "\0";
+	return (environ);
+}
+
 void	ft_exec_command(t_ast *node, int pipeRedir)
 {
 	int		pid;
 	int		fd[2];
 	char	**cmd;
+	char	**environ;
 
 	if (!node)
 		return ;
 	pipe(fd);
 	pid = fork();
+	environ = ft_envmatrix();
 	if (pid == 0)
 	{
 		cmd = ft_return_cmd(node->left, node->data);
@@ -39,8 +72,11 @@ void	ft_exec_command(t_ast *node, int pipeRedir)
 		printf("CMD : %s\n", cmd[0]);
 		printf("CMD : %s\n", cmd[1]);
 		execve(cmd[0], cmd, environ);
+		ft_free_split(environ);
 		perror(cmd[0]);
+		ft_free_split(cmd);
 		exit(1);
+
 		//ft_mange_outputs(node->right->right);
 	}
 	else
@@ -55,13 +91,19 @@ void	ft_exec_command(t_ast *node, int pipeRedir)
 
 void	ft_exec_tree(t_ast *tree, int pipe)
 {
-	printf("command : %s\n", tree->data);
-	printf("param : %s\n", tree->right->data);
+	//printf("command : %s\n", tree->data);
+	//printf("param : %s\n", tree->left->data);
 	if (tree->type == T_PIPE_NODE)
 	{
 		ft_exec_tree(tree->left, 1);
 		ft_exec_tree(tree->right, 0);
 	}
 	if (tree->type == T_COMMAND_NODE)
-		ft_exec_command(tree, pipe);
+	{
+		if (!ft_strnstr(tree->data, "cdpwdechoexitunsetenvexport", 
+					ft_strlen(tree->data)))
+			ft_use_builtins(tree);
+		else
+			ft_exec_command(tree, pipe);
+	}
 }

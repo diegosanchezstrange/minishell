@@ -14,12 +14,9 @@
 
 void	ft_env(void)
 {
-	int	i;
-
-	i = 0;
-	while (environ[i] != NULL)
+	while (env)
 	{
-		printf("%s\n", environ[i]);
-		i++;
+		printf("%s\n", (char *)env->content);
+		env = env->next;
 	}
 }
