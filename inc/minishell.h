@@ -99,6 +99,7 @@ t_ast	**ft_generate_ast(t_list **tokens);
 
 //executor.c
 void	ft_exec_tree(t_ast *tree, int pipe);
+void	ft_free_split(char **s);
 
 //binaries
 void	ft_use_builtins(t_ast *tree);
@@ -107,4 +108,5 @@ void	ft_echo(t_ast *tree);
 void	ft_exit(void);
 void    ft_env(void);
 void	ft_unset(t_ast *tree);
+void	ft_export(t_ast *tree);
 #endif

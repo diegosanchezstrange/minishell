@@ -105,8 +105,8 @@ void	ft_exec_tree(t_ast *tree, int pipe)
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
-		if (ft_strnstr("envpwdechoexitunset", tree->data, 
-					19) != NULL)
+		if (ft_strnstr("envpwdechoexitunsetexport", tree->data, 
+					25) != NULL)
 		{
 			printf("tree data %s\n", tree->data);
 			ft_use_builtins(tree);

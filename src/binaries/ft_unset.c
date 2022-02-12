@@ -25,6 +25,7 @@ void	ft_unset(t_ast *tree)
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = g_env;
+	next = NULL;
 	if (!tree->left->data)
 		return ;
 	data = tree->left->data;

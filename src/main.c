@@ -99,6 +99,8 @@ void	ft_use_builtins(t_ast *tree)
 		ft_env();
 	else if (ft_strncmp(tree->data, "unset", 5) == 0)
 		ft_unset(tree);
+	else if (ft_strncmp(tree->data, "export", 5) == 0)
+		ft_export(tree);
 }
 
 int	main(void)
