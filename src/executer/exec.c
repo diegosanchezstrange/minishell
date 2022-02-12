@@ -50,7 +50,7 @@ char	**ft_envmatrix()
 		environ[i++] = ft_strdup(g_env->content);
 		g_env = g_env->next;
 	}
-	environ[i]= "\0";
+	environ[i]= NULL;
 	g_env = cpy;
 	return (environ);
 }
@@ -82,7 +82,6 @@ void	ft_exec_command(t_ast *node, int pipeRedir)
 		perror(cmd[0]);
 		ft_free_split(cmd);
 		exit(1);
-
 		//ft_mange_outputs(node->right->right);
 	}
 	else
@@ -106,9 +105,12 @@ void	ft_exec_tree(t_ast *tree, int pipe)
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
-		if (ft_strnstr(tree->data, "cdpwdechoexitunsetenvexport", 
-					ft_strlen(tree->data)))
+		if (ft_strnstr("envpwdechoexitunset", tree->data, 
+					19) != NULL)
+		{
+			printf("tree data %s\n", tree->data);
 			ft_use_builtins(tree);
+		}
 		else
 			ft_exec_command(tree, pipe);
 	}

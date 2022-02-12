@@ -14,9 +14,14 @@
 
 void	ft_env(void)
 {
-	while (env)
+	t_list	**cpy;
+
+	cpy = ft_calloc(1, sizeof(void *));
+	*cpy = g_env;
+	while (*cpy)
 	{
-		printf("%s\n", (char *)env->content);
-		env = env->next;
+		printf("%s\n", (char *)(*cpy)->content);
+		*cpy = (*cpy)->next;
 	}
+	free(cpy);
 }

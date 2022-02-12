@@ -11,27 +11,44 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+#include <stdio.h>
+static int	check_possible_needle(const char *p, const char *n, size_t s, int i)
 {
-	size_t	i;
-	size_t	j;
-	size_t	ll;
+	int		f_size;
+	int		j;
+	size_t	index;
 
-	if (little[0] == 0)
-		return ((char *)big);
-	i = 0;
 	j = 0;
-	ll = ft_strlen(little);
-	while (big[i] && i < len)
+	index = i;
+	f_size = 0;
+	while (p[i] == n[j] && n[j] && p[i] && j + index < s)
 	{
-		while (i + j < len && little[j] && big[i + j] == little[j])
-			j++;
-		if (j == ll)
-			return (((char *) big) + i);
-		else
-			j = 0;
+		f_size++;
+		j++;
 		i++;
 	}
-	return (NULL);
+	return (f_size);
+}
+
+char	*ft_strnstr(const char	*str, const char *to_find, size_t len)
+{
+	size_t	i;
+	int		size;
+	char	*s;
+
+	if (to_find[0] == '\0')
+		return ((char *)str);
+	i = 0;
+	s = (char *) str;
+	size = (int) ft_strlen(to_find);
+	while (str[i] && i < len)
+	{
+		if (str[i] == to_find[0])
+		{
+			if (check_possible_needle(str, to_find, len, i) == size)
+				return ((char *)(str + i));
+		}
+		i++;
+	}
+	return (0);
 }
