@@ -18,43 +18,6 @@ char	**ft_return_cmd(t_ast *node, char *cmd)
 	return (sol);
 }
 
-void	ft_free_split(char **s)
-{
-	char	**str;
-
-	str = s;
-    while (*str)
-	{
-		free(*str);
-		str++;
-	}
-	free(s);
-}
-
-char	**ft_envmatrix()
-{
-	char	**environ;
-	int		i;
-	t_list	*cpy;
-
-	environ = ft_calloc(ft_lstsize(g_env) + 1, sizeof(char *));
-	i = 0;
-	if (!g_env)
-	{
-		free(environ);
-		return NULL;
-	}
-	cpy = g_env;
-	while (g_env)
-	{
-		environ[i++] = ft_strdup(g_env->content);
-		g_env = g_env->next;
-	}
-	environ[i]= NULL;
-	g_env = cpy;
-	return (environ);
-}
-
 void	ft_exec_command(t_ast *node, int pipeRedir)
 {
 	int		pid;
@@ -106,7 +69,7 @@ void	ft_exec_tree(t_ast *tree, int pipe)
 	if (tree->type == T_COMMAND_NODE)
 	{
 		if (ft_strnstr("envpwdechoexitunsetexport", tree->data, 
-					25) != NULL)
+					25) != NULL && valid_builtins(tree))
 		{
 			printf("tree data %s\n", tree->data);
 			ft_use_builtins(tree);

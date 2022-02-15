@@ -100,7 +100,9 @@ t_ast	**ft_generate_ast(t_list **tokens);
 //executor.c
 void	ft_exec_tree(t_ast *tree, int pipe);
 void	ft_free_split(char **s);
+char	**ft_envmatrix();
 
+int	valid_builtins(t_ast *tree);
 //binaries
 void	ft_use_builtins(t_ast *tree);
 void	ft_pwd(void);
