@@ -1,5 +1,4 @@
 #include <minishell.h>
-
 t_node_type	ft_map_types(t_token_type type)
 {
 	if (type == T_OUT_REDIR)
@@ -16,13 +15,11 @@ t_node_type	ft_map_types(t_token_type type)
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree)
 {
 	t_token	*actual;
-	int		pipe;
 
-	pipe = 0;
 	if (!*tree)
 		return (tokens);
 	ft_astadd_right(tree, ft_astnew(T_REDIR_NODE, NULL));
-	while (tokens && !pipe)
+	while (tokens && actual->type != T_PIPE)
 	{
 		actual = ((t_token *)tokens->content);
 		if (actual->type == T_ARGUMENT && (*tree)->data == NULL)

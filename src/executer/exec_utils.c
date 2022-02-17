@@ -60,7 +60,7 @@ int	valid_builtins(t_ast *tree)
 		return (1);
 	if (ft_strncmp(tree->data ,"export", 6))
 		return (1);
-	if (ft_strncmp(tree->data, "unset", 5) && vars)
+	if (ft_strncmp(tree->data, "unset", 5) && vars != NULL)
 		return (1);
 	if ((ft_strncmp(tree->data, "env", 3) || ft_strncmp(tree->data, "exit", 4)) 
 			&& !vars)

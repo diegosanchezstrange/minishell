@@ -17,20 +17,14 @@ int	valid_variable(char  *data)
 	return (0);
 }
 
-void	ft_unset(t_ast *tree)
+void	ft_removevar(char *data)
 {
 	t_list	**cpy;
 	t_list	*next;
-	char	*data;
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = g_env;
 	next = NULL;
-	if (!tree->left)
-		return ;
-	data = tree->left->data;
-	if (!valid_variable(data))
-		return ;
 	while ((*cpy)->next)
 	{
 		if (ft_strnstr((*cpy)->next->content, data, ft_strlen(data)))
@@ -44,4 +38,22 @@ void	ft_unset(t_ast *tree)
 	}
 	free(cpy);
 	free(next);
+}
+
+void	ft_unset(t_ast *tree)
+{
+	char	*data;
+	t_ast	*node;
+
+	if (!tree->left)
+		return ;
+	data = tree->left->data;
+	node = tree->left;
+	while (node)
+	{
+		ft_removevar(data);
+		node = node->right;
+		if (node)
+			data = node->data;
+	}
 }

@@ -34,6 +34,7 @@ char	*ft_get_path(char *arg)
 	}
 	return ("");
 }
+
 void	ft_cloneenv(void)
 {
 	int	i;
