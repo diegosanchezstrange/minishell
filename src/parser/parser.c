@@ -30,22 +30,23 @@ void	ft_structure_tree(t_list *tokens, t_ast **tree)
 	}
 }
 
-t_list	*ft_fill_tree(t_list *tokens, t_ast **tree)
+t_list	*ft_fill_tree(t_list **tokens, t_ast **tree)
 {
 	t_list	*current;
 
-	current = tokens;
+	current = *tokens;
 	if ((*tree)->type == T_PIPE_NODE)
 	{
 		printf("Filling PIPE : %s\n", ((t_token *)current->content)->data);
-		current = ft_fill_tree(current, &((*tree)->left));
-		printf("current : %s\n", ((t_token *)current->content)->data);
+		current = ft_fill_tree(&current, &((*tree)->left));
+		printf("current left : %s\n", ((t_token *)current->content)->data);
 		current = ft_fill_tree(current, &((*tree)->right));
-		printf("----------------------------\n");
+		printf("current right: %s\n", ((t_token *)current->content)->data);
+		//printf("----------------------------\n");
 	}
 	if ((*tree)->type == T_COMMAND_NODE)
 	{
-		printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
+		//printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
 		return (ft_fill_simple_command(current, tree));
 	}
 	return (tokens);

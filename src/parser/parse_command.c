@@ -19,9 +19,9 @@ t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree)
 	if (!*tree)
 		return (tokens);
 	ft_astadd_right(tree, ft_astnew(T_REDIR_NODE, NULL));
-	while (tokens && actual->type != T_PIPE)
+	actual = (t_token *)tokens->content;
+	while (tokens && actual && actual->type != T_PIPE)
 	{
-		actual = ((t_token *)tokens->content);
 		if (actual->type == T_ARGUMENT && (*tree)->data == NULL)
 			(*tree)->data = actual->data;
 		else if (actual->type == T_ARGUMENT && (*tree)->data != NULL)
@@ -31,6 +31,8 @@ t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree)
 		else if (actual->type == T_D_IN_REDIR || actual->type == T_IN_REDIR)
 			ft_astappend_l(&((*tree)->right),ft_astnew(ft_map_types(actual->type), actual->data));
 		tokens = tokens->next;
+		if (tokens)
+			actual = ((t_token *)tokens->content);
 	}
 	return (tokens);
 }

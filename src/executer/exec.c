@@ -91,7 +91,9 @@ void	ft_exec_tree(t_ast *tree, int pip)
 	{
 		printf("EJECUTANDO PIPE\n");
 		ft_exec_tree(tree->left, 1);
+		printf("first: %s\n", tree->left->data);
 		ft_exec_tree(tree->right, 0);
+		printf("second: %s\n", tree->right->data);
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
@@ -99,6 +101,7 @@ void	ft_exec_tree(t_ast *tree, int pip)
 		pipe(fd);
 		if (pid == 0)
 		{
+			printf("EJECUTANDO COMANDO\n");
 			close(fd[READ_END]);
 			fdesc = ft_getredir(tree->right->right, pip);
 			if (fdesc != 1)
@@ -119,7 +122,6 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			close(fd[READ_END]);
 			waitpid(pid, NULL, 0);
 		}
-
-		printf("tree data %s %i\n", tree->data, fdesc);
+		//printf("tree data %s %i\n", tree->data, fdesc);
 	}
 }
