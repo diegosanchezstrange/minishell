@@ -34,12 +34,10 @@ char	*ft_strnstr(const char	*str, const char *to_find, size_t len)
 {
 	size_t	i;
 	int		size;
-	char	*s;
 
 	if (to_find[0] == '\0')
 		return ((char *)str);
 	i = 0;
-	s = (char *) str;
 	size = (int) ft_strlen(to_find);
 	while (str[i] && i < len)
 	{

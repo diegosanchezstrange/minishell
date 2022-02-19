@@ -13,6 +13,9 @@
 #include <minishell.h>
 #include <readline/readline.h>
 
+t_list	*g_env;
+extern char	**environ;
+
 char	*ft_get_path(char *arg)
 {
 	char	*env;

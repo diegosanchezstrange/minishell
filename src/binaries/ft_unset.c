@@ -2,10 +2,8 @@
 
 int	valid_variable(char  *data)
 {
-	int	i;
 	t_list	*cpy;
 
-	i = 0;
 	cpy = g_env;
 	while (g_env)
 	{

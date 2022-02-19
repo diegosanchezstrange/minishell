@@ -14,8 +14,7 @@
 # define WRITE_END 1
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
-extern char **environ;
-t_list	*g_env;
+extern t_list	*g_env;
 typedef enum e_lex_states
 {
 	P_ERROR			= -1,
