@@ -17,7 +17,7 @@ void	ft_free_split(char **s)
 	char	**str;
 
 	str = s;
-    while (*str)
+	while (*str)
 	{
 		free(*str);
 		str++;
@@ -42,30 +42,31 @@ char	**ft_envmatrix()
 	*cpy = g_env;
 	while (*cpy)
 	{
-		environ[i++] = ft_strdup((*cpy)->content);
+		environ[i] = ft_strdup((*cpy)->content);
+		i++;
 		(*cpy) = (*cpy)->next;
 	}
 	environ[i]= NULL;
+	free(cpy);
 	return (environ);
 }
 
 int	valid_builtins(t_ast *tree)
 {
-	t_ast 	*vars;
+	t_ast	*vars;
 
 	vars = tree->left;
 	if (ft_strncmp(tree->data, "echo", 4))
 		return (1);
-	if (ft_strncmp(tree->data ,"pwd", 3) && !vars)
+	if (ft_strncmp(tree->data, "pwd", 3) && !vars)
 		return (1);
-	if (ft_strncmp(tree->data ,"export", 6))
+	if (ft_strncmp(tree->data, "export", 6))
 		return (1);
 	if (ft_strncmp(tree->data, "unset", 5) && vars != NULL)
 		return (1);
-	if ((ft_strncmp(tree->data, "env", 3) || ft_strncmp(tree->data, "exit", 4)) 
-			&& !vars)
+	if ((ft_strncmp(tree->data, "env", 3)
+			|| ft_strncmp(tree->data, "exit", 4)) && !vars)
 		return (1);
 	else
 		return (0);
 }
-

@@ -42,8 +42,8 @@ void	ft_cloneenv(void)
 {
 	int	i;
 
-	i = 1;
-	while(environ[i] != NULL)
+	i = 0;
+	while (environ[i] != NULL)
 		ft_lstadd_back(&g_env, ft_lstnew(ft_strdup(environ[i++])));
 }
 

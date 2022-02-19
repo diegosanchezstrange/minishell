@@ -18,6 +18,7 @@ void	ft_env(void)
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = g_env;
+	printf("START\n");
 	while (*cpy)
 	{
 		printf("%s\n", (char *)(*cpy)->content);
