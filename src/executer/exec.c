@@ -106,14 +106,19 @@ int	ft_getredir(t_ast *tree)
 	t_ast	**cpy;
 	int		fd;
 
-	fd = 1;
+	fd = 0;
 	if (!tree)
 		return (0);
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = tree;
 	while (*cpy)
 	{
-		fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if ((*cpy)->type == T_OUT_NODE)
+			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if ((*cpy)->type == T_DOUBLE_OUT_NODE)
+			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
+		if (fd == -1)
+			return (0);
 		(*cpy) = (*cpy)->right;
 	}
 	return (fd);
