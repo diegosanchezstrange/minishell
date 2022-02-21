@@ -132,14 +132,15 @@ void	ft_exec_tree(t_ast *tree, int pip)
 
 	if (tree->type == T_PIPE_NODE)
 	{
-		printf("EJECUTANDO PIPE\n");
+		//printf("EJECUTANDO PIPE\n");
 		ft_exec_tree(tree->left, 1);
-		printf("first: %s\n", tree->left->data);
+		//printf("first: %s\n", tree->left->data);
 		ft_exec_tree(tree->right, 0);
-		printf("second: %s\n", tree->right->data);
+		//printf("second: %s\n", tree->right->data);
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
+		//printf("CURRENT CMD: %s\n", tree->data);
 		pid = fork();
 		pipe(fd);
 		if (pid == 0)

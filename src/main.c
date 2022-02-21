@@ -107,6 +107,17 @@ void	ft_use_builtins(t_ast *tree)
 		ft_export(tree);
 }
 
+void	ft_free_tree(t_ast **tree)
+{
+	if (!*tree)
+		return ;
+	if ((*tree)->right)
+		ft_free_tree(&((*tree)->right));
+	if ((*tree)->left)
+		ft_free_tree(&((*tree)->left));
+	free(*tree);
+}
+
 int	main(void)
 {
 	t_list		**tokens;
@@ -120,6 +131,7 @@ int	main(void)
 	{
 		//my_signal();
 		status.data = readline(CYAN"$"NC" ");
+		tree = NULL;
 		if (status.data == NULL)
 		{
 			write(1, "exit", 5);
@@ -130,11 +142,15 @@ int	main(void)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		//ft_print_tokens_list(tokens);
+		ft_print_tokens_list(tokens);
 		if (tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
+		{
 			ft_exec_tree(*tree, 0);
+			ft_free_tree(tree);
+			free(tree);
+		}
 		ft_lstclear(tokens, ft_free_token);
 		free(tokens);
 	}

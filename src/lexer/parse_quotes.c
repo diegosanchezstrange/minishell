@@ -10,8 +10,8 @@ t_lex_states	ft_change_state(t_lex_states state, t_lex_states newState)
 
 void	ft_parse_quotes(char **token)
 {
-	int			i;
-	char		*new;
+	int				i;
+	char			*new;
 	t_lex_states	state;
 
 	i = 0;
