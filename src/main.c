@@ -142,7 +142,7 @@ int	main(void)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		ft_print_tokens_list(tokens);
+		//ft_print_tokens_list(tokens);
 		if (tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)

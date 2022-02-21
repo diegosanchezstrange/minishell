@@ -34,5 +34,7 @@ t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree)
 		if (tokens)
 			actual = ((t_token *)tokens->content);
 	}
+	if (actual->type == T_PIPE)
+		tokens = tokens->next;
 	return (tokens);
 }
