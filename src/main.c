@@ -134,6 +134,7 @@ int	main(void)
 		tree = NULL;
 		if (status.data == NULL)
 		{
+			printf("ke\n");
 			write(1, "exit", 5);
 			exit(0);
 		}

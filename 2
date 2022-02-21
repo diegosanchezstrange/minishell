@@ -94,7 +94,7 @@ void	ft_exec_command(t_ast *node)
 		return ;
 	environ = ft_envmatrix();
 	cmd = ft_return_cmd(node->left, node->data);
-	//printf("command %s\n", cmd[1]);
+	printf("command %s\n", cmd[1]);
 	execve(ft_getpath(environ, cmd[0]), cmd, environ);
 	perror(cmd[0]);
 	ft_free_split(environ);
@@ -141,14 +141,18 @@ void	ft_exec_tree(t_ast *tree, int pip)
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
-		//printf("CURRENT CMD: %s %i \n", tree->data, pip);
-		pipe(fd);
+		printf("CURRENT CMD: %s %i \n", tree->data, pip);
 		pid = fork();
+		pipe(fd);
 		if (pid == 0)
 		{
+			printf("PIP %i\n", pip);
 			close(fd[READ_END]);
 			if (pip == 1)
+			{
 				dup2(fd[WRITE_END], 1);
+				printf("traza\n");
+			}
 			close(fd[WRITE_END]);
 			fdesc = ft_getredir(tree->right->right);
 			if (fdesc)
@@ -164,7 +168,6 @@ void	ft_exec_tree(t_ast *tree, int pip)
 		}
 		else
 		{
-			printf("ending command %i\n", pip);
 			close(fd[WRITE_END]);
 			if (pip)
 				dup2(fd[READ_END], 0);
