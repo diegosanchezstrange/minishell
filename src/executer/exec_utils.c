@@ -6,24 +6,11 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:13:52 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/15 21:08:39 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/02/22 20:53:56 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	ft_free_split(char **s)
-{
-	char	**str;
-
-	str = s;
-	while (*str)
-	{
-		free(*str);
-		str++;
-	}
-	free(s);
-}
 
 char	**ft_envmatrix()
 {
@@ -51,21 +38,38 @@ char	**ft_envmatrix()
 	return (environ);
 }
 
+void	ft_use_builtins(t_ast *tree)
+{
+	if (ft_strncmp(tree->data, "pwd", 3) == 0)
+	{
+		ft_pwd(); printf("trazaaaaa\n");}
+	else if (ft_strncmp(tree->data, "echo", 4) == 0)
+		ft_echo(tree);
+	else if (ft_strncmp(tree->data, "exit", 4) == 0)
+		ft_exit();
+	else if (ft_strncmp(tree->data, "env", 3) == 0)
+		ft_env();
+	else if (ft_strncmp(tree->data, "unset", 5) == 0)
+		ft_unset(tree);
+	else if (ft_strncmp(tree->data, "export", 5) == 0)
+		ft_export(tree);
+}
+
 int	valid_builtins(t_ast *tree)
 {
 	t_ast	*vars;
 
 	vars = tree->left;
-	if (ft_strncmp(tree->data, "echo", 4))
+	if (!ft_strncmp(tree->data, "echo", 4))
 		return (1);
-	if (ft_strncmp(tree->data, "pwd", 3) && !vars)
+	if (!ft_strncmp(tree->data, "pwd", 3))
 		return (1);
-	if (ft_strncmp(tree->data, "export", 6))
+	if (!ft_strncmp(tree->data, "export", 6))
 		return (1);
-	if (ft_strncmp(tree->data, "unset", 5) && vars != NULL)
+	if (!ft_strncmp(tree->data, "unset", 5) && vars != NULL)
 		return (1);
-	if ((ft_strncmp(tree->data, "env", 3)
-			|| ft_strncmp(tree->data, "exit", 4)) && !vars)
+	if ((!ft_strncmp(tree->data, "env", 3)
+			|| !ft_strncmp(tree->data, "exit", 4)) && !vars)
 		return (1);
 	else
 		return (0);

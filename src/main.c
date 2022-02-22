@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/02 21:37:30 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/02/22 20:54:44 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <readline/readline.h>
 
 t_list	*g_env;
-extern char	**environ;
 
 char	*ft_get_path(char *arg)
 {
@@ -38,7 +37,7 @@ char	*ft_get_path(char *arg)
 	return ("");
 }
 
-void	ft_cloneenv(void)
+void	ft_cloneenv(char **environ)
 {
 	int	i;
 
@@ -67,15 +66,6 @@ void	ft_print_tokens_list(t_list **tokens)
 	free(pointer);
 }
 
-void	ft_free_token(void *t)
-{
-	t_token	*token;
-
-	token = (t_token *)t;
-	free(token->data);
-	free(token);
-}
-
 /*void	my_prompt(int n)
 {
 	n = 0;
@@ -91,50 +81,37 @@ void my_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }*/
-void	ft_use_builtins(t_ast *tree)
+
+void	ft_process(t_ast **tree)
 {
-	if (ft_strncmp(tree->data, "pwd", 3) == 0)
-		ft_pwd();
-	else if (ft_strncmp(tree->data, "echo", 4) == 0)
-		ft_echo(tree);
-	else if (ft_strncmp(tree->data, "exit", 4) == 0)
-		ft_exit();
-	else if (ft_strncmp(tree->data, "env", 3) == 0)
-		ft_env();
-	else if (ft_strncmp(tree->data, "unset", 5) == 0)
-		ft_unset(tree);
-	else if (ft_strncmp(tree->data, "export", 5) == 0)
-		ft_export(tree);
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		ft_exec_tree(*tree, 0);
+		exit(0);
+	}
+	else 
+		waitpid(pid, NULL, 0);
 }
 
-void	ft_free_tree(t_ast **tree)
-{
-	if (!*tree)
-		return ;
-	if ((*tree)->right)
-		ft_free_tree(&((*tree)->right));
-	if ((*tree)->left)
-		ft_free_tree(&((*tree)->left));
-	free(*tree);
-}
-
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_list		**tokens;
 	t_ast		**tree;
-	int			state;
 	t_pstatus	status;
 
-	state = 1;
-	ft_cloneenv();
-	while (state)
+	ft_cloneenv(envp);
+	argc = 0;
+	argv = NULL;
+	while (1)
 	{
 		//my_signal();
 		status.data = readline(CYAN"$"NC" ");
 		tree = NULL;
 		if (status.data == NULL)
 		{
-			printf("ke\n");
 			write(1, "exit", 5);
 			exit(0);
 		}
@@ -147,11 +124,9 @@ int	main(void)
 		if (tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
-		{
-			ft_exec_tree(*tree, 0);
-			ft_free_tree(tree);
-			free(tree);
-		}
+			ft_process(tree);
+		ft_free_tree(tree);
+		free(tree);
 		ft_lstclear(tokens, ft_free_token);
 		free(tokens);
 	}

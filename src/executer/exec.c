@@ -1,4 +1,5 @@
 #include <minishell.h>
+#include <errno.h>
 
 char	*ft_strjoin_path(char *path, char *cmd)
 {
@@ -39,34 +40,6 @@ char	*ft_getpath(char **envp, char *cmd)
 	return ("");
 }
 
-/*char	*ft_getpath(char **envp, char *cmd)
-{
-	int		i;
-	char	**dirs;
-	char	*slash;
-
-	i = 0;
-	if (!access(cmd, F_OK))
-		return (cmd);
-	while (*envp)
-	{
-		if (ft_strncmp(*envp, "PATH", 4) == 0)
-			break ;
-		envp++;
-	}
-	if (!*envp)
-		return (cmd);
-	*envp += 5;
-	dirs = ft_split(*envp, ':');
-	slash = ft_strjoin("/", cmd);
-	i = 0;
-	while (dirs[i] && access(ft_strjoin(dirs[i], slash), F_OK))
-		i++;
-	if (!dirs[i])
-		return ("");
-	return (ft_strjoin(dirs[i], slash));
-}*/
-
 char	**ft_return_cmd(t_ast *node, char *cmd)
 {
 	char	**sol;
@@ -94,7 +67,6 @@ void	ft_exec_command(t_ast *node)
 		return ;
 	environ = ft_envmatrix();
 	cmd = ft_return_cmd(node->left, node->data);
-	//printf("command %s\n", cmd[1]);
 	execve(ft_getpath(environ, cmd[0]), cmd, environ);
 	perror(cmd[0]);
 	ft_free_split(environ);
@@ -141,7 +113,6 @@ void	ft_exec_tree(t_ast *tree, int pip)
 	}
 	if (tree->type == T_COMMAND_NODE)
 	{
-		//printf("CURRENT CMD: %s %i \n", tree->data, pip);
 		pipe(fd);
 		pid = fork();
 		if (pid == 0)
@@ -154,7 +125,7 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			if (fdesc)
 				dup2(fdesc, 1);
 			if (ft_strnstr("envpwdechoexitunsetexport", tree->data,
-						25) != NULL && valid_builtins(tree))
+						25) != NULL && valid_builtins(tree) == 1)
 			{
 				ft_use_builtins(tree);
 				exit(0);
@@ -164,7 +135,6 @@ void	ft_exec_tree(t_ast *tree, int pip)
 		}
 		else
 		{
-			printf("ending command %i\n", pip);
 			close(fd[WRITE_END]);
 			if (pip)
 				dup2(fd[READ_END], 0);

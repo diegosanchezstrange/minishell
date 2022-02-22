@@ -76,6 +76,10 @@ void	ft_extend_vars(char **token);
 // utils
 void	ft_skip_spaces(t_pstatus *status);
 char	**ft_resize_tokens(int num, char **tokens);
+void	ft_free_split(char **s);
+void	ft_free_tree(t_ast **tree);
+void	ft_free_token(void *t);
+void	ft_free_split(char **s);
 
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
@@ -99,7 +103,6 @@ t_ast	**ft_generate_ast(t_list **tokens);
 
 //executor.c
 void	ft_exec_tree(t_ast *tree, int pipe);
-void	ft_free_split(char **s);
 char	**ft_envmatrix();
 
 int	valid_builtins(t_ast *tree);
