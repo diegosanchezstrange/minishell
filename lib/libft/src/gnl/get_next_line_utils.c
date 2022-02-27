@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char const *s)
+size_t	ft_strlen_gnl(char const *s)
 {
 	size_t	len;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char const *s)
 	return (len);
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+void	*ft_memmove_gnl(void *dest, const void *src, size_t n)
 {
 	unsigned char	*cdest;
 	unsigned char	*csrc;
@@ -59,16 +59,16 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	int		s2_l;
 	int		s_l;
 
-	s1_l = ft_strlen(s1);
-	s2_l = ft_strlen(s2);
+	s1_l = ft_strlen_gnl(s1);
+	s2_l = ft_strlen_gnl(s2);
 	s_l = s1_l + s2_l;
 	if ((!s1 && !s2) || s_l == 0)
 		return (NULL);
 	res = (char *) malloc(s_l + 1);
 	if (!res)
 		return (NULL);
-	ft_memmove(res, s1, s1_l);
-	ft_memmove(res + s1_l, s2, s2_l);
+	ft_memmove_gnl(res, s1, s1_l);
+	ft_memmove_gnl(res + s1_l, s2, s2_l);
 	res[s_l] = 0;
 	free(s1);
 	return (res);

@@ -74,6 +74,44 @@ void	ft_exec_command(t_ast *node)
 	exit(1);
 }
 
+void	ft_pipe_here_doc(char *delimiter)
+{
+	char	*line;
+	int		fd[2];
+	int		pid;
+	size_t	l;
+
+	pipe(fd);
+	l = 0;
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[READ_END]);
+		while (1)
+		{
+			line = get_next_line(0);
+			l = ft_strlen(line);
+			if (l)
+				line[l - 1] = 0;
+			if (l < ft_strlen(delimiter))
+				l = ft_strlen(delimiter);
+			if (ft_strncmp(line, delimiter, l) == 0)
+				break ;
+			write(fd[WRITE_END], line, ft_strlen(line));
+			free(line);
+		}
+		free(line);
+		exit(0);
+	}
+	else
+	{
+		close(fd[WRITE_END]);
+		dup2(fd[READ_END], 0);
+		close(fd[READ_END]);
+		waitpid(pid, NULL, 0);
+	}
+}
+
 int	ft_getredir(t_ast *tree, int io)
 {
 	t_ast	**cpy;
@@ -88,12 +126,18 @@ int	ft_getredir(t_ast *tree, int io)
 	{
 		if ((*cpy)->type == T_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if ((*cpy)->type == T_DOUBLE_OUT_NODE)
+		if ((*cpy)->type == T_DOUBLE_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
 		if ((*cpy)->type == T_IN_NODE && io == 1)
 			fd = open((*cpy)->data, O_RDONLY , 0644);
+		if ((*cpy)->type == T_DOUBLE_IN_NODE && io == 1)
+		{
+			ft_pipe_here_doc((*cpy)->data);
+			fd = 0;
+		}
 		if (fd == -1)
 			return (0);
+		//printf("TRAZA\n");
 		(*cpy) = (*cpy)->right;
 	}
 	return (fd);
@@ -126,7 +170,7 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			fdesc = ft_getredir(tree->right->right, 0);
 			if (fdesc)
 				dup2(fdesc, 1);
-			fdesc = ft_getredir(tree->right->right, 1);
+			fdesc = ft_getredir(tree->right->left, 1);
 			if (fdesc)
 				dup2(fdesc, 0);
 			if (ft_strnstr("envpwdechoexitunsetexport", tree->data,

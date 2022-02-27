@@ -69,7 +69,7 @@ char	*get_line(char *line)
 		l++;
 	if (line[l] == '\n')
 		l++;
-	nline = malloc(ft_strlen(line) - l + 1);
+	nline = malloc(ft_strlen_gnl(line) - l + 1);
 	while (line[l])
 		nline[i++] = line[l++];
 	nline[i] = 0;

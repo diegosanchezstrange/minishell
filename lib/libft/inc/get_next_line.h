@@ -17,7 +17,7 @@
 # include <stdlib.h>
 
 char	*ft_strjoin_gnl(char *s1, char *s2);
-size_t	ft_strlen(char const *s);
+size_t	ft_strlen_gnl(char const *s);
 char	*get_next_line(int fd);
 
 #endif
