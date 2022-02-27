@@ -73,7 +73,6 @@ int	ft_validate_redirs(t_pstatus *status, int *start)
 		i++;
 	status->curr = i - 1;
 	*start = i;
-	printf("TRAZA : ---%s---\n", status->data + status->curr);
 	return (0);
 }
 
@@ -155,11 +154,6 @@ char	*ft_get_token(t_pstatus **status)
 	start = (*status)->curr;
 	while ((*status)->data[(*status)->curr])
 	{
-		/*if (start == (*status)->curr && (*status)->type != T_ARGUMENT)
-		{
-			ft_skip_spaces(*status);
-			start = (*status)->curr;
-		}*/
 		val = ft_check_token_end(*status, &start);
 		if (val == 1)
 			break ;
@@ -202,8 +196,11 @@ t_list	**ft_get_tokens(t_pstatus *status)
 			ft_lstadd_back(tokens, ft_lstnew(new));
 		actual = ft_get_token(&status);
 	}
+	//if (new->type == T_PIPE)
+	//	status->error = 1;
 	if (status->error)
 	{
+		printf("TRAZA\n");
 		ft_lstclear(tokens, free);
 		return (NULL);
 	}

@@ -66,13 +66,15 @@ void	ft_print_tokens_list(t_list **tokens)
 	free(pointer);
 }
 
-/*void	my_prompt(int n)
+void	my_prompt(int n)
 {
-	n = 0;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (n == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void my_signal(void)
@@ -80,7 +82,7 @@ void my_signal(void)
 
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
-}*/
+}
 
 void	ft_process(t_ast **tree)
 {
@@ -103,11 +105,11 @@ int	main(int argc, char **argv, char **envp)
 	t_pstatus	status;
 
 	ft_cloneenv(envp);
-	argc = 0;
-	argv = NULL;
+	if (argc > 1 || argv[1])
+		return (1);
 	while (1)
 	{
-		//my_signal();
+		my_signal();
 		status.data = readline(CYAN"$"NC" ");
 		tree = NULL;
 		if (status.data == NULL)
@@ -124,8 +126,10 @@ int	main(int argc, char **argv, char **envp)
 		if (tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
+		{
 			ft_process(tree);
-		ft_free_tree(tree);
+			ft_free_tree(tree);
+		}
 		free(tree);
 		ft_lstclear(tokens, ft_free_token);
 		free(tokens);
