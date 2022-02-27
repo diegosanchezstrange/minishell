@@ -74,7 +74,7 @@ void	ft_exec_command(t_ast *node)
 	exit(1);
 }
 
-int	ft_getredir(t_ast *tree)
+int	ft_getredir(t_ast *tree, int io)
 {
 	t_ast	**cpy;
 	int		fd;
@@ -86,10 +86,12 @@ int	ft_getredir(t_ast *tree)
 	*cpy = tree;
 	while (*cpy)
 	{
-		if ((*cpy)->type == T_OUT_NODE)
+		if ((*cpy)->type == T_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if ((*cpy)->type == T_DOUBLE_OUT_NODE)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
+		if ((*cpy)->type == T_IN_NODE && io == 1)
+			fd = open((*cpy)->data, O_RDONLY , 0644);
 		if (fd == -1)
 			return (0);
 		(*cpy) = (*cpy)->right;
@@ -121,9 +123,12 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			if (pip == 1)
 				dup2(fd[WRITE_END], 1);
 			close(fd[WRITE_END]);
-			fdesc = ft_getredir(tree->right->right);
+			fdesc = ft_getredir(tree->right->right, 0);
 			if (fdesc)
 				dup2(fdesc, 1);
+			fdesc = ft_getredir(tree->right->right, 1);
+			if (fdesc)
+				dup2(fdesc, 0);
 			if (ft_strnstr("envpwdechoexitunsetexport", tree->data,
 						25) != NULL && valid_builtins(tree) == 1)
 			{
