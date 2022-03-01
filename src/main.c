@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/22 20:54:44 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/01 21:19:13 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_print_tokens_list(t_list **tokens)
 	printf("------------------- TOKENS -------------------\n");
 	free(pointer);
 }
-/*
+
 void	my_prompt(int n)
 {
 	if (n == SIGINT)
@@ -82,7 +82,6 @@ void my_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }
-*/
 
 void	ft_process(t_ast **tree)
 {
@@ -95,7 +94,12 @@ void	ft_process(t_ast **tree)
 		exit(0);
 	}
 	else 
+	{
+		signal(SIGINT, SIG_IGN); 
 		waitpid(pid, NULL, 0);
+		signal(SIGINT, my_prompt);
+	}
+
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -109,8 +113,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-//		my_signal();
-		status.data = readline(CYAN"$"NC" ");
+		my_signal();
+		status.data = readline("$ ");
 		tree = NULL;
 		if (status.data == NULL)
 		{

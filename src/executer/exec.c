@@ -46,8 +46,7 @@ char	**ft_return_cmd(t_ast *node, char *cmd)
 	int		i;
 
 	sol = ft_calloc(sizeof(char *), ft_astsize_r(node) + 2);
-	sol[0] = cmd;
-	i = 1;
+	sol[0] = cmd; i = 1;
 	while (node)
 	{
 		sol[i] = node->data;
@@ -124,6 +123,8 @@ int	ft_getredir(t_ast *tree, int io)
 	*cpy = tree;
 	while (*cpy)
 	{
+		printf("FILE : %s\n", (*cpy)->data);
+		printf("FILE R : %s\n", (*cpy)->left->data);
 		if ((*cpy)->type == T_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if ((*cpy)->type == T_DOUBLE_OUT_NODE && io == 0)
@@ -142,7 +143,27 @@ int	ft_getredir(t_ast *tree, int io)
 	}
 	return (fd);
 }
+static void	sig_ignore(void)
+{
+	signal(SIGINT, SIG_IGN);
+}
 
+static void	my_prompt(int n)
+{
+	if (n == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+static void my_signal(void)
+{
+
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, my_prompt);
+}
 void	ft_exec_tree(t_ast *tree, int pip)
 {
 	int	fdesc;
@@ -163,6 +184,7 @@ void	ft_exec_tree(t_ast *tree, int pip)
 		pid = fork();
 		if (pid == 0)
 		{
+			my_signal();
 			close(fd[READ_END]);
 			if (pip == 1)
 				dup2(fd[WRITE_END], 1);
@@ -184,6 +206,7 @@ void	ft_exec_tree(t_ast *tree, int pip)
 		}
 		else
 		{
+			sig_ignore();
 			close(fd[WRITE_END]);
 			if (pip)
 				dup2(fd[READ_END], 0);
