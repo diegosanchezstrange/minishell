@@ -83,6 +83,7 @@ void my_signal(void)
 	signal(SIGINT, my_prompt);
 }
 
+
 void	ft_process(t_ast **tree)
 {
 	int	pid;
@@ -94,12 +95,7 @@ void	ft_process(t_ast **tree)
 		exit(0);
 	}
 	else 
-	{
-		signal(SIGINT, SIG_IGN); 
 		waitpid(pid, NULL, 0);
-		signal(SIGINT, my_prompt);
-	}
-
 }
 
 int	main(int argc, char **argv, char **envp)
