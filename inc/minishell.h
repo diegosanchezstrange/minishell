@@ -102,7 +102,7 @@ t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
 
 //executor.c
-void	ft_exec_tree(t_ast *tree, int pipe);
+void	ft_exec_tree(t_ast *tree, int pipe, int *l_pid);
 char	**ft_envmatrix();
 
 int	valid_builtins(t_ast *tree);

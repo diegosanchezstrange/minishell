@@ -154,7 +154,7 @@ void	sig_child(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-void	ft_exec_tree(t_ast *tree, int pip)
+void	ft_exec_tree(t_ast *tree, int pip, int *l_pid)
 {
 	int	fdesc;
 	int	pid;
@@ -163,9 +163,9 @@ void	ft_exec_tree(t_ast *tree, int pip)
 	if (tree->type == T_PIPE_NODE)
 	{
 		//printf("EJECUTANDO PIPE\n");
-		ft_exec_tree(tree->left, 1);
+		ft_exec_tree(tree->left, 1, l_pid);
 		//printf("first: %s\n", tree->left->data);
-		ft_exec_tree(tree->right, 0);
+		ft_exec_tree(tree->right, 0, l_pid);
 		//printf("second: %s\n", tree->right->data);
 	}
 	if (tree->type == T_COMMAND_NODE)
@@ -208,7 +208,8 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			if (pip)
 				dup2(fd[READ_END], 0);
 			close(fd[READ_END]);
-			waitpid(pid, NULL, 0);
+			*l_pid = pid;
+			printf("PID %s: %d\n",tree->data ,pid);
 		}
 	}
 }

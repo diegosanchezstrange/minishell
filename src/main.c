@@ -87,15 +87,23 @@ void my_signal(void)
 void	ft_process(t_ast **tree)
 {
 	int	pid;
+	int	*l_pid;
 
+	l_pid = ft_calloc(1, sizeof(int));
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_exec_tree(*tree, 0);
+		ft_exec_tree(*tree, 0, l_pid);
+		printf("L_PID : %d\n", *l_pid);
+		waitpid(*l_pid, NULL, 0);
+		free(l_pid);
 		exit(0);
 	}
 	else 
+	{
 		waitpid(pid, NULL, 0);
+		free(l_pid);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
