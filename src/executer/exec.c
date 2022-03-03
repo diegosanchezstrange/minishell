@@ -182,10 +182,16 @@ void	ft_exec_tree(t_ast *tree, int pip)
 			close(fd[WRITE_END]);
 			fdesc = ft_getredir(tree->right->right, 0);
 			if (fdesc)
+			{
 				dup2(fdesc, 1);
+				close(fdesc);
+			}
 			fdesc = ft_getredir(tree->right->left, 1);
 			if (fdesc)
+			{
 				dup2(fdesc, 0);
+				close(fdesc);
+			}
 			if (ft_strnstr("envpwdechoexitunsetexport", tree->data,
 						25) != NULL && valid_builtins(tree) == 1)
 			{
