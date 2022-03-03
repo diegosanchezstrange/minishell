@@ -4,7 +4,7 @@ CC		= gcc
 
 CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
-SRCS_MAIN	= main.c frees.c
+SRCS_MAIN	= main.c frees.c signals.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 

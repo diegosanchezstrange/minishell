@@ -15,28 +15,6 @@
 
 t_list	*g_env;
 
-char	*ft_get_path(char *arg)
-{
-	char	*env;
-	char	**path;
-	char	*command;
-
-	if (access(arg, F_OK) == 0)
-		return (arg);
-	env = getenv("PATH");
-	if (!env)
-		return ("");
-	path = ft_split(env, ':');
-	while (*path)
-	{
-		command = ft_strjoin(*path, ft_strjoin("/", arg));
-		if (access(command, F_OK) == 0)
-			return (command);
-		path++;
-	}
-	return ("");
-}
-
 void	ft_cloneenv(char **environ)
 {
 	int	i;
@@ -66,24 +44,6 @@ void	ft_print_tokens_list(t_list **tokens)
 	free(pointer);
 }
 
-void	my_prompt(int n)
-{
-	if (n == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-void my_signal(void)
-{
-
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, my_prompt);
-}
-
-
 void	ft_process(t_ast **tree)
 {
 	int	pid;
@@ -94,7 +54,6 @@ void	ft_process(t_ast **tree)
 	if (pid == 0)
 	{
 		ft_exec_tree(*tree, 0, l_pid);
-		printf("L_PID : %d\n", *l_pid);
 		waitpid(*l_pid, NULL, 0);
 		free(l_pid);
 		exit(0);
@@ -130,17 +89,12 @@ int	main(int argc, char **argv, char **envp)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		//ft_print_tokens_list(tokens);
-		if (tokens)
+		ft_print_tokens_list(tokens);
+		if (*tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
-		{
 			ft_process(tree);
-			ft_free_tree(tree);
-		}
-		free(tree);
-		ft_lstclear(tokens, ft_free_token);
-		free(tokens);
+		ft_free_all(tree, tokens);
 	}
 	return (0);
 }

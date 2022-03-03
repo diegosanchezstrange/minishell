@@ -136,22 +136,9 @@ int	ft_getredir(t_ast *tree, int io)
 		}
 		if (fd == -1)
 			return (0);
-		//printf("TRAZA\n");
 		(*cpy) = (*cpy)->right;
 	}
 	return (fd);
-}
-
-static void	sig_ignore(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	sig_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 }
 
 void	ft_exec_tree(t_ast *tree, int pip, int *l_pid)
@@ -174,7 +161,6 @@ void	ft_exec_tree(t_ast *tree, int pip, int *l_pid)
 		pid = fork();
 		if (pid == 0)
 		{
-			//my_signal();
 			sig_child();
 			close(fd[READ_END]);
 			if (pip == 1)
@@ -209,7 +195,6 @@ void	ft_exec_tree(t_ast *tree, int pip, int *l_pid)
 				dup2(fd[READ_END], 0);
 			close(fd[READ_END]);
 			*l_pid = pid;
-			printf("PID %s: %d\n",tree->data ,pid);
 		}
 	}
 }

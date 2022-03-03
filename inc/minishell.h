@@ -14,7 +14,9 @@
 # define WRITE_END 1
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
+
 extern t_list	*g_env;
+
 typedef enum e_lex_states
 {
 	P_ERROR			= -1,
@@ -76,10 +78,18 @@ void	ft_extend_vars(char **token);
 // utils
 void	ft_skip_spaces(t_pstatus *status);
 char	**ft_resize_tokens(int num, char **tokens);
+
+//frees.c
 void	ft_free_split(char **s);
 void	ft_free_tree(t_ast **tree);
 void	ft_free_token(void *t);
 void	ft_free_split(char **s);
+void	ft_free_all(t_ast **tree, t_list **tokens);
+
+//signas.c
+void	my_signal(void);
+void	sig_ignore(void);
+void	sig_child(void);
 
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
