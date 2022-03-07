@@ -65,7 +65,7 @@ void	ft_print_tokens_list(t_list **tokens)
 	printf("------------------- TOKENS -------------------\n");
 	free(pointer);
 }
-/*
+
 void	my_prompt(int n)
 {
 	if (n == SIGINT)
@@ -82,7 +82,7 @@ void my_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }
-*/
+
 
 void	ft_process(t_ast **tree)
 {
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-//		my_signal();
+		my_signal();
 		status.data = readline(CYAN"$"NC" ");
 		tree = NULL;
 		if (status.data == NULL)

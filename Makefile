@@ -2,7 +2,7 @@ NAME	= minishell
 
 CC		= gcc
 
-CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address 
 
 SRCS_MAIN	= main.c frees.c
 
@@ -47,9 +47,9 @@ RM		= rm -rf
 
 OS		:= $(shell uname -s)
 
-LIB_LNK	= -L ${LIBFT}
+LIB_LNK	= -L ${LIBFT} -L /opt/homebrew/opt/readline/lib
 
-INCLUDES = -I${LIBFT}inc -Iinc
+INCLUDES = -I${LIBFT}inc -Iinc -I/opt/homebrew/opt/readline/include
 
 all: ${NAME}
 
@@ -57,7 +57,7 @@ run: all
 	./minishell
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
-	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@ 
+	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 $(NAME): ${LIBFT_NAME} ${OBJS_DIRS} ${OBJS_PATHS} 
 	${CC} ${CFLAGS} ${LIB_LNK} ${OBJS_PATHS} -o ${NAME} -lft -lreadline
