@@ -111,11 +111,15 @@ int		ft_astsize_r(t_ast *node);
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
 
+// here_doc.c
+void	ft_process_here_doc(t_ast **tree);
+
 //executor.c
 void	ft_exec_tree(t_ast *tree, int pipe, int *l_pid);
 char	**ft_envmatrix();
 
-int	valid_builtins(t_ast *tree);
+int		valid_builtins(t_ast *tree);
+
 //binaries
 void	ft_use_builtins(t_ast *tree);
 void	ft_pwd(void);
@@ -124,4 +128,5 @@ void	ft_exit(void);
 void    ft_env(void);
 void	ft_unset(t_ast *tree);
 void	ft_export(t_ast *tree);
+
 #endif

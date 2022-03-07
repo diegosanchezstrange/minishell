@@ -129,11 +129,6 @@ int	ft_getredir(t_ast *tree, int io)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
 		if ((*cpy)->type == T_IN_NODE && io == 1)
 			fd = open((*cpy)->data, O_RDONLY , 0644);
-		if ((*cpy)->type == T_DOUBLE_IN_NODE && io == 1)
-		{
-			ft_pipe_here_doc((*cpy)->data);
-			fd = 0;
-		}
 		if (fd == -1)
 			return (0);
 		(*cpy) = (*cpy)->right;

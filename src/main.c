@@ -7,12 +7,11 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
 /*   Updated: 2022/03/01 21:19:13 by dsanchez         ###   ########.fr       */
-/*                                                                            */
+/*                                                                            */ 
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <readline/readline.h>
-
 t_list	*g_env;
 
 void	ft_cloneenv(char **environ)
@@ -53,6 +52,7 @@ void	ft_process(t_ast **tree)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_process_here_doc(tree);
 		ft_exec_tree(*tree, 0, l_pid);
 		waitpid(*l_pid, NULL, 0);
 		free(l_pid);
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 			tree = ft_generate_ast(tokens);
 		if (tree)
 			ft_process(tree);
+		free(status.data);
 		ft_free_all(tree, tokens);
 	}
 	return (0);
