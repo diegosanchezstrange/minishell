@@ -1,36 +1,48 @@
 #include <minishell.h>
 
+char	*get_name(int i)
+{
+	char	*num;
+	char	*name;
+	char	*tmp;
+
+	num = ft_itoa(i);
+	tmp = ft_strjoin(num, ".tmp");
+	name = ft_strjoin(".", tmp);
+	free(num);
+	free(tmp);
+	return (name);
+}
+
 char	*ft_open_tmp(int	*fd)
 {
 	int		i;
-	char	*num;
 	char	*name;
 
 	i = 0;
 	while (i++ < 1000)
 	{
-		num = ft_itoa(i);
-		name = ft_strjoin(num, ".tmp");
+		name = get_name(i);
 		if (access(name, F_OK) == 0)
+		{
+			free(name);
 			continue ;
+		}
 		*fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (*fd != -1)
 			break ;
 		else
 		{
 			free(name);
-			free(num);
 			return (NULL);
 		}
 	}
-	free(num);
 	return (name);
 }
 
 void	ft_write_here_doc(t_ast *node)
 {
 	char	*line;
-	size_t	l;
 	int		*fd;
 	char	*name;
 
@@ -38,20 +50,15 @@ void	ft_write_here_doc(t_ast *node)
 	name = ft_open_tmp(fd);
 	while (1)
 	{
-		line = get_next_line(0);
-		l = ft_strlen(line);
-		if (l)
-			line[l - 1] = 0;
-		if (l < ft_strlen(node->data))
-			l = ft_strlen(node->data);
-		if (ft_strncmp(line, node->data, l) == 0)
+		line = readline("> ");
+		if (ft_strlen(line) == ft_strlen(node->data) 
+				&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
 			break ;
-		write(*fd, line, ft_strlen(line));
+		ft_putendl_fd(line, *fd);
 		free(line);
 	}
 	close(*fd);
 	node->data = name;
-	node->type = T_IN_NODE;
 	free(line);
 	free(fd);
 }

@@ -37,7 +37,7 @@ char	*ft_getpath(char **envp, char *cmd)
 		path++;
 	}
 	ft_free_split(tmp);
-	return ("");
+	return (NULL);
 }
 
 char	**ft_return_cmd(t_ast *node, char *cmd)
@@ -60,17 +60,23 @@ char	**ft_return_cmd(t_ast *node, char *cmd)
 void	ft_exec_command(t_ast *node)
 {
 	char	**cmd;
+	char	*path;
 	char	**environ;
+	int		ret;
 
 	if (!node)
 		return ;
+	ret = EXIT_FAILURE;
 	environ = ft_envmatrix();
 	cmd = ft_return_cmd(node->left, node->data);
-	execve(ft_getpath(environ, cmd[0]), cmd, environ);
+	path = ft_getpath(environ, cmd[0]);
+	if (!path)
+		ret = 127;
+	execve(cmd[0], cmd, environ);
 	perror(cmd[0]);
 	ft_free_split(environ);
 	ft_free_split(cmd);
-	exit(1);
+	exit(ret);
 }
 
 void	ft_pipe_here_doc(char *delimiter)
@@ -127,11 +133,15 @@ int	ft_getredir(t_ast *tree, int io)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if ((*cpy)->type == T_DOUBLE_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if ((*cpy)->type == T_IN_NODE && io == 1)
+		if (((*cpy)->type == T_IN_NODE || (*cpy)->type == T_DOUBLE_IN_NODE) 
+				&& io == 1)
 			fd = open((*cpy)->data, O_RDONLY , 0644);
 		if (fd == -1)
 			return (0);
-		(*cpy) = (*cpy)->right;
+		if (io == 0)
+			(*cpy) = (*cpy)->right;
+		else if (io == 1)
+			(*cpy) = (*cpy)->left;
 	}
 	return (fd);
 }

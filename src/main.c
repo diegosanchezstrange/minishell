@@ -43,26 +43,55 @@ void	ft_print_tokens_list(t_list **tokens)
 	free(pointer);
 }
 
-void	ft_process(t_ast **tree)
+void	ft_rm_here_doc(t_ast **tree)
+{
+	t_ast	*curr;
+
+	if ((*tree)->type == T_PIPE_NODE)
+	{
+		ft_process_here_doc(&((*tree)->left));
+		ft_process_here_doc(&((*tree)->right));
+	}
+	else
+	{
+		curr = (*tree)->right->left;
+		while (curr)
+		{
+			if (curr->type == T_DOUBLE_IN_NODE)
+				unlink(curr->data);
+			curr = curr->left;
+		}
+	}
+}
+
+int	ft_process(t_ast **tree)
 {
 	int	pid;
+	int	status;
 	int	*l_pid;
 
 	l_pid = ft_calloc(1, sizeof(int));
 	pid = fork();
 	if (pid == 0)
 	{
+		sig_here_doc();
 		ft_process_here_doc(tree);
 		ft_exec_tree(*tree, 0, l_pid);
-		waitpid(*l_pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		ft_rm_here_doc(tree);
 		free(l_pid);
+		if ( WIFEXITED(status) )
+			exit(WEXITSTATUS(status));
 		exit(0);
 	}
 	else 
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
 		free(l_pid);
+		if ( WIFEXITED(status) )
+			return (WEXITSTATUS(status));
 	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -74,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_cloneenv(envp);
 	if (argc > 1 || argv[1])
 		return (1);
+	status.l_error = 0;
 	while (1)
 	{
 		my_signal();
@@ -89,11 +119,11 @@ int	main(int argc, char **argv, char **envp)
 		status.curr = 0;
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
-		ft_print_tokens_list(tokens);
+		//ft_print_tokens_list(tokens);
 		if (*tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
-			ft_process(tree);
+			status.l_error = ft_process(tree);
 		free(status.data);
 		ft_free_all(tree, tokens);
 	}

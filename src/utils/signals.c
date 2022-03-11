@@ -11,7 +11,13 @@ void	my_prompt(int n)
 	}
 }
 
-void my_signal(void)
+void	sig_here_doc(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_DFL);
+}
+
+void	my_signal(void)
 {
 
 	signal(SIGQUIT, SIG_IGN);

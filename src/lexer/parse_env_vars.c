@@ -22,20 +22,28 @@ char	*ft_join_env_var(char *name, char *token, int i, int num)
 {
 	char	*var;
 	char	*tmp;
+	char	*aux;
 
-	var = getenv(name);
+	var = ft_getenv(name);
 	if (!var)
 		tmp = ft_substr(token, 0, i);
 	else
-		tmp = ft_strjoin(ft_substr(token, 0, i), var);
+	{
+		aux = ft_substr(token, 0, i);
+		tmp = ft_strjoin(aux, var);
+		free(aux);
+	}
+	free(var);
 	var = tmp;
-	tmp = ft_strjoin(var, ft_substr(token, i + num + 1, ft_strlen(token)));
+	aux = ft_substr(token, i + num + 1, ft_strlen(token));
+	tmp = ft_strjoin(var, aux);
+	free(aux);
 	free(var);
 	free(token);
 	return (tmp);
 }
 
-void	ft_extend_vars(char **token)
+void	ft_extend_vars(char **token, t_pstatus *status)
 {
 	int		i;
 	int		num;
@@ -51,9 +59,15 @@ void	ft_extend_vars(char **token)
 			squotes++;
 		if ((*token)[i] == '$' && squotes % 2 != 0)
 		{
-			aux = ft_get_env_var((*token) + i + 1, &num);
-			if (aux)
+			if ((*token)[i + 1] == '?')
 				*token = ft_join_env_var(aux, *token, i, num);
+			else
+			{
+				aux = ft_get_env_var((*token) + i + 1, &num);
+				if (aux)
+					*token = ft_join_env_var(aux, *token, i, num);
+				free(aux);
+			}
 		}
 		if ((*token)[i])
 			i++;

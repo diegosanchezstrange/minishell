@@ -66,6 +66,7 @@ typedef struct s_pstatus
 	char			*data;
 	int				curr;
 	int 			error;
+	int 			l_error;
 	t_token_type	type;
 	t_lex_states	state;
 }				t_pstatus;
@@ -90,6 +91,10 @@ void	ft_free_all(t_ast **tree, t_list **tokens);
 void	my_signal(void);
 void	sig_ignore(void);
 void	sig_child(void);
+void	sig_here_doc(void);
+
+//env.c
+char	*ft_getenv(char *name);
 
 // parser_quotes.c
 void	ft_parse_quotes(char **token);

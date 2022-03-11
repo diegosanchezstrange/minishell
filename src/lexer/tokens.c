@@ -50,10 +50,7 @@ int	ft_validate_redirs(t_pstatus *status, int *start)
 
 	i = status->curr;
 	if (ft_istype_redir(status->type) && status->curr == *start)
-	{
-		printf("TRAZA\n");
 		return (2);
-	}
 	if (status->data[i] == '>' && status->type == T_ARGUMENT)
 		status->type = T_OUT_REDIR;
 	else if (status->data[i] == '<' && status->type == T_ARGUMENT)
@@ -123,7 +120,7 @@ t_token	*ft_get_current_token(t_pstatus *status, char **actual)
 		return (NULL);
 	token->type = status->type;
 	token->data = *actual;
-	ft_extend_vars(&token->data);
+	ft_extend_vars(&token->data, status);
 	ft_parse_quotes(&token->data);
 	if (!ft_strlen(token->data))
 	{
@@ -200,7 +197,6 @@ t_list	**ft_get_tokens(t_pstatus *status)
 	//	status->error = 1;
 	if (status->error)
 	{
-		printf("TRAZA\n");
 		ft_lstclear(tokens, free);
 		return (NULL);
 	}

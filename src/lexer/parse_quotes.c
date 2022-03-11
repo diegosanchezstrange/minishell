@@ -8,31 +8,32 @@ t_lex_states	ft_change_state(t_lex_states state, t_lex_states newState)
 		return (P_NEUTRAL);
 }
 
+t_lex_states	ft_join_token(char **token, t_lex_states act, t_lex_states n, int i)
+{
+	char	*aux;
+	char	*new;
+
+	aux = ft_substr(*token, 0, i);
+	new = ft_strjoin(aux, (*token) + i + 1);
+	free(aux);
+	free(*token);
+	*token = new;
+	return (ft_change_state(act, n));
+}
+
 void	ft_parse_quotes(char **token)
 {
 	int				i;
-	char			*new;
 	t_lex_states	state;
 
 	i = 0;
 	state = P_NEUTRAL;
-	new = NULL;
 	while ((*token)[i])
 	{
 		if ((*token)[i] == '\"' && (state == P_NEUTRAL || state == P_D_QUOTE))
-		{
-			new = ft_strjoin(ft_substr(*token, 0, i), (*token) + i + 1);
-			free(*token);
-			*token = new;
-			state = ft_change_state(state, P_D_QUOTE);
-		}
+			state = ft_join_token(token, state, P_D_QUOTE, i);
 		else if ((*token)[i] == '\'' && (state == P_NEUTRAL || state == P_S_QUOTE))
-		{
-			new = ft_strjoin(ft_substr(*token, 0, i), (*token) + i + 1);
-			free(*token);
-			*token = new;
-			state = ft_change_state(state, P_S_QUOTE);
-		}
+			state = ft_join_token(token, state, P_S_QUOTE, i);
 		else
 			i++;
 	}

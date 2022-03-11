@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
-SRCS_UTILS	= frees.c signals.c here_doc.c
+SRCS_UTILS	= frees.c signals.c here_doc.c env.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
