@@ -74,8 +74,8 @@ int	ft_process(t_ast **tree)
 	pid = fork();
 	if (pid == 0)
 	{
-		sig_here_doc();
-		ft_process_here_doc(tree);
+		if (ft_process_here_doc(tree))
+			exit(130);
 		ft_exec_tree(*tree, 0, l_pid);
 		waitpid(pid, &status, 0);
 		ft_rm_here_doc(tree);
@@ -86,10 +86,12 @@ int	ft_process(t_ast **tree)
 	}
 	else 
 	{
+		sig_ignore();
 		waitpid(pid, &status, 0);
 		free(l_pid);
 		if ( WIFEXITED(status) )
 			return (WEXITSTATUS(status));
+		my_signal();
 	}
 	return (0);
 }

@@ -41,8 +41,7 @@ char	**ft_envmatrix()
 void	ft_use_builtins(t_ast *tree)
 {
 	if (ft_strncmp(tree->data, "pwd", 3) == 0)
-	{
-		ft_pwd(); printf("trazaaaaa\n");}
+		ft_pwd();
 	else if (ft_strncmp(tree->data, "echo", 4) == 0)
 		ft_echo(tree);
 	else if (ft_strncmp(tree->data, "exit", 4) == 0)

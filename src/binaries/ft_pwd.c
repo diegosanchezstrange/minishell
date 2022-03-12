@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+
 void ft_pwd(void)
 {
 	t_list	**cpy;
@@ -18,7 +19,6 @@ void ft_pwd(void)
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = g_env;
-
 	while (*cpy)
 	{
 		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)
@@ -32,4 +32,5 @@ void ft_pwd(void)
 		write(1, path, ft_strlen(path));
 		write(1, "\n", 1);
 	}
+	free(cpy);
 }
