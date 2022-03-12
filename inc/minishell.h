@@ -74,7 +74,7 @@ typedef struct s_pstatus
 // parse_env_vars
 char	*ft_get_env_var(char *token, int *num);
 char	*ft_join_env_var(char *name, char *token, int i, int num);
-void	ft_extend_vars(char **token);
+void	ft_extend_vars(char **token, t_pstatus *status);
 
 // utils
 void	ft_skip_spaces(t_pstatus *status);
