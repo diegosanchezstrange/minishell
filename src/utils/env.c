@@ -20,7 +20,10 @@ char	*ft_getenv(char *name)
 	while (*cpy)
 	{
 		tmp = ft_split((*cpy)->content, '=');
-		sol = ft_strdup(tmp[1]);
+		if (!tmp[1])
+			sol = NULL;
+		else 
+			sol = ft_strdup(tmp[1]);
 		if (!ft_strncmp(tmp[0], name, ft_max(len, ft_strlen((*cpy)->content))))
 		{
 			free(cpy);

@@ -18,8 +18,6 @@ char	*ft_getpath(char **envp, char *cmd)
 	char	**tmp;
 	char	*command;
 
-	if (access(cmd, F_OK) == 0)
-		return (cmd);
 	while (*envp && ft_strncmp("PATH", *envp, 4))
 		envp++;
 	if (!*envp)
@@ -32,7 +30,10 @@ char	*ft_getpath(char **envp, char *cmd)
 	{
 		command = ft_strjoin_path(*path, cmd);
 		if (access(command, F_OK) == 0)
+		{
+			ft_free_split(tmp);
 			return (command);
+		}
 		free(command);
 		path++;
 	}
@@ -69,10 +70,13 @@ void	ft_exec_command(t_ast *node)
 	ret = EXIT_FAILURE;
 	environ = ft_envmatrix();
 	cmd = ft_return_cmd(node->left, node->data);
-	path = ft_getpath(environ, cmd[0]);
+	if (access(cmd[0], F_OK) == 0)
+		path = cmd[0];
+	else
+		path = ft_getpath(environ, cmd[0]);
 	if (!path)
 		ret = 127;
-	execve(cmd[0], cmd, environ);
+	execve(path, cmd, environ);
 	perror(cmd[0]);
 	ft_free_split(environ);
 	ft_free_split(cmd);
