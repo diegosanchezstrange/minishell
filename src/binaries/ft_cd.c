@@ -12,7 +12,13 @@
 
 #include <minishell.h>
 
-void	ft_cd(char *path)
+void	ft_cd(t_ast *path)
 {
-
+	char	*home;
+	if (!path)
+	{
+		home = ft_getenv("HOME");
+		chdir(home);
+		free(home);
+	}
 }

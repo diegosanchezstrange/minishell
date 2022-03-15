@@ -14,12 +14,16 @@
 
 void	ft_free_tree(t_ast **tree)
 {
+	if (!tree)
+		return ;
 	if (!*tree)
 		return ;
 	if ((*tree)->right)
 		ft_free_tree(&((*tree)->right));
 	if ((*tree)->left)
 		ft_free_tree(&((*tree)->left));
+	if ((*tree)->type == T_DOUBLE_IN_NODE)
+		free((*tree)->data);
 	free(*tree);
 }
 
@@ -43,4 +47,12 @@ void	ft_free_split(char **s)
 		str++;
 	}
 	free(s);
+}
+
+void	ft_free_all(t_ast **tree, t_list **tokens)
+{
+	ft_free_tree(tree);
+	free(tree);
+	ft_lstclear(tokens, ft_free_token);
+	free(tokens);
 }

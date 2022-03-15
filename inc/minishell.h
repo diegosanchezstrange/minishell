@@ -14,7 +14,9 @@
 # define WRITE_END 1
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
+
 extern t_list	*g_env;
+
 typedef enum e_lex_states
 {
 	P_ERROR			= -1,
@@ -64,22 +66,40 @@ typedef struct s_pstatus
 	char			*data;
 	int				curr;
 	int 			error;
+	int 			l_error;
 	t_token_type	type;
 	t_lex_states	state;
 }				t_pstatus;
 
+typedef struct s_l_fd
+{
+	int	fd[2];
+}				t_l_fd;
+
 // parse_env_vars
 char	*ft_get_env_var(char *token, int *num);
 char	*ft_join_env_var(char *name, char *token, int i, int num);
-void	ft_extend_vars(char **token);
+void	ft_extend_vars(char **token, t_pstatus *status);
 
 // utils
 void	ft_skip_spaces(t_pstatus *status);
 char	**ft_resize_tokens(int num, char **tokens);
+
+//frees.c
 void	ft_free_split(char **s);
 void	ft_free_tree(t_ast **tree);
 void	ft_free_token(void *t);
 void	ft_free_split(char **s);
+void	ft_free_all(t_ast **tree, t_list **tokens);
+
+//signas.c
+void	my_signal(void);
+void	sig_ignore(void);
+void	sig_child(void);
+void	sig_here_doc(void);
+
+//env.c
+char	*ft_getenv(char *name);
 
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
@@ -101,17 +121,28 @@ int		ft_astsize_r(t_ast *node);
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);
 t_ast	**ft_generate_ast(t_list **tokens);
 
+// here_doc.c
+int		ft_process_here_doc(t_ast **tree);
+
+
+int	ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[]);
+int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
+int	ft_getredir(t_ast *tree, int io);
+
 //executor.c
-void	ft_exec_tree(t_ast *tree, int pipe);
+t_l_fd		*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
 char	**ft_envmatrix();
 
-int	valid_builtins(t_ast *tree);
+int		valid_builtins(t_ast *tree);
+
 //binaries
-void	ft_use_builtins(t_ast *tree);
-void	ft_pwd(void);
-void	ft_echo(t_ast *tree);
+void	ft_use_builtins(t_ast *tree, int fd);
+void	ft_pwd(int fd);
+void	ft_cd(t_ast *path);
+void	ft_echo(t_ast *tree, int fd);
 void	ft_exit(void);
-void    ft_env(void);
+void    ft_env(int fd);
 void	ft_unset(t_ast *tree);
-void	ft_export(t_ast *tree);
+void	ft_export(t_ast *tree, int fd);
+
 #endif

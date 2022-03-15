@@ -4,19 +4,22 @@ CC		= gcc
 
 CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address 
 
-SRCS_MAIN	= main.c frees.c
+SRCS_MAIN	= main.c
+
+SRCS_UTILS	= frees.c signals.c here_doc.c env.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
 SRCS_PARSER	= parser.c parse_command.c
 
-SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c ft_unset.c ft_export.c
+SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c ft_unset.c ft_export.c ft_cd.c
 
 SRCS_AST	= ast_new.c ast_add_right.c ast_add_left.c ast_get_last_r.c ast_get_last_l.c ast_append_left.c ast_append_right.c astsize_r.c
 
 SRCS_EXEC	= exec.c exec_utils.c
 
 SRCS	= $(SRCS_MAIN) \
+		  $(addprefix utils/, $(SRCS_UTILS)) \
 		  $(addprefix lexer/, $(SRCS_LEXER)) \
 		  $(addprefix binaries/, $(SRCS_BINARY)) \
 		  $(addprefix ast/, $(SRCS_AST)) \
@@ -29,6 +32,7 @@ SRCS_DIR = src
 OBJS_DIR = obj
 
 OBJS_DIRS = $(OBJS_DIR) \
+			$(addprefix $(OBJS_DIR)/, utils) \
 			$(addprefix $(OBJS_DIR)/, lexer) \
 			$(addprefix $(OBJS_DIR)/, binaries) \
 			$(addprefix $(OBJS_DIR)/, ast) \

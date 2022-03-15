@@ -6,36 +6,13 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/02/22 20:54:44 by mclerico         ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2022/03/01 21:19:13 by dsanchez         ###   ########.fr       */
+/*                                                                            */ 
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <readline/readline.h>
-
 t_list	*g_env;
-
-char	*ft_get_path(char *arg)
-{
-	char	*env;
-	char	**path;
-	char	*command;
-
-	if (access(arg, F_OK) == 0)
-		return (arg);
-	env = getenv("PATH");
-	if (!env)
-		return ("");
-	path = ft_split(env, ':');
-	while (*path)
-	{
-		command = ft_strjoin(*path, ft_strjoin("/", arg));
-		if (access(command, F_OK) == 0)
-			return (command);
-		path++;
-	}
-	return ("");
-}
 
 void	ft_cloneenv(char **environ)
 {
@@ -66,36 +43,42 @@ void	ft_print_tokens_list(t_list **tokens)
 	free(pointer);
 }
 
-void	my_prompt(int n)
+void	ft_rm_here_doc(t_ast **tree)
 {
-	if (n == SIGINT)
+	t_ast	*curr;
+
+	if ((*tree)->type == T_PIPE_NODE)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		ft_process_here_doc(&((*tree)->left));
+		ft_process_here_doc(&((*tree)->right));
+	}
+	else
+	{
+		curr = (*tree)->right->left;
+		while (curr)
+		{
+			if (curr->type == T_DOUBLE_IN_NODE)
+				unlink(curr->data);
+			curr = curr->left;
+		}
 	}
 }
-void my_signal(void)
+
+int	ft_process(t_ast **tree)
 {
+	int	status;
+	int	*l_pid;
 
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, my_prompt);
-}
-
-
-void	ft_process(t_ast **tree)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		ft_exec_tree(*tree, 0);
-		exit(0);
-	}
-	else 
-		waitpid(pid, NULL, 0);
+	l_pid = ft_calloc(1, sizeof(int));
+	if (ft_process_here_doc(tree))
+		return (130);
+	ft_exec_tree(*tree, 0, l_pid, NULL);
+	waitpid(*l_pid, &status, 0);
+	ft_rm_here_doc(tree);
+	free(l_pid);
+	if ( WIFEXITED(status) )
+		return (WEXITSTATUS(status));
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -107,10 +90,11 @@ int	main(int argc, char **argv, char **envp)
 	ft_cloneenv(envp);
 	if (argc > 1 || argv[1])
 		return (1);
+	status.l_error = 0;
 	while (1)
 	{
 		my_signal();
-		status.data = readline(CYAN"$"NC" ");
+		status.data = readline("$ ");
 		tree = NULL;
 		if (status.data == NULL)
 		{
@@ -123,16 +107,12 @@ int	main(int argc, char **argv, char **envp)
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
 		//ft_print_tokens_list(tokens);
-		if (tokens)
+		if (*tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
-		{
-			ft_process(tree);
-			ft_free_tree(tree);
-		}
-		free(tree);
-		ft_lstclear(tokens, ft_free_token);
-		free(tokens);
+			status.l_error = ft_process(tree);
+		free(status.data);
+		ft_free_all(tree, tokens);
 	}
 	return (0);
 }
