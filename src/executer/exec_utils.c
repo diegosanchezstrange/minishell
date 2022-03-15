@@ -18,14 +18,14 @@ char	**ft_envmatrix()
 	t_list	**cpy;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	environ = ft_calloc(ft_lstsize(g_env) + 1, sizeof(char *));
+	environ = ft_calloc(ft_lstsize(*(g_env.env)) + 1, sizeof(char *));
 	i = 0;
-	if (!g_env)
+	if (!(*(g_env.env)))
 	{
 		free(environ);
 		return NULL;
 	}
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	while (*cpy)
 	{
 		environ[i] = ft_strdup((*cpy)->content);

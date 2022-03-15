@@ -68,7 +68,7 @@ void	ft_addvar(char **data, char *tree_data)
 	t_list	**cpy;
 	
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	while ((*cpy)->next)
 	{
 		if (ft_strnstr((*cpy)->next->content, data[0], ft_strlen(data[0])))
@@ -80,7 +80,7 @@ void	ft_addvar(char **data, char *tree_data)
 		(*cpy) = (*cpy)->next;
 	}
 	free(cpy);
-	ft_lstadd_back(&g_env, ft_lstnew(ft_strdup(tree_data)));
+	ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(tree_data)));
 }
 
 void	ft_export(t_ast *tree, int fd)

@@ -18,7 +18,7 @@ void ft_pwd(int fd)
 	char *path;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	while (*cpy)
 	{
 		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)

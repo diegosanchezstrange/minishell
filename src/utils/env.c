@@ -15,7 +15,7 @@ char	*ft_getenv(char *name)
 	char	**tmp;
 
 	cpy = ft_calloc(sizeof(void *), 1);
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	len = ft_strlen(name);
 	while (*cpy)
 	{

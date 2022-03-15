@@ -43,13 +43,13 @@ char	*ft_join_env_var(char *name, char *token, int i, int num)
 	return (tmp);
 }
 
-char	*ft_join_err_code(char *token, int i, int code)
+char	*ft_join_err_code(char *token, int i)
 {
 	char	*num;
 	char	*tmp;
 	char	*aux;
 
-	num = ft_itoa(code);
+	num = ft_itoa(g_env.l_cod);
 	tmp = ft_substr(token, 0, i);
 	aux = ft_strjoin(tmp, num);
 	free(tmp);
@@ -62,7 +62,7 @@ char	*ft_join_err_code(char *token, int i, int code)
 	return (num);
 }
 
-void	ft_process_env_vars(char **token, int i, int code)
+void	ft_process_env_vars(char **token, int i)
 {
 	int		num;
 	char	*aux;
@@ -71,7 +71,7 @@ void	ft_process_env_vars(char **token, int i, int code)
 	if (!(*token)[i + 1])
 		return ;
 	if ((*token)[i + 1] == '?')
-		*token = ft_join_err_code(*token, i, code);
+		*token = ft_join_err_code(*token, i);
 	else
 	{
 		aux = ft_get_env_var((*token) + i + 1, &num);
@@ -81,7 +81,7 @@ void	ft_process_env_vars(char **token, int i, int code)
 	}
 }
 
-void	ft_extend_vars(char **token, t_pstatus *status)
+void	ft_extend_vars(char **token)
 {
 	int		i;
 	int		squotes;
@@ -93,7 +93,7 @@ void	ft_extend_vars(char **token, t_pstatus *status)
 		if ((*token)[i] == '\'')
 			squotes++;
 		if ((*token)[i] == '$' && squotes % 2 != 0)
-			ft_process_env_vars(token, i, status->l_error);
+			ft_process_env_vars(token, i);
 		if ((*token)[i])
 			i++;
 	}

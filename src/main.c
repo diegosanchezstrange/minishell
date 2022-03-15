@@ -12,15 +12,18 @@
 
 #include <minishell.h>
 #include <readline/readline.h>
-t_list	*g_env;
+
+t_prog	g_env;
 
 void	ft_cloneenv(char **environ)
 {
 	int	i;
 
 	i = 0;
+	g_env.l_cod = 0;
+	g_env.env = (t_list **)ft_calloc(sizeof(t_list *), 1);
 	while (environ[i] != NULL)
-		ft_lstadd_back(&g_env, ft_lstnew(ft_strdup(environ[i++])));
+		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(environ[i++])));
 }
 
 void	ft_print_tokens_list(t_list **tokens)
@@ -73,11 +76,21 @@ int	ft_process(t_ast **tree)
 	if (ft_process_here_doc(tree))
 		return (130);
 	ft_exec_tree(*tree, 0, l_pid, NULL);
-	waitpid(*l_pid, &status, 0);
+	if (*l_pid != 0)
+	{
+		waitpid(*l_pid, &status, 0);
+		ft_rm_here_doc(tree);
+		free(l_pid);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+		{
+			write(1, "\n", 1);
+			return (WTERMSIG(status) + 128);
+		}
+	}
 	ft_rm_here_doc(tree);
 	free(l_pid);
-	if ( WIFEXITED(status) )
-		return (WEXITSTATUS(status));
 	return (0);
 }
 
@@ -90,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_cloneenv(envp);
 	if (argc > 1 || argv[1])
 		return (1);
-	status.l_error = 0;
+	status.l_error = g_env.l_cod;
 	while (1)
 	{
 		my_signal();
@@ -110,7 +123,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
-			status.l_error = ft_process(tree);
+			g_env.l_cod = ft_process(tree);
 		free(status.data);
 		ft_free_all(tree, tokens);
 	}

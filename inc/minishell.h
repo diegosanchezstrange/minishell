@@ -15,7 +15,15 @@
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
 
-extern t_list	*g_env;
+//extern t_list	*g_env;
+
+typedef struct s_prog
+{
+	t_list	**env;
+	int		l_cod;
+}				t_prog;
+
+extern t_prog	g_env;
 
 typedef enum e_lex_states
 {
@@ -79,7 +87,7 @@ typedef struct s_l_fd
 // parse_env_vars
 char	*ft_get_env_var(char *token, int *num);
 char	*ft_join_env_var(char *name, char *token, int i, int num);
-void	ft_extend_vars(char **token, t_pstatus *status);
+void	ft_extend_vars(char **token);
 
 // utils
 void	ft_skip_spaces(t_pstatus *status);

@@ -8,6 +8,7 @@ void	my_prompt(int n)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_env.l_cod = 130;
 	}
 }
 

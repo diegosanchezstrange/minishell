@@ -17,7 +17,7 @@ void	ft_env(int fd)
 	t_list	**cpy;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	while (*cpy)
 	{
 		write(fd, (char *)(*cpy)->content, ft_strlen((char *)(*cpy)->content));

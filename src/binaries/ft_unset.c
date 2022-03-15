@@ -1,27 +1,12 @@
 #include <minishell.h>
 
-int	valid_variable(char  *data)
-{
-	t_list	*cpy;
-
-	cpy = g_env;
-	while (g_env)
-	{
-		if (ft_strncmp(g_env->content, data, ft_strlen(data)))
-			return (1);
-		g_env = g_env->next;
-	}
-	g_env = cpy;
-	return (0);
-}
-
 void	ft_removevar(char *data)
 {
 	t_list	**cpy;
 	t_list	*next;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	next = NULL;
 	while ((*cpy)->next)
 	{
