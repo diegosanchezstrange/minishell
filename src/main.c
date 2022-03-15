@@ -73,7 +73,6 @@ int	ft_process(t_ast **tree)
 	if (ft_process_here_doc(tree))
 		return (130);
 	ft_exec_tree(*tree, 0, l_pid, NULL);
-	//my_signal();
 	waitpid(*l_pid, &status, 0);
 	ft_rm_here_doc(tree);
 	free(l_pid);
@@ -81,38 +80,6 @@ int	ft_process(t_ast **tree)
 		return (WEXITSTATUS(status));
 	return (0);
 }
-
-/*int	ft_process(t_ast **tree)
-{
-	int	pid;
-	int	status;
-	int	*l_pid;
-
-	l_pid = ft_calloc(1, sizeof(int));
-	pid = fork();
-	if (pid == 0)
-	{
-		if (ft_process_here_doc(tree))
-			exit(130);
-		ft_exec_tree(*tree, 0, l_pid);
-		waitpid(pid, &status, 0);
-		ft_rm_here_doc(tree);
-		free(l_pid);
-		if ( WIFEXITED(status) )
-			exit(WEXITSTATUS(status));
-		exit(0);
-	}
-	else 
-	{
-		sig_ignore();
-		waitpid(pid, &status, 0);
-		free(l_pid);
-		if ( WIFEXITED(status) )
-			return (WEXITSTATUS(status));
-		my_signal();
-	}
-	return (0);
-}*/
 
 int	main(int argc, char **argv, char **envp)
 {

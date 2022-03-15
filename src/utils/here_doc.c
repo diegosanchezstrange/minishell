@@ -51,7 +51,10 @@ void	ft_read_input(t_ast *node, char *name)
 		line = readline("> ");
 		if (ft_strlen(line) == ft_strlen(node->data) 
 				&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
+		{
+			close(fd);
 			break ;
+		}
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -70,7 +73,6 @@ int	ft_write_here_doc(t_ast *node)
 	if (pid == 0)
 	{
 		sig_here_doc();
-		//sig_ignore();
 		ft_read_input(node, name);
 		exit(EXIT_SUCCESS);
 	}

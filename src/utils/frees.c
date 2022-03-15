@@ -22,6 +22,8 @@ void	ft_free_tree(t_ast **tree)
 		ft_free_tree(&((*tree)->right));
 	if ((*tree)->left)
 		ft_free_tree(&((*tree)->left));
+	if ((*tree)->type == T_DOUBLE_IN_NODE)
+		free((*tree)->data);
 	free(*tree);
 }
 
