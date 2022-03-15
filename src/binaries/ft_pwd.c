@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-void ft_pwd(void)
+void ft_pwd(int fd)
 {
 	t_list	**cpy;
 	char *path;
@@ -29,8 +29,8 @@ void ft_pwd(void)
 	path += 4;
 	if (path)
 	{
-		write(1, path, ft_strlen(path));
-		write(1, "\n", 1);
+		write(fd, path, ft_strlen(path));
+		write(fd, "\n", 1);
 	}
 	free(cpy);
 }

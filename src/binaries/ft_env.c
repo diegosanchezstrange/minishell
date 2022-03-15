@@ -12,16 +12,16 @@
 
 #include <minishell.h>
 
-void	ft_env(void)
+void	ft_env(int fd)
 {
 	t_list	**cpy;
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = g_env;
-	printf("START\n");
 	while (*cpy)
 	{
-		printf("%s\n", (char *)(*cpy)->content);
+		write(fd, (char *)(*cpy)->content, ft_strlen((char *)(*cpy)->content));
+		write(fd, "\n", 1);
 		*cpy = (*cpy)->next;
 	}
 	free(cpy);

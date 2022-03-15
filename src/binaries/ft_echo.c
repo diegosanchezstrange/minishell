@@ -11,7 +11,7 @@
 
 #include <minishell.h>
 
-void	ft_echo(t_ast *tree)
+void	ft_echo(t_ast *tree, int fd)
 {
 	int		nline;
 
@@ -27,11 +27,11 @@ void	ft_echo(t_ast *tree)
 	}
 	while (tree)
 	{
-		write(1, (tree->data), ft_strlen(tree->data));
+		write(fd, (tree->data), ft_strlen(tree->data));
 		tree = tree->right;
 		if (tree)
-			write(1, " ", 1);
+			write(fd, " ", 1);
 	}
 	if (nline == 1)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 }

@@ -25,18 +25,18 @@ int	ft_sorted(char **env)
 	}
 	return (1); 
 }
-void	ft_printenv(char **env)
+void	ft_printenv(char **env, int fd)
 {
 	int	i;
 
 	i = 0;
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		write(fd, env[i], ft_strlen(env[i]));
 		i++;
 	}
 }
-void	ft_sortenv(void)
+void	ft_sortenv(int fd)
 {
 	char	**env;
 	char	*aux;
@@ -59,9 +59,10 @@ void	ft_sortenv(void)
 		if (!env[++i])
 			i = 0;
 	}
-	ft_printenv(env);
+	ft_printenv(env, fd);
 	ft_free_split(env);
 }
+
 void	ft_addvar(char **data, char *tree_data)
 {
 	t_list	**cpy;
@@ -81,14 +82,15 @@ void	ft_addvar(char **data, char *tree_data)
 	free(cpy);
 	ft_lstadd_back(&g_env, ft_lstnew(ft_strdup(tree_data)));
 }
-void	ft_export(t_ast *tree)
+
+void	ft_export(t_ast *tree, int fd)
 {
 	char	**data;
 	t_ast	*node;
 
 	if (!tree->left)
 	{
-		ft_sortenv();
+		ft_sortenv(fd);
 		return ;
 	}
 	data = ft_split(tree->left->data, '=');

@@ -71,6 +71,11 @@ typedef struct s_pstatus
 	t_lex_states	state;
 }				t_pstatus;
 
+typedef struct s_l_fd
+{
+	int	fd[2];
+}				t_l_fd;
+
 // parse_env_vars
 char	*ft_get_env_var(char *token, int *num);
 char	*ft_join_env_var(char *name, char *token, int i, int num);
@@ -119,19 +124,25 @@ t_ast	**ft_generate_ast(t_list **tokens);
 // here_doc.c
 int		ft_process_here_doc(t_ast **tree);
 
+
+int	ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[]);
+int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
+int	ft_getredir(t_ast *tree, int io);
+
 //executor.c
-void	ft_exec_tree(t_ast *tree, int pipe, int *l_pid);
+t_l_fd		*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
 char	**ft_envmatrix();
 
 int		valid_builtins(t_ast *tree);
 
 //binaries
-void	ft_use_builtins(t_ast *tree);
-void	ft_pwd(void);
-void	ft_echo(t_ast *tree);
+void	ft_use_builtins(t_ast *tree, int fd);
+void	ft_pwd(int fd);
+void	ft_cd(t_ast *path);
+void	ft_echo(t_ast *tree, int fd);
 void	ft_exit(void);
-void    ft_env(void);
+void    ft_env(int fd);
 void	ft_unset(t_ast *tree);
-void	ft_export(t_ast *tree);
+void	ft_export(t_ast *tree, int fd);
 
 #endif

@@ -66,6 +66,24 @@ void	ft_rm_here_doc(t_ast **tree)
 
 int	ft_process(t_ast **tree)
 {
+	int	status;
+	int	*l_pid;
+
+	l_pid = ft_calloc(1, sizeof(int));
+	if (ft_process_here_doc(tree))
+		return (130);
+	ft_exec_tree(*tree, 0, l_pid, NULL);
+	//my_signal();
+	waitpid(*l_pid, &status, 0);
+	ft_rm_here_doc(tree);
+	free(l_pid);
+	if ( WIFEXITED(status) )
+		return (WEXITSTATUS(status));
+	return (0);
+}
+
+/*int	ft_process(t_ast **tree)
+{
 	int	pid;
 	int	status;
 	int	*l_pid;
@@ -94,7 +112,7 @@ int	ft_process(t_ast **tree)
 		my_signal();
 	}
 	return (0);
-}
+}*/
 
 int	main(int argc, char **argv, char **envp)
 {
