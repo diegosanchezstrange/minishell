@@ -144,6 +144,9 @@ char	**ft_envmatrix();
 int		valid_builtins(t_ast *tree);
 
 //binaries
+//
+
+int		ft_llen(char *s1, char *s2);
 void	ft_use_builtins(t_ast *tree, int fd);
 void	ft_pwd(int fd);
 void	ft_cd(t_ast *path);

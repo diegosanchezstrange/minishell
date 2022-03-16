@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/02 19:15:51 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/02 21:41:53 by dsanchez         ###   ########.fr       */ /*                                                                            */
+/*   Created: 2022/03/16 21:03:45 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 21:03:48 by mclerico         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>

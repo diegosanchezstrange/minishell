@@ -1,30 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 21:15:43 by mclerico         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-int	ft_llen(char *s1, char *s2)
-{
-	if (ft_strlen(s1) >= ft_strlen(s2))
-		return (ft_strlen(s1));
-	else
-		return (ft_strlen(s2));
-}
-
-int	ft_sorted(char **env)
+int	ft_sorted(char **ev)
 {
 	int	i;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		if (env[i + 1])
 		{
-			if (ft_strncmp(env[i], env[i + 1], 
-						ft_llen(env[i], env[i + 1])) > 0)
+			if (ft_strncmp(ev[i], ev[i + 1], ft_llen(ev[i], ev[i + 1])) > 0)
 				return (0);
 		}
 		i++;
 	}
-	return (1); 
+	return (1);
 }
+
 void	ft_printenv(char **env, int fd)
 {
 	int	i;
@@ -36,37 +40,38 @@ void	ft_printenv(char **env, int fd)
 		i++;
 	}
 }
+
 void	ft_sortenv(int fd)
 {
-	char	**env;
+	char	**e;
 	char	*aux;
 	int		i;
 
-	env = ft_envmatrix();
+	e = ft_envmatrix();
 	i = 0;
-	while (!ft_sorted(env))
+	while (!ft_sorted(e))
 	{
-		if (env[i + 1] && ft_strncmp(env[i], env[i + 1],
-						ft_llen(env[i], env[i + 1])) > 0)
+		if (e[i + 1]
+			&& ft_strncmp(e[i], e[i + 1], ft_llen(e[i], e[i + 1])) > 0)
 		{
-			aux = ft_strdup(env[i]);
-			free(env[i]);
-			env[i] = ft_strdup(env[i + 1]);
-			free(env[i + 1]);
-			env[i + 1] = ft_strdup(aux);
+			aux = ft_strdup(e[i]);
+			free(e[i]);
+			e[i] = ft_strdup(e[i + 1]);
+			free(e[i + 1]);
+			e[i + 1] = ft_strdup(aux);
 			free(aux);
 		}
-		if (!env[++i])
+		if (!e[++i])
 			i = 0;
 	}
-	ft_printenv(env, fd);
-	ft_free_split(env);
+	ft_printenv(e, fd);
+	ft_free_split(e);
 }
 
 void	ft_addvar(char **data, char *tree_data)
 {
 	t_list	**cpy;
-	
+
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = *(g_env.env);
 	while ((*cpy)->next)
@@ -99,7 +104,7 @@ void	ft_export(t_ast *tree, int fd)
 	{
 		ft_addvar(data, node->data);
 		node = node->right;
-		if(node)
+		if (node)
 			data = ft_split(node->data, '=');
 	}
 	ft_free_split(data);

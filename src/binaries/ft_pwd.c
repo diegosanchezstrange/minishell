@@ -6,15 +6,15 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 19:01:39 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/22 18:59:54 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:06:03 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void ft_pwd(int fd)
+void	ft_pwd(int fd)
 {
-	char *path;
+	char	*path;
 
 	path = getcwd(0, 0);
 	if (path)

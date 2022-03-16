@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:08:16 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/15 18:09:23 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:16:12 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 char	*ft_getact(void)
 {
 	t_list	**cpy;
-	char *path;
+	char	*path;
 
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = *(g_env.env);
 	while (*cpy)
 	{
 		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)
-			break;
+			break ;
 		*cpy = (*cpy)->next;
 	}
 	if (!*cpy)
@@ -44,8 +44,8 @@ void	ft_update(char *var, char *path)
 	new = ft_strjoin(new, path);
 	while (*cpy)
 	{
-		if ((*cpy)->next 
-				&& ft_strnstr((*cpy)->next->content, var, ft_strlen(var)))
+		if ((*cpy)->next
+			&& ft_strnstr((*cpy)->next->content, var, ft_strlen(var)))
 		{
 			free((*cpy)->next->content);
 			(*cpy)->next->content = ft_strdup(new);
