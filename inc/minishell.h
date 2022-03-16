@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
+/*   Updated: 2022/03/16 21:23:06 by mclerico         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -112,6 +124,11 @@ char	*ft_getenv(char *name);
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
 
+//classify_tokens.c
+int		ft_validate_redirs(t_pstatus *status, int *start);
+void	ft_validate_quotes(t_pstatus *status);
+int		ft_check_token_end(t_pstatus *status, int *start);
+
 // lexer
 t_list	**ft_get_tokens(t_pstatus *status);
 
@@ -132,21 +149,23 @@ t_ast	**ft_generate_ast(t_list **tokens);
 // here_doc.c
 int		ft_process_here_doc(t_ast **tree);
 
+// builtin_utils.c
+void	ft_use_builtins(t_ast *tree, int fd);
+int		valid_builtins(t_ast *tree);
+int		ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[]);
 
-int	ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[]);
-int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
-int	ft_getredir(t_ast *tree, int io);
+int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
 
-//executor.c
-t_l_fd		*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
+// redirs.c
+int		ft_getredir(t_ast *tree, int io);
+
+// executor.c
+t_l_fd	*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
 char	**ft_envmatrix();
 
 int		valid_builtins(t_ast *tree);
 
-//binaries
-//
-
-int		ft_llen(char *s1, char *s2);
+// binaries
 void	ft_use_builtins(t_ast *tree, int fd);
 void	ft_pwd(int fd);
 void	ft_cd(t_ast *path);

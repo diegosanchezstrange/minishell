@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		tree = NULL;
 		if (status.data == NULL)
 		{
-			write(1, "exit", 5);
+			write(1, "exit\n", 5);
 			exit(0);
 		}
 		if (status.data)
