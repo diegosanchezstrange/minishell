@@ -16,7 +16,7 @@ SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c ft_unset.c ft_export.c ft_cd
 
 SRCS_AST	= ast_new.c ast_add_right.c ast_add_left.c ast_get_last_r.c ast_get_last_l.c ast_append_left.c ast_append_right.c astsize_r.c
 
-SRCS_EXEC	= exec.c exec_utils.c
+SRCS_EXEC	= exec.c exec_utils.c redirs.c builtin_utils.c
 
 SRCS	= $(SRCS_MAIN) \
 		  $(addprefix utils/, $(SRCS_UTILS)) \
