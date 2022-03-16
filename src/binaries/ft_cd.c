@@ -18,7 +18,7 @@ char	*ft_getact(void)
 	char *path;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	while (*cpy)
 	{
 		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)
@@ -39,7 +39,7 @@ void	ft_update(char *var, char *path)
 	char	*new;
 
 	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = g_env;
+	*cpy = *(g_env.env);
 	new = ft_strjoin(var, "=");
 	new = ft_strjoin(new, path);
 	while (*cpy)
@@ -54,7 +54,7 @@ void	ft_update(char *var, char *path)
 		*cpy = (*cpy)->next;
 	}
 	if (!*cpy && ft_strnstr(var, "OLDPWD", 6) != NULL)
-		ft_lstadd_back(&g_env, ft_lstnew(ft_strdup(new)));
+		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(new)));
 	free(cpy);
 	free(new);
 }

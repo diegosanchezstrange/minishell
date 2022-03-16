@@ -14,7 +14,6 @@
 
 void ft_pwd(int fd)
 {
-	t_list	**cpy;
 	char *path;
 
 	path = getcwd(0, 0);

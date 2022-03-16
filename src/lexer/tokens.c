@@ -120,7 +120,7 @@ t_token	*ft_get_current_token(t_pstatus *status, char **actual)
 		return (NULL);
 	token->type = status->type;
 	token->data = *actual;
-	ft_extend_vars(&token->data, status);
+	ft_extend_vars(&token->data);
 	ft_parse_quotes(&token->data);
 	if (!ft_strlen(token->data))
 	{
