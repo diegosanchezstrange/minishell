@@ -45,6 +45,7 @@ void	ft_read_input(t_ast *node, char *name)
 	char	*line;
 	int		fd;
 
+	line = NULL;
 	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (line != NULL)
 	{

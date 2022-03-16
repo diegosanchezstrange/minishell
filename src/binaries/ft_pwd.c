@@ -17,20 +17,10 @@ void ft_pwd(int fd)
 	t_list	**cpy;
 	char *path;
 
-	cpy = ft_calloc(1, sizeof(void *));
-	*cpy = *(g_env.env);
-	while (*cpy)
-	{
-		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)
-			break;
-		*cpy = (*cpy)->next;
-	}
-	path = (*cpy)->content;
-	path += 4;
+	path = getcwd(0, 0);
 	if (path)
 	{
 		write(fd, path, ft_strlen(path));
 		write(fd, "\n", 1);
 	}
-	free(cpy);
 }
