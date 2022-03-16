@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 18:13:52 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/22 20:53:56 by mclerico         ###   ########.fr       */ /*                                                                            */
+/*   Created: 2022/03/16 21:29:43 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 21:51:07 by mclerico         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**ft_envmatrix()
+char	**ft_envmatrix(void)
 {
 	char	**environ;
 	int		i;
@@ -23,7 +24,7 @@ char	**ft_envmatrix()
 	if (!(*(g_env.env)))
 	{
 		free(environ);
-		return NULL;
+		return (NULL);
 	}
 	*cpy = *(g_env.env);
 	while (*cpy)
@@ -32,7 +33,7 @@ char	**ft_envmatrix()
 		i++;
 		(*cpy) = (*cpy)->next;
 	}
-	environ[i]= NULL;
+	environ[i] = NULL;
 	free(cpy);
 	return (environ);
 }
@@ -42,7 +43,8 @@ char	*ft_strjoin_path(char *path, char *cmd)
 	char	*sol;
 	char	*tmp;
 
-	tmp = ft_strjoin("/", cmd); sol = ft_strjoin(path, tmp);
+	tmp = ft_strjoin("/", cmd);
+	sol = ft_strjoin(path, tmp);
 	free(tmp);
 	return (sol);
 }
@@ -82,7 +84,8 @@ char	**ft_return_cmd(t_ast *node, char *cmd)
 	int		i;
 
 	sol = ft_calloc(sizeof(char *), ft_astsize_r(node) + 2);
-	sol[0] = cmd; i = 1;
+	sol[0] = cmd;
+	i = 1;
 	while (node)
 	{
 		sol[i] = node->data;
@@ -121,61 +124,3 @@ void	ft_exec_command(t_ast *node)
 	ft_free_split(cmd);
 	exit(ret);
 }
-
-int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
-{
-	int		fdesc;
-	int		pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		sig_child();
-		close(fd[READ_END]);
-		if (l_fd)
-		{
-			dup2(l_fd->fd[READ_END], 0);
-			close(l_fd->fd[READ_END]);
-		}
-		if (r_fd)
-			dup2(fd[WRITE_END], 1);
-		close(fd[WRITE_END]);
-		fdesc = ft_getredir(tree->right->right, 0);
-		if (fdesc == -1)
-			exit(1);
-		if (fdesc)
-		{
-			dup2(fdesc, 1);
-			close(fdesc);
-		}
-		fdesc = ft_getredir(tree->right->left, 1);
-		if (fdesc == -1)
-			exit(1);
-		if (fdesc)
-		{
-			dup2(fdesc, 0);
-			close(fdesc);
-		}
-		if (!tree->data)
-			exit(1);
-		else if (ft_strnstr("envpwdechoexitunsetexportcd", tree->data,
-					27) != NULL && valid_builtins(tree) == 1 )
-		{
-			ft_use_builtins(tree, 1);
-			exit(0);
-		}
-		else
-			ft_exec_command(tree);
-	}
-	else
-	{
-		sig_ignore();
-		close(fd[WRITE_END]);
-		if (r_fd)
-			r_fd->fd[READ_END] = fd[READ_END];
-		else
-			close(fd[READ_END]);
-	}
-	return (pid);
-}
-

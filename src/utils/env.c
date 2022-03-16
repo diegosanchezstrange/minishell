@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:52:58 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:13:50 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:24:35 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_getenv(char *name)
 		tmp = ft_split((*cpy)->content, '=');
 		if (!tmp[1])
 			sol = NULL;
-		else 
+		else
 			sol = ft_strdup(tmp[1]);
 		if (!ft_strncmp(tmp[0], name, ft_max(len, ft_strlen((*cpy)->content))))
 		{

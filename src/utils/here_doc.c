@@ -6,15 +6,16 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 20:53:33 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:23:46 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_name(int i) {
-   	char	*num;
-   	char	*name;
+char	*get_name(int i)
+{
+	char	*num;
+	char	*name;
 	char	*tmp;
 
 	num = ft_itoa(i);
@@ -25,7 +26,7 @@ char	*get_name(int i) {
 	return (name);
 }
 
-char	*ft_open_tmp()
+char	*ft_open_tmp(void)
 {
 	int		i;
 	int		fd;
@@ -62,8 +63,8 @@ void	ft_read_input(t_ast *node, char *name)
 	while (line != NULL)
 	{
 		line = readline("> ");
-		if (ft_strlen(line) == ft_strlen(node->data) 
-				&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
+		if (ft_strlen(line) == ft_strlen(node->data)
+			&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
 		{
 			close(fd);
 			break ;

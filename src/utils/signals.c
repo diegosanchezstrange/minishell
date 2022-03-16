@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:40 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 20:53:43 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:31:00 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	sig_here_doc(void)
 
 void	my_signal(void)
 {
-
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, my_prompt);
 }

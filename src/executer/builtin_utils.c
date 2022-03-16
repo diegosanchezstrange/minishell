@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 22:19:24 by mclerico         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 void	ft_use_builtins(t_ast *tree, int fd)
@@ -62,3 +74,25 @@ int	ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[])
 	return (0);
 }
 
+int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
+{
+	int		pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		ft_dups(l_fd, fd, r_fd, tree);
+		if (!tree->data)
+			exit(1);
+		else if (ft_strnstr("envpwdechoexitunsetexportcd", tree->data, 27)
+			&& valid_builtins(tree) == 1)
+		{
+			ft_use_builtins(tree, 1);
+			exit(0);
+		}
+		ft_exec_command(tree);
+	}
+	else
+		ft_dupschild(fd, r_fd);
+	return (pid);
+}

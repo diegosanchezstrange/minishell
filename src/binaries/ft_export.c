@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:15:43 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:59:54 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	ft_sorted(char **ev)
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while (ev[i])
 	{
-		if (env[i + 1])
+		if (ev[i + 1])
 		{
 			if (ft_strncmp(ev[i], ev[i + 1], ft_llen(ev[i], ev[i + 1])) > 0)
 				return (0);

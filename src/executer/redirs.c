@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:28:09 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 22:08:26 by mclerico         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 int	ft_open_file(char *name, t_node_type type, int io, int old_fd)
@@ -11,9 +23,9 @@ int	ft_open_file(char *name, t_node_type type, int io, int old_fd)
 		fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (type == T_DOUBLE_OUT_NODE && io == 0)
 		fd = open(name, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if ((type == T_IN_NODE || type == T_DOUBLE_IN_NODE) 
-			&& io == 1)
-		fd = open(name, O_RDONLY , 0644);
+	if ((type == T_IN_NODE || type == T_DOUBLE_IN_NODE)
+		&& io == 1)
+		fd = open(name, O_RDONLY, 0644);
 	return (fd);
 }
 
@@ -46,3 +58,39 @@ int	ft_getredir(t_ast *tree, int io)
 	return (fd);
 }
 
+void	ft_dupsaux(t_l_fd *l_fd, int fd[], t_l_fd *r_fd)
+{
+	if (l_fd)
+	{
+		dup2(l_fd->fd[READ_END], 0);
+		close(l_fd->fd[READ_END]);
+	}
+	if (r_fd)
+		dup2(fd[WRITE_END], 1);
+	close(fd[WRITE_END]);
+}	
+
+void	ft_dups(t_l_fd *l_fd, int fd[], t_l_fd *r_fd, t_ast *tree)
+{
+	int		fdesc;
+
+	sig_child();
+	close(fd[READ_END]);
+	ft_dupsaux(l_fd, fd, r_fd);
+	fdesc = ft_getredir(tree->right->right, 0);
+	if (fdesc == -1)
+		exit(1);
+	if (fdesc)
+	{
+		dup2(fdesc, 1);
+		close(fdesc);
+	}
+	fdesc = ft_getredir(tree->right->left, 1);
+	if (fdesc == -1)
+		exit(1);
+	if (fdesc)
+	{
+		dup2(fdesc, 0);
+		close(fdesc);
+	}
+}
