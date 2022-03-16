@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/16 21:32:05 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/16 21:55:55 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ char	*ft_getenv(char *name);
 
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
+
+//classify_tokens.c
+int		ft_validate_redirs(t_pstatus *status, int *start);
+void	ft_validate_quotes(t_pstatus *status);
+int		ft_check_token_end(t_pstatus *status, int *start);
 
 // lexer
 t_list	**ft_get_tokens(t_pstatus *status);

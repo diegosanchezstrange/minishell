@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_quotes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:50:59 by dsanchez          #+#    #+#             */
+/*   Updated: 2022/03/16 21:51:38 by dsanchez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 t_lex_states	ft_change_state(t_lex_states state, t_lex_states newState)
@@ -8,7 +20,8 @@ t_lex_states	ft_change_state(t_lex_states state, t_lex_states newState)
 		return (P_NEUTRAL);
 }
 
-t_lex_states	ft_join_token(char **token, t_lex_states act, t_lex_states n, int i)
+t_lex_states	ft_join_token(char **token, t_lex_states act,
+		t_lex_states n, int i)
 {
 	char	*aux;
 	char	*new;
@@ -32,7 +45,8 @@ void	ft_parse_quotes(char **token)
 	{
 		if ((*token)[i] == '\"' && (state == P_NEUTRAL || state == P_D_QUOTE))
 			state = ft_join_token(token, state, P_D_QUOTE, i);
-		else if ((*token)[i] == '\'' && (state == P_NEUTRAL || state == P_S_QUOTE))
+		else if ((*token)[i] == '\''
+				&& (state == P_NEUTRAL || state == P_S_QUOTE))
 			state = ft_join_token(token, state, P_S_QUOTE, i);
 		else
 			i++;
