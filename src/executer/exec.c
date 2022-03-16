@@ -1,5 +1,16 @@
-#include <minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 20:51:57 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/16 21:18:14 by mclerico         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include <minishell.h>
 
 int	ft_getredir(t_ast *tree, int io)
 {
@@ -17,9 +28,9 @@ int	ft_getredir(t_ast *tree, int io)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if ((*cpy)->type == T_DOUBLE_OUT_NODE && io == 0)
 			fd = open((*cpy)->data, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if (((*cpy)->type == T_IN_NODE || (*cpy)->type == T_DOUBLE_IN_NODE) 
-				&& io == 1)
-			fd = open((*cpy)->data, O_RDONLY , 0644);
+		if (((*cpy)->type == T_IN_NODE || (*cpy)->type == T_DOUBLE_IN_NODE)
+			&& io == 1)
+			fd = open((*cpy)->data, O_RDONLY ,0644);
 		if (fd == -1)
 			return (0);
 		if (io == 0)
