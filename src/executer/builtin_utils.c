@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 04:00:55 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:20:12 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	valid_builtins(t_ast *tree)
 		return (1);
 	if (!ft_strncmp(tree->data, "export", 6))
 		return (1);
-	if (!ft_strncmp(tree->data, "unset", 5) && vars != NULL)
+	if (!ft_strncmp(tree->data, "unset", 5))
 		return (1);
 	if ((!ft_strncmp(tree->data, "env", 3)
 			|| !ft_strncmp(tree->data, "exit", 4)) && !vars)

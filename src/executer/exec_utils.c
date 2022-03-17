@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:29:43 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:51:07 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 04:10:52 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ void	ft_exec_command(t_ast *node)
 		path = ft_getpath(environ, cmd[0]);
 	if (!path)
 	{
-		ret = 127;
-		execve(cmd[0], cmd, environ);
+		printf("%s: command not found\n", cmd[0]);
+		exit(127);
 	}
 	else
 		execve(path, cmd, environ);
-	perror(cmd[0]);
+	perror("mini");
 	ft_free_split(environ);
 	ft_free_split(cmd);
 	exit(ret);

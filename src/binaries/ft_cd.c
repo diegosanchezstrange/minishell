@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:08:16 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:16:12 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 04:17:14 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_update(char *var, char *path)
 		{
 			free((*cpy)->next->content);
 			(*cpy)->next->content = ft_strdup(new);
+			free(new);
+			free(cpy);
 			return ;
 		}
 		*cpy = (*cpy)->next;
@@ -65,9 +67,13 @@ void	ft_cd(t_ast *path)
 	char	*old;
 
 	if (chdir(path->data) == -1)
+	{
+		perror(path->data);
 		return ;
+	}
 	old = ft_getact();
 	ft_update("OLDPWD", old);
 	home = getcwd(0, 0);
 	ft_update("PWD", home);
+	free(home);
 }

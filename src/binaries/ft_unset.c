@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:51:06 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 02:59:45 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:21:27 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ void	ft_unset(t_ast *tree)
 	t_ast	*node;
 
 	if (!tree->left)
+	{
+		printf("unset: not enough arguments\n");
+		g_env.l_cod = 1;
 		return ;
+	}
 	data = tree->left->data;
 	node = tree->left;
 	while (node)

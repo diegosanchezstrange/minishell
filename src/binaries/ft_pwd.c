@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 19:01:39 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:06:03 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:05:51 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	ft_pwd(int fd)
 		write(fd, path, ft_strlen(path));
 		write(fd, "\n", 1);
 	}
+	free(path);
 }
