@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:08:16 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 20:20:11 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 20:23:10 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ char	*ft_getact(char *var)
 		*cpy = (*cpy)->next;
 	}
 	if (!*cpy)
+	{
+		free(cpy);
 		return ("");
+	}
 	path = (*cpy)->content;
 	path += ft_strlen(var);
 	free(cpy);
