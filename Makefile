@@ -2,7 +2,7 @@ NAME	= minishell
 
 CC		= gcc
 
-CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address 
+CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
