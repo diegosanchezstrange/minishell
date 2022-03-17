@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:51:06 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 20:52:20 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 02:59:45 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_removevar(char *data)
 			next = (*cpy)->next->next;
 			ft_lstdelone((*cpy)->next, free);
 			(*cpy)->next = next;
+			free(cpy);
 			return ;
 		}
 		(*cpy) = (*cpy)->next;

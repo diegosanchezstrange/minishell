@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 22:23:46 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 01:57:33 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ void	ft_read_input(t_ast *node, char *name)
 	char	*line;
 	int		fd;
 
-	line = NULL;
 	fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	line = readline("> ");
 	while (line != NULL)
 	{
-		line = readline("> ");
 		if (ft_strlen(line) == ft_strlen(node->data)
 			&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
 		{
@@ -71,6 +70,7 @@ void	ft_read_input(t_ast *node, char *name)
 		}
 		ft_putendl_fd(line, fd);
 		free(line);
+		line = readline("> ");
 	}
 	close(fd);
 	free(line);

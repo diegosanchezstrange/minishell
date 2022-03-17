@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/01 21:19:13 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 02:03:03 by dsanchez         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
 		//ft_print_tokens_list(tokens);
-		if (*tokens)
+		if (tokens && *tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
 			g_env.l_cod = ft_process(tree);

@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:39 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/16 22:01:16 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 02:06:48 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_list	**ft_get_tokens(t_pstatus *status)
 	if (status->error)
 	{
 		ft_lstclear(tokens, free);
+		free(tokens);
 		return (NULL);
 	}
 	return (tokens);
