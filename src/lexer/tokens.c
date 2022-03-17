@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:39 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/17 15:32:03 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:13:51 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ t_token	*ft_get_current_token(t_pstatus *status, char **actual)
 
 char	*ft_error_near(t_pstatus **status, char c)
 {
-	printf("Error near '%c'\n", c);
+	if (c == 0)
+		printf("Error near '\\n'\n");
+	else
+		printf("Error near '%c'\n", c);
 	(*status)->error = 1;
 	return (NULL);
 }
@@ -59,7 +62,8 @@ char	*ft_get_token(t_pstatus **status)
 			return (ft_error_near(status, (*status)->data[(*status)->curr]));
 		(*status)->curr++;
 	}
-	if ((*status)->type != T_ARGUMENT && (*status)->curr == start)
+	if (((*status)->type != T_ARGUMENT && (*status)->curr == start)
+			|| (*status)->state == P_D_QUOTE || (*status)->state == P_S_QUOTE)
 		return (ft_error_near(status, (*status)->data[(*status)->curr]));
 	return (ft_substr((*status)->data, start, (*status)->curr - start));
 }

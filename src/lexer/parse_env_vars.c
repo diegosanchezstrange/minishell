@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:58:35 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/16 21:58:36 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:04:23 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,21 @@ void	ft_extend_vars(char **token)
 {
 	int		i;
 	int		squotes;
+	int		dquotes;
 
 	i = 0;
 	squotes = 1;
+	dquotes = 1;
 	while ((*token)[i])
 	{
 		if ((*token)[i] == '\'')
 			squotes++;
+		if ((*token)[i] == '\"')
+			dquotes++;
 		if ((*token)[i] == '$' && squotes % 2 != 0)
+			ft_process_env_vars(token, i);
+		else if ((*token)[i] == '$'
+				&& (squotes % 2 != 0 && (dquotes == 1 || dquotes % 2 == 0)))
 			ft_process_env_vars(token, i);
 		if ((*token)[i])
 			i++;
