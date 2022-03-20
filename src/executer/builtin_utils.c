@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 15:20:12 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:48:30 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
 		ft_exec_command(tree);
 	}
 	else
+	{
+		if (l_fd)
+			close(l_fd->fd[READ_END]);
 		ft_dupschild(fd, r_fd);
+	}
 	return (pid);
 }

@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:51:57 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 03:49:36 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:17:22 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	ft_dupschild(int fd[], t_l_fd *r_fd)
 {
 	sig_ignore();
-	close(fd[WRITE_END]); if (r_fd)
+	close(fd[WRITE_END]); 
+	if (r_fd)
 		r_fd->fd[READ_END] = fd[READ_END];
 	else
 		close(fd[READ_END]);
@@ -31,6 +32,7 @@ t_l_fd	*ft_exec_tree(t_ast *tree, int pip, int *l_pid, t_l_fd *l_fd)
 	{
 		r_fd = ft_exec_tree(tree->left, 1, l_pid, l_fd);
 		ft_exec_tree(tree->right, 2, l_pid, r_fd);
+		g_env.l_read = r_fd->fd[READ_END];
 		free(r_fd);
 	}
 	else if (tree->type == T_COMMAND_NODE)

@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 20:47:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/22 20:51:57 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:13:32 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_free_split(char **s)
 {
 	char	**str;
 
+	if (!s)
+		return ;
 	str = s;
 	while (*str)
 	{

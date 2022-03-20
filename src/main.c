@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/17 20:21:36 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/18 00:17:48 by dsanchez         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */
 
@@ -71,14 +71,23 @@ int	ft_process(t_ast **tree)
 {
 	int	status;
 	int	*l_pid;
+	int pid;
 
 	l_pid = ft_calloc(1, sizeof(int));
 	if (ft_process_here_doc(tree))
 		return (130);
+	//g_env.l_read = -1;
 	ft_exec_tree(*tree, 0, l_pid, NULL);
+	//if (g_env.l_read != -1)
+		//close(g_env.l_read);
 	if (*l_pid != 0)
 	{
 		waitpid(*l_pid, &status, 0);
+		pid = waitpid(-1, NULL, 0);
+		while (pid != -1)
+		{
+			pid = waitpid(-1, NULL, 0);
+		}
 		ft_rm_here_doc(tree);
 		free(l_pid);
 		if (WIFEXITED(status))
@@ -126,7 +135,6 @@ int	main(int argc, char **argv, char **envp)
 			g_env.l_cod = ft_process(tree);
 		free(status.data);
 		ft_free_all(tree, tokens);
-		system("leaks minishell");
 	}
 	return (0);
 }

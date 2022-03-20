@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/17 03:49:48 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/20 20:51:09 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_prog
 {
 	t_list	**env;
 	int		l_cod;
+	int		l_read;
 }				t_prog;
 
 extern t_prog	g_env;
@@ -141,6 +142,8 @@ t_ast	*ft_astget_last_l(t_ast *tree);
 void	ft_astappend_l(t_ast **tree, t_ast *new);
 void	ft_astappend_r(t_ast **tree, t_ast *new);
 int		ft_astsize_r(t_ast *node);
+
+int		ft_check_tokens(t_list *tokens);
 
 // parser.c
 t_list	*ft_fill_simple_command(t_list *tokens, t_ast **tree);

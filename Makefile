@@ -2,7 +2,7 @@ NAME	= minishell
 
 CC		= gcc
 
-CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address 
 
 SRCS_MAIN	= main.c
 
@@ -10,7 +10,7 @@ SRCS_UTILS	= frees.c signals.c here_doc.c env.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
-SRCS_PARSER	= parser.c parse_command.c
+SRCS_PARSER	= parser.c parse_command.c check_tokens.c
 
 SRCS_BINARY = ft_pwd.c ft_echo.c ft_exit.c ft_env.c ft_unset.c ft_export.c ft_cd.c
 
