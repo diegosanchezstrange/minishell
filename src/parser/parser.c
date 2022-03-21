@@ -46,7 +46,6 @@ t_list	*ft_fill_tree(t_list **tokens, t_ast **tree)
 	}
 	if ((*tree)->type == T_COMMAND_NODE)
 	{
-		//printf("Filling COMMAND : %s\n", ((t_token *)current->content)->data);
 		return (ft_fill_simple_command(current, tree));
 	}
 	return (*tokens);
@@ -56,6 +55,8 @@ t_ast	**ft_generate_ast(t_list **tokens)
 {
 	t_ast	**head;
 
+	if (!ft_check_tokens(*tokens))
+		return (NULL);
 	head = ft_calloc(1, sizeof(void *));
 	if (!head)
 		return (NULL);

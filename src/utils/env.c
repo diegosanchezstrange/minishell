@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:52:58 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 22:24:35 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:38:18 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,49 @@ int	ft_llen(char *s1, char *s2)
 		return (ft_strlen(s2));
 }
 
+void	ft_set_env_split(t_list *cpy, char **name, char **content)
+{
+	char	**tmp;
+
+	tmp = ft_split(cpy->content, '=');
+	free(*name);
+	if (!tmp[1])
+		*name = NULL;
+	else
+		*name = ft_strdup(tmp[0]);
+	free(*content);
+	if (!tmp[0])
+		*content = NULL;
+	else
+		*content = ft_strdup(tmp[1]);
+	ft_free_split(tmp);
+}
+
 char	*ft_getenv(char *name)
 {
 	t_list	**cpy;
 	size_t	len;
 	char	*sol;
-	char	**tmp;
+	char	*cname;
 
 	cpy = ft_calloc(sizeof(void *), 1);
 	*cpy = *(g_env.env);
 	len = ft_strlen(name);
+	cname = NULL;
+	sol = NULL;
 	while (*cpy)
 	{
-		tmp = ft_split((*cpy)->content, '=');
-		if (!tmp[1])
-			sol = NULL;
-		else
-			sol = ft_strdup(tmp[1]);
-		if (!ft_strncmp(tmp[0], name, ft_max(len, ft_strlen((*cpy)->content))))
+		ft_set_env_split(*cpy, &(cname), &(sol));
+		if (!ft_strncmp(cname, name, ft_max(len, ft_strlen((*cpy)->content))))
 		{
 			free(cpy);
-			ft_free_split(tmp);
+			free(cname);
 			return (sol);
 		}
-		ft_free_split(tmp);
-		free(sol);
 		*cpy = (*cpy)->next;
 	}
+	free(cname);
+	free(sol);
 	free(cpy);
 	return (NULL);
 }

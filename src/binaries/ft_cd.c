@@ -5,14 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 19:32:18 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 19:32:25 by mclerico         ###   ########.fr       */
-/*                                                                            */
+/*   Created: 2022/02/15 18:08:16 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/21 19:52:18 by mclerico         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*ft_getact(void)
+char	*ft_getact(char *var)
 {
 	t_list	**cpy;
 	char	*path;
@@ -21,16 +20,30 @@ char	*ft_getact(void)
 	*cpy = *(g_env.env);
 	while (*cpy)
 	{
-		if (ft_strnstr((*cpy)->content, "PWD", 3) != NULL)
+		if (ft_strnstr((*cpy)->content, var, ft_strlen(var)) != NULL)
 			break ;
 		*cpy = (*cpy)->next;
 	}
 	if (!*cpy)
+	{
+		free(cpy);
 		return ("");
+	}
 	path = (*cpy)->content;
-	path += 4;
+	path += ft_strlen(var);
 	free(cpy);
 	return (path);
+}
+
+char  *ft_joinwfree(char *s1, char *s2)
+{
+	char *act;
+	char 	*new;
+
+	act = s1;
+	new = ft_strjoin(act, s2);
+	free(act);
+	return (new);
 }
 
 void	ft_update(char *var, char *path)
@@ -41,7 +54,7 @@ void	ft_update(char *var, char *path)
 	cpy = ft_calloc(1, sizeof(void *));
 	*cpy = *(g_env.env);
 	new = ft_strjoin(var, "=");
-	new = ft_strjoin(new, path);
+	new = ft_joinwfree(new, path);
 	while (*cpy)
 	{
 		if ((*cpy)->next
@@ -49,6 +62,8 @@ void	ft_update(char *var, char *path)
 		{
 			free((*cpy)->next->content);
 			(*cpy)->next->content = ft_strdup(new);
+			free(new);
+			free(cpy);
 			return ;
 		}
 		*cpy = (*cpy)->next;
@@ -59,15 +74,46 @@ void	ft_update(char *var, char *path)
 	free(new);
 }
 
+void	ft_home(void)
+{
+	char	*home;
+	char	*act;
+
+	home = ft_getact("HOME=");
+	if (ft_strlen(home) == 0)
+	{
+		printf("cd: HOME not set\n");
+		g_env.l_cod = 1;
+		return ;
+	}
+	else
+	{
+		if (chdir(home) != -1)
+		{
+			act = ft_getact("PWD=");
+			ft_update("OLDPWD", act);
+			ft_update("PWD", home);
+		}
+		else
+			perror(home);
+	}
+}
+
 void	ft_cd(t_ast *path)
 {
 	char	*home;
 	char	*old;
 
-	if (chdir(path->data) == -1)
+	if (!path)
+		ft_home();
+	else if (chdir(path->data) == -1)
+	{
+		perror(path->data);
 		return ;
-	old = ft_getact();
+	}
+	old = ft_getact("PWD");
 	ft_update("OLDPWD", old);
 	home = getcwd(0, 0);
 	ft_update("PWD", home);
+	free(home);
 }

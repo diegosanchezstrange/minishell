@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 22:19:24 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:48:30 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	valid_builtins(t_ast *tree)
 		return (1);
 	if (!ft_strncmp(tree->data, "export", 6))
 		return (1);
-	if (!ft_strncmp(tree->data, "unset", 5) && vars != NULL)
+	if (!ft_strncmp(tree->data, "unset", 5))
 		return (1);
 	if ((!ft_strncmp(tree->data, "env", 3)
 			|| !ft_strncmp(tree->data, "exit", 4)) && !vars)
@@ -52,26 +52,27 @@ int	valid_builtins(t_ast *tree)
 		return (0);
 }
 
-int	ft_exec_builtin(t_ast *tree, int pip, t_l_fd *r_fd, int fd[])
+void	ft_exec_builtin(t_ast *tree)
 {
 	int	fdesc;
+	int	in_fd;
 
-	if (pip)
-		fdesc = fd[WRITE_END];
+	fdesc = 1;
+	in_fd = ft_getredir(tree->right->left, 1);
+	if (in_fd == -1)
+	{
+		g_env.l_cod = 1;
+		return ;
+	}
 	fdesc = ft_getredir(tree->right->right, 0);
+	if (fdesc == -1)
+	{
+		g_env.l_cod = 1;
+		return ;
+	}
 	if (!fdesc)
 		fdesc = 1;
 	ft_use_builtins(tree, fdesc);
-	close(fd[WRITE_END]);
-	if (pip)
-	{
-		r_fd->fd[READ_END] = fd[READ_END];
-		return (0);
-	}
-	close(fd[READ_END]);
-	free(r_fd);
-	r_fd = NULL;
-	return (0);
 }
 
 int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
@@ -93,6 +94,10 @@ int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
 		ft_exec_command(tree);
 	}
 	else
+	{
+		if (l_fd)
+			close(l_fd->fd[READ_END]);
 		ft_dupschild(fd, r_fd);
+	}
 	return (pid);
 }

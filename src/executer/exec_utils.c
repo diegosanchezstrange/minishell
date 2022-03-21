@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:29:43 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:51:07 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:21:14 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**ft_envmatrix(void)
 	if (!(*(g_env.env)))
 	{
 		free(environ);
+		free(cpy);
 		return (NULL);
 	}
 	*cpy = *(g_env.env);
@@ -55,10 +56,12 @@ char	*ft_getpath(char **envp, char *cmd)
 	char	**tmp;
 	char	*command;
 
+	if (!envp)
+		return (NULL);
 	while (*envp && ft_strncmp("PATH", *envp, 4))
 		envp++;
 	if (!*envp)
-		return ("");
+		return (NULL);
 	tmp = ft_split(*envp, '=');
 	path = ft_split(tmp[1], ':');
 	ft_free_split(tmp);
@@ -103,8 +106,6 @@ void	ft_exec_command(t_ast *node)
 	char	**environ;
 	int		ret;
 
-	if (!node)
-		return ;
 	ret = EXIT_FAILURE;
 	environ = ft_envmatrix();
 	cmd = ft_return_cmd(node->left, node->data);
@@ -114,12 +115,14 @@ void	ft_exec_command(t_ast *node)
 		path = ft_getpath(environ, cmd[0]);
 	if (!path)
 	{
-		ret = 127;
-		execve(cmd[0], cmd, environ);
+		printf("%s: command not found\n", cmd[0]);
+		ft_free_split(environ);
+		ft_free_split(cmd);
+		exit(127);
 	}
 	else
 		execve(path, cmd, environ);
-	perror(cmd[0]);
+	perror("mini");
 	ft_free_split(environ);
 	ft_free_split(cmd);
 	exit(ret);

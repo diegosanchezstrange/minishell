@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:59:54 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/17 20:24:06 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_addvar(char **data, char *tree_data)
 		{
 			free((*cpy)->next->content);
 			(*cpy)->next->content = ft_strdup(tree_data);
+			free(cpy);
 			return ;
 		}
 		(*cpy) = (*cpy)->next;

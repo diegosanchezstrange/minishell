@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/17 19:29:38 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:51:36 by mclerico         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_rm_here_doc(t_ast **tree)
 
 	if ((*tree)->type == T_PIPE_NODE)
 	{
-		ft_process_here_doc(&((*tree)->left));
-		ft_process_here_doc(&((*tree)->right));
+		ft_rm_here_doc(&((*tree)->left));
+		ft_rm_here_doc(&((*tree)->right));
 	}
 	else
 	{
@@ -71,6 +71,7 @@ int	ft_process(t_ast **tree)
 {
 	int	status;
 	int	*l_pid;
+	int pid;
 
 	l_pid = ft_calloc(1, sizeof(int));
 	if (ft_process_here_doc(tree))
@@ -79,6 +80,11 @@ int	ft_process(t_ast **tree)
 	if (*l_pid != 0)
 	{
 		waitpid(*l_pid, &status, 0);
+		pid = waitpid(-1, NULL, 0);
+		while (pid != -1)
+		{
+			pid = waitpid(-1, NULL, 0);
+		}
 		ft_rm_here_doc(tree);
 		free(l_pid);
 		if (WIFEXITED(status))
@@ -120,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 		status.error = 0;
 		tokens = ft_get_tokens(&status);
 		//ft_print_tokens_list(tokens);
-		if (*tokens)
+		if (tokens && *tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
 			g_env.l_cod = ft_process(tree);

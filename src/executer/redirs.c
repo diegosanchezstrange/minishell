@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:28:09 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 22:08:26 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:37:08 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	ft_getredir(t_ast *tree, int io)
 
 void	ft_dupsaux(t_l_fd *l_fd, int fd[], t_l_fd *r_fd)
 {
+	//if (g_env.l_read != -1)
+		//close(g_env.l_read);
 	if (l_fd)
 	{
 		dup2(l_fd->fd[READ_END], 0);
