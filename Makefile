@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Werror -Wextra -D BUFFER_SIZE=32 -g3 -fsanitize=address
 
 SRCS_MAIN	= main.c
 
-SRCS_UTILS	= frees.c here_doc.c env.c
+SRCS_UTILS	= frees.c here_doc.c env.c signals.c
 
 SRCS_LEXER	= tokens.c classify_tokens.c utils.c parse_env_vars.c parse_quotes.c
 
@@ -64,7 +64,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
 	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@
 
 $(NAME): ${LIBFT_NAME} ${OBJS_DIRS} ${OBJS_PATHS} 
-	${CC} ${CFLAGS} ${LIB_LNK} ${OBJS_PATHS} -o ${NAME} #-lft -lreadline
+	${CC} ${CFLAGS} ${LIB_LNK} ${OBJS_PATHS} -o ${NAME} -lft -lreadline
 
 ${LIBFT_NAME} :
 	make -C ${LIBFT}

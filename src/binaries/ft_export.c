@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/17 20:24:06 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:05:27 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	ft_sorted(char **ev)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
+	if (!ev || !*ev)
+		return (1);
 	while (ev[i])
 	{
 		if (ev[i + 1])
@@ -34,9 +36,13 @@ void	ft_printenv(char **env, int fd)
 	int	i;
 
 	i = 0;
+	if (!env || !*env)
+		return ;
 	while (env[i])
 	{
+		write(fd, "declare -x ", 11);
 		write(fd, env[i], ft_strlen(env[i]));
+		write(fd, "\n", 1);
 		i++;
 	}
 }
