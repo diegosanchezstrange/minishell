@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/01 21:19:13 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:29:38 by mclerico         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	status.l_error = g_env.l_cod;
 	while (1)
 	{
-		my_signal();
+	my_signal();
 		status.data = readline("$ ");
 		tree = NULL;
 		if (status.data == NULL)
