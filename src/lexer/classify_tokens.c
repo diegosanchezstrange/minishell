@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 18:38:26 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/16 21:56:59 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/21 02:25:11 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	ft_check_token_end(t_pstatus *status, int *start)
 	if (ft_strchr("<>|", status->data[status->curr]) && *start != status->curr
 		&& status->state == P_NEUTRAL)
 		return (1);
-	if (ft_strchr("<>", status->data[status->curr]))
+	if (ft_strchr("<>", status->data[status->curr])
+		&& status->state == P_NEUTRAL)
 		return (ft_validate_redirs(status, start));
 	if (status->data[status->curr] == '|' && status->state == P_NEUTRAL
 		&& status->type == T_ARGUMENT)

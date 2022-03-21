@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/18 00:17:48 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:34:54 by dsanchez         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_rm_here_doc(t_ast **tree)
 
 	if ((*tree)->type == T_PIPE_NODE)
 	{
-		ft_process_here_doc(&((*tree)->left));
-		ft_process_here_doc(&((*tree)->right));
+		ft_rm_here_doc(&((*tree)->left));
+		ft_rm_here_doc(&((*tree)->right));
 	}
 	else
 	{
@@ -76,10 +76,7 @@ int	ft_process(t_ast **tree)
 	l_pid = ft_calloc(1, sizeof(int));
 	if (ft_process_here_doc(tree))
 		return (130);
-	//g_env.l_read = -1;
 	ft_exec_tree(*tree, 0, l_pid, NULL);
-	//if (g_env.l_read != -1)
-		//close(g_env.l_read);
 	if (*l_pid != 0)
 	{
 		waitpid(*l_pid, &status, 0);

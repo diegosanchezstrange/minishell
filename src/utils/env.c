@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:52:58 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 23:46:08 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:38:18 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*ft_getenv(char *name)
 		}
 		*cpy = (*cpy)->next;
 	}
+	free(cname);
+	free(sol);
 	free(cpy);
 	return (NULL);
 }
