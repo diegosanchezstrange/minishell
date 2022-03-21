@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:51:57 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/19 15:17:22 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:21:26 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_l_fd	*ft_exec_tree(t_ast *tree, int pip, int *l_pid, t_l_fd *l_fd)
 	{
 		r_fd = ft_exec_tree(tree->left, 1, l_pid, l_fd);
 		ft_exec_tree(tree->right, 2, l_pid, r_fd);
-		g_env.l_read = r_fd->fd[READ_END];
 		free(r_fd);
 	}
 	else if (tree->type == T_COMMAND_NODE)
