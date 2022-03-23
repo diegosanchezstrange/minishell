@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:14:39 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/22 14:47:53 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/23 16:37:41 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*ft_get_current_token(t_pstatus *status, char **actual)
 	token->type = status->type;
 	token->data = *actual;
 	//ft_extend_vars(&token->data);
-	//ft_parse_quotes(&token->data);
+	ft_parse_quotes(&token->data);
 	if (!ft_strlen(token->data))
 	{
 		free(token->data);
@@ -88,7 +88,6 @@ t_list	**ft_get_tokens(t_pstatus *status)
 	t_list	**tokens;
 
 	ft_extend_vars(&(status->data));
-	printf("DATA : %s\n", status->data);
 	tokens = ft_calloc(1, sizeof(void *));
 	if (!tokens)
 		return (NULL);
