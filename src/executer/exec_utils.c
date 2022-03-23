@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:29:43 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/19 15:21:14 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:18:12 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,28 @@ char	*ft_strjoin_path(char *path, char *cmd)
 	return (sol);
 }
 
-char	*ft_getpath(char **envp, char *cmd)
+char	*ft_getpath(char *cmd)
 {
 	char	**path;
-	char	**tmp;
+	char	*tmp;
 	char	*command;
+	int		i;
 
-	if (!envp)
+	tmp = ft_getenv("PATH");
+	if (!tmp)
 		return (NULL);
-	while (*envp && ft_strncmp("PATH", *envp, 4))
-		envp++;
-	if (!*envp)
-		return (NULL);
-	tmp = ft_split(*envp, '=');
-	path = ft_split(tmp[1], ':');
-	ft_free_split(tmp);
-	tmp = path;
-	while (*path)
+	path = ft_split(tmp, ':');
+	free(tmp);
+	i = 0;
+	while (path[i])
 	{
-		command = ft_strjoin_path(*path, cmd);
+		command = ft_strjoin_path(path[i], cmd);
 		if (access(command, F_OK) == 0)
-		{
-			ft_free_split(tmp);
 			return (command);
-		}
 		free(command);
-		path++;
+		i++;
 	}
-	ft_free_split(tmp);
+	ft_free_split(path);
 	return (NULL);
 }
 
@@ -112,7 +106,7 @@ void	ft_exec_command(t_ast *node)
 	if (access(cmd[0], F_OK) == 0)
 		path = cmd[0];
 	else
-		path = ft_getpath(environ, cmd[0]);
+		path = ft_getpath(cmd[0]);
 	if (!path)
 	{
 		printf("%s: command not found\n", cmd[0]);

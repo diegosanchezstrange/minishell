@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:52:58 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/21 14:38:18 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:33:46 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	ft_set_env_split(t_list *cpy, char **name, char **content)
 
 	tmp = ft_split(cpy->content, '=');
 	free(*name);
-	if (!tmp[1])
+	if (!tmp[0])
 		*name = NULL;
 	else
 		*name = ft_strdup(tmp[0]);
 	free(*content);
-	if (!tmp[0])
+	if (!tmp[1])
 		*content = NULL;
 	else
 		*content = ft_strdup(tmp[1]);
