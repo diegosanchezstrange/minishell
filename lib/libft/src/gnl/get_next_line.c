@@ -13,6 +13,23 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*res;
+	size_t	i;
+
+	i = 0;
+	res = (char *)malloc(nmemb * size);
+	if (!res)
+		return (NULL);
+	while (i < size * nmemb)
+	{
+		res[i] = 0;
+		i++;
+	}
+	return ((void *)res);
+}
+
 int	next_nl(char *line)
 {
 	int	i;
@@ -87,15 +104,11 @@ char	*get_next_line(int fd)
 {
 	char		*buff;
 	int			r;
-	int			i;
 	static char	*line;
 
-	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return (NULL);
+	buff = ft_calloc(BUFFER_SIZE + 1, 1);
 	r = 1;
 	while (r != 0 && next_nl(line) == -1)
 	{
@@ -107,7 +120,6 @@ char	*get_next_line(int fd)
 		}
 		buff[r] = '\0';
 		line = ft_strjoin_gnl(line, buff);
-		i++;
 	}
 	free(buff);
 	buff = get_res(line);

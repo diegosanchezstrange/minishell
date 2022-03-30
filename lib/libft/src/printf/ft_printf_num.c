@@ -25,7 +25,7 @@ int	ft_putnbr(int nbr)
 	}
 	else
 		n = (unsigned int) nbr;
-	if (n >= 10 )
+	if (n >= 10)
 	{
 		c += ft_putnbr (n / 10);
 		c += ft_putnbr (n % 10);
@@ -40,7 +40,7 @@ int	ft_putnbr_u(unsigned int nbr)
 	int				c;
 
 	c = 0;
-	if (nbr >= 10 )
+	if (nbr >= 10)
 	{
 		c += ft_putnbr (nbr / 10);
 		c += ft_putnbr (nbr % 10);

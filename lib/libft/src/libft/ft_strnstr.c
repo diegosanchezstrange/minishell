@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 static int	check_possible_needle(const char *p, const char *n, size_t s, int i)
 {
 	int		f_size;
