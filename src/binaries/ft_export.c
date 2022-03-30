@@ -16,7 +16,7 @@ int	ft_sorted(char **ev)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!ev || !*ev)
 		return (1);
 	while (ev[i])
