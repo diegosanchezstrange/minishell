@@ -19,7 +19,10 @@ void	ft_echo(t_ast *tree, int fd)
 	tree = tree->left;
 	nline = 1;
 	if (!tree)
+	{
+		write(fd, "\n", 1);
 		return ;
+	}
 	if (ft_strncmp((tree->data), "-n", ft_strlen(tree->data)) == 0)
 	{
 		tree = tree->right;
