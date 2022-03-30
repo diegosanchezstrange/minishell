@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/21 19:51:48 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:24:59 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ typedef struct s_pstatus
 {
 	char			*data;
 	int				curr;
-	int 			error;
-	int 			l_error;
+	int				error;
+	int				l_error;
 	t_token_type	type;
 	t_lex_states	state;
 }				t_pstatus;
@@ -119,7 +119,7 @@ void	sig_here_doc(void);
 
 //env.c
 char	*ft_getenv(char *name);
-
+void	ft_cloneenv(char **environ);
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
 
@@ -162,9 +162,9 @@ int		ft_getredir(t_ast *tree, int io);
 
 // executor.c
 t_l_fd	*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
-void    ft_exec_command(t_ast *node);
-char	**ft_envmatrix();
-void    ft_dups(t_l_fd *l_fd, int fd[], t_l_fd *r_fd, t_ast *tree);
+void	ft_exec_command(t_ast *node);
+char	**ft_envmatrix(void);
+void	ft_dups(t_l_fd *l_fd, int fd[], t_l_fd *r_fd, t_ast *tree);
 int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
 int		valid_builtins(t_ast *tree);
 void	ft_dupschild(int fd[], t_l_fd *r_fd);
@@ -176,7 +176,7 @@ void	ft_pwd(int fd);
 void	ft_cd(t_ast *path);
 void	ft_echo(t_ast *tree, int fd);
 void	ft_exit(void);
-void    ft_env(int fd);
+void	ft_env(int fd);
 void	ft_unset(t_ast *tree);
 void	ft_export(t_ast *tree, int fd);
 

@@ -82,6 +82,6 @@ fclean:		clean
 re:		fclean all
 
 tags :
-	ctags -R ${SRCS_PATHS}
+	ctags  ${SRCS_PATHS}
 
 .PHONY:	clean re fclean all

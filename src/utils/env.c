@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 20:52:58 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/22 14:33:46 by dsanchez         ###   ########.fr       */
+/*   Created: 2022/03/30 20:10:50 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/30 20:11:07 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ void	ft_set_env_split(t_list *cpy, char **name, char **content)
 	else
 		*content = ft_strdup(tmp[1]);
 	ft_free_split(tmp);
+}
+
+void	ft_cloneenv(char **environ)
+{
+	int	i;
+
+	i = 0;
+	g_env.l_cod = 0;
+	g_env.env = (t_list **)ft_calloc(sizeof(t_list *), 1);
+	while (environ[i] != NULL)
+		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(environ[i++])));
 }
 
 char	*ft_getenv(char *name)
