@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/21 19:51:48 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:08:54 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	sig_here_doc(void);
 
 //env.c
 char	*ft_getenv(char *name);
-
+void	ft_cloneenv(char **environ);
 // parser_quotes.c
 void	ft_parse_quotes(char **token);
 

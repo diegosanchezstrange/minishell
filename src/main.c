@@ -3,48 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsanchez <dsanchez@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/09 16:14:18 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/23 16:25:03 by dsanchez         ###   ########.fr       */
-/*                                                                            */ 
+/*   Created: 2022/03/30 19:51:08 by mclerico          #+#    #+#             */
+/*   Updated: 2022/03/30 20:09:37 by mclerico         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <readline/readline.h>
 
 t_prog	g_env;
-
-void	ft_cloneenv(char **environ)
-{
-	int	i;
-
-	i = 0;
-	g_env.l_cod = 0;
-	g_env.env = (t_list **)ft_calloc(sizeof(t_list *), 1);
-	while (environ[i] != NULL)
-		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(environ[i++])));
-}
-
-void	ft_print_tokens_list(t_list **tokens)
-{
-	t_list	**pointer;
-
-	if (!tokens)
-		return ;
-	pointer = malloc(sizeof(void *));
-	if (!pointer)
-		return ;
-	*pointer = *tokens;
-	printf("------------------- TOKENS -------------------\n");
-	while (*pointer)
-	{
-		printf("data: %s , type: %d\n", ((t_token *)((*pointer)->content))->data, ((t_token *)((*pointer)->content))->type);
-		*pointer = (*pointer)->next;
-	}
-	printf("------------------- TOKENS -------------------\n");
-	free(pointer);
-}
 
 void	ft_rm_here_doc(t_ast **tree)
 {
@@ -67,37 +36,54 @@ void	ft_rm_here_doc(t_ast **tree)
 	}
 }
 
+int	ft_procaux(int *l_pid, t_ast **tree)
+{
+	int	pid;
+	int	status;
+
+	waitpid(*l_pid, &status, 0);
+	pid = waitpid(-1, NULL, 0);
+	while (pid != -1)
+		pid = waitpid(-1, NULL, 0);
+	ft_rm_here_doc(tree);
+	free(l_pid);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+	{
+		write(1, "\n", 1);
+		return (WTERMSIG(status) + 128);
+	}
+	return (status);
+}
+
 int	ft_process(t_ast **tree)
 {
-	int	status;
 	int	*l_pid;
-	int pid;
 
 	l_pid = ft_calloc(1, sizeof(int));
 	if (ft_process_here_doc(tree))
 		return (130);
 	ft_exec_tree(*tree, 0, l_pid, NULL);
 	if (*l_pid != 0)
-	{
-		waitpid(*l_pid, &status, 0);
-		pid = waitpid(-1, NULL, 0);
-		while (pid != -1)
-		{
-			pid = waitpid(-1, NULL, 0);
-		}
-		ft_rm_here_doc(tree);
-		free(l_pid);
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-		else if (WIFSIGNALED(status))
-		{
-			write(1, "\n", 1);
-			return (WTERMSIG(status) + 128);
-		}
-	}
+		return (ft_procaux(l_pid, tree));
 	ft_rm_here_doc(tree);
 	free(l_pid);
 	return (0);
+}
+
+void	ft_status(t_pstatus *status)
+{
+	status->data = readline("$ ");
+	if (status->data == NULL)
+	{
+		write(1, "exit\n", 5);
+		exit(0);
+	}
+	if (status->data)
+		add_history(status->data);
+	status->curr = 0;
+	status->error = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -112,20 +98,10 @@ int	main(int argc, char **argv, char **envp)
 	status.l_error = g_env.l_cod;
 	while (1)
 	{
-	my_signal();
-		status.data = readline("$ ");
+		my_signal();
 		tree = NULL;
-		if (status.data == NULL)
-		{
-			write(1, "exit\n", 5);
-			exit(0);
-		}
-		if (status.data)
-			add_history(status.data);
-		status.curr = 0;
-		status.error = 0;
+		ft_status(&status);
 		tokens = ft_get_tokens(&status);
-		//ft_print_tokens_list(tokens);
 		if (tokens && *tokens)
 			tree = ft_generate_ast(tokens);
 		if (tree)
