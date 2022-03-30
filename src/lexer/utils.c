@@ -21,7 +21,6 @@ int	ft_isspace(int c)
 
 void	ft_skip_spaces(t_pstatus *status)
 {
-	//while (status->data[status->curr] == ' ')
 	while (ft_isspace(status->data[status->curr]))
 		status->curr++;
 }

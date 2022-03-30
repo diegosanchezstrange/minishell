@@ -27,8 +27,6 @@
 # define CYAN	"\033[1;36m"
 # define NC		"\033[0m"
 
-//extern t_list	*g_env;
-
 typedef struct s_prog
 {
 	t_list	**env;

@@ -1,5 +1,17 @@
 #include <minishell.h>
 
+void	ft_check_end_struc(t_ast **tree, t_ast *head)
+{
+	if (!*tree)
+		ft_astadd_left(tree, ft_astnew(T_COMMAND_NODE, NULL));
+	else
+	{
+		if (!(*tree)->right)
+			ft_astadd_right(tree, ft_astnew(T_COMMAND_NODE, NULL));
+		*tree = head;
+	}
+}
+
 void	ft_structure_tree(t_list *tokens, t_ast **tree)
 {
 	t_token	*actual;
@@ -20,14 +32,7 @@ void	ft_structure_tree(t_list *tokens, t_ast **tree)
 		}
 		tokens = tokens->next;
 	}
-	if (!*tree)
-		ft_astadd_left(tree, ft_astnew(T_COMMAND_NODE, NULL));
-	else
-	{
-		if (!(*tree)->right)
-			ft_astadd_right(tree, ft_astnew(T_COMMAND_NODE, NULL));
-		*tree = head;
-	}
+	ft_check_end_struc(tree, head);
 }
 
 t_list	*ft_fill_tree(t_list **tokens, t_ast **tree)
@@ -37,17 +42,11 @@ t_list	*ft_fill_tree(t_list **tokens, t_ast **tree)
 	current = *tokens;
 	if ((*tree)->type == T_PIPE_NODE)
 	{
-		//printf("Filling PIPE : %s\n", ((t_token *)(*current)->content)->data);
 		current = ft_fill_tree(&current, &((*tree)->left));
-		//printf("current left : %s\n", ((t_token *)(*current)->content)->data);
 		current = ft_fill_tree(&current, &((*tree)->right));
-		//printf("current right: %s\n", ((t_token *)current->content)->data);
-		//printf("----------------------------\n");
 	}
 	if ((*tree)->type == T_COMMAND_NODE)
-	{
 		return (ft_fill_simple_command(current, tree));
-	}
 	return (*tokens);
 }
 

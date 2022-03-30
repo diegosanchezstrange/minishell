@@ -35,10 +35,10 @@ char	*ft_getact(char *var)
 	return (path);
 }
 
-char  *ft_joinwfree(char *s1, char *s2)
+char	*ft_joinwfree(char *s1, char *s2)
 {
-	char *act;
-	char 	*new;
+	char	*act;
+	char	*new;
 
 	act = s1;
 	new = ft_strjoin(act, s2);

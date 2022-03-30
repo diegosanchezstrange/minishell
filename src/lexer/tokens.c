@@ -21,7 +21,6 @@ t_token	*ft_get_current_token(t_pstatus *status, char **actual)
 		return (NULL);
 	token->type = status->type;
 	token->data = *actual;
-	//ft_extend_vars(&token->data);
 	ft_parse_quotes(&token->data);
 	if (!ft_strlen(token->data))
 	{
@@ -63,7 +62,7 @@ char	*ft_get_token(t_pstatus **status)
 		(*status)->curr++;
 	}
 	if (((*status)->type != T_ARGUMENT && (*status)->curr == start)
-			|| (*status)->state == P_D_QUOTE || (*status)->state == P_S_QUOTE)
+		|| (*status)->state == P_D_QUOTE || (*status)->state == P_S_QUOTE)
 		return (ft_error_near(status, (*status)->data[(*status)->curr]));
 	return (ft_substr((*status)->data, start, (*status)->curr - start));
 }
