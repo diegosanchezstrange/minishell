@@ -1,0 +1,92 @@
+Mmain	src/main.c	/^int	main(int argc, char **argv, char **envp)$/
+ft_addvar	src/binaries/ft_export.c	/^void	ft_addvar(char **data, char *tree_data)$/
+ft_astadd_left	src/ast/ast_add_left.c	/^void	ft_astadd_left(t_ast **tree, t_ast *new)$/
+ft_astadd_right	src/ast/ast_add_right.c	/^void	ft_astadd_right(t_ast **tree, t_ast *new)$/
+ft_astappend_l	src/ast/ast_append_left.c	/^void	ft_astappend_l(t_ast **tree, t_ast *new)$/
+ft_astappend_r	src/ast/ast_append_right.c	/^void	ft_astappend_r(t_ast **tree, t_ast *new)$/
+ft_astget_last_l	src/ast/ast_get_last_l.c	/^t_ast	*ft_astget_last_l(t_ast *tree)$/
+ft_astget_last_r	src/ast/ast_get_last_r.c	/^t_ast	*ft_astget_last_r(t_ast *tree)$/
+ft_astnew	src/ast/ast_new.c	/^t_ast	*ft_astnew(t_node_type type, char *content)$/
+ft_astsize_r	src/ast/astsize_r.c	/^int	ft_astsize_r(t_ast *node)$/
+ft_cd	src/binaries/ft_cd.c	/^void	ft_cd(t_ast *path)$/
+ft_change_state	src/lexer/parse_quotes.c	/^t_lex_states	ft_change_state(t_lex_states state, t/
+ft_check_end_struc	src/parser/parser.c	/^void	ft_check_end_struc(t_ast **tree, t_ast *head)/
+ft_check_token_end	src/lexer/classify_tokens.c	/^int	ft_check_token_end(t_pstatus *status, int *sta/
+ft_check_tokens	src/parser/check_tokens.c	/^int	ft_check_tokens(t_list *tokens)$/
+ft_cloneenv	src/utils/env.c	/^void	ft_cloneenv(char **environ)$/
+ft_dups	src/executer/redirs.c	/^void	ft_dups(t_l_fd *l_fd, int fd[], t_l_fd *r_fd,/
+ft_dupsaux	src/executer/redirs.c	/^void	ft_dupsaux(t_l_fd *l_fd, int fd[], t_l_fd *r_/
+ft_dupschild	src/executer/exec.c	/^void	ft_dupschild(int fd[], t_l_fd *r_fd)$/
+ft_echo	src/binaries/ft_echo.c	/^void	ft_echo(t_ast *tree, int fd)$/
+ft_env	src/binaries/ft_env.c	/^void	ft_env(int fd)$/
+ft_envmatrix	src/executer/exec_utils.c	/^char	**ft_envmatrix(void)$/
+ft_error_near	src/lexer/tokens.c	/^char	*ft_error_near(t_pstatus **status, char c)$/
+ft_exec_builtin	src/executer/builtin_utils.c	/^void	ft_exec_builtin(t_ast *tree)$/
+ft_exec_cmd	src/executer/builtin_utils.c	/^int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd /
+ft_exec_cmd_node	src/executer/exec.c	/^t_l_fd	*ft_exec_cmd_node(t_ast *tree, int pip, int/
+ft_exec_command	src/executer/exec_utils.c	/^void	ft_exec_command(t_ast *node)$/
+ft_exec_tree	src/executer/exec.c	/^t_l_fd	*ft_exec_tree(t_ast *tree, int pip, int *l_/
+ft_exit	src/binaries/ft_exit.c	/^void	ft_exit(void)$/
+ft_export	src/binaries/ft_export.c	/^void	ft_export(t_ast *tree, int fd)$/
+ft_extend_vars	src/lexer/parse_env_vars.c	/^void	ft_extend_vars(char **token)$/
+ft_fill_simple_command	src/parser/parse_command.c	/^t_list	*ft_fill_simple_command(t_list *tokens, t_a/
+ft_fill_tree	src/parser/parser.c	/^t_list	*ft_fill_tree(t_list **tokens, t_ast **tree/
+ft_free_all	src/utils/frees.c	/^void	ft_free_all(t_ast **tree, t_list **tokens)$/
+ft_free_list	src/lexer/tokens.c	/^void	ft_free_list(t_list **s)$/
+ft_free_split	src/utils/frees.c	/^void	ft_free_split(char **s)$/
+ft_free_token	src/utils/frees.c	/^void	ft_free_token(void *t)$/
+ft_free_tree	src/utils/frees.c	/^void	ft_free_tree(t_ast **tree)$/
+ft_generate_ast	src/parser/parser.c	/^t_ast	**ft_generate_ast(t_list **tokens)$/
+ft_get_current_token	src/lexer/tokens.c	/^t_token	*ft_get_current_token(t_pstatus *status, c/
+ft_get_env_var	src/lexer/parse_env_vars.c	/^char	*ft_get_env_var(char *token, int *num)$/
+ft_get_token	src/lexer/tokens.c	/^char	*ft_get_token(t_pstatus **status)$/
+ft_get_tokens	src/lexer/tokens.c	/^t_list	**ft_get_tokens(t_pstatus *status)$/
+ft_getact	src/binaries/ft_cd.c	/^char	*ft_getact(char *var)$/
+ft_getenv	src/utils/env.c	/^char	*ft_getenv(char *name)$/
+ft_getpath	src/executer/exec_utils.c	/^char	*ft_getpath(char *cmd)$/
+ft_getredir	src/executer/redirs.c	/^int	ft_getredir(t_ast *tree, int io)$/
+ft_home	src/binaries/ft_cd.c	/^void	ft_home(void)$/
+ft_isspace	src/lexer/utils.c	/^int	ft_isspace(int c)$/
+ft_istype_redir	src/lexer/classify_tokens.c	/^int	ft_istype_redir(t_token_type type)$/
+ft_join_env_var	src/lexer/parse_env_vars.c	/^char	*ft_join_env_var(char *name, char *token, int/
+ft_join_err_code	src/lexer/parse_env_vars.c	/^char	*ft_join_err_code(char *token, int i)$/
+ft_join_token	src/lexer/parse_quotes.c	/^t_lex_states	ft_join_token(char **token, t_lex_sta/
+ft_joinwfree	src/binaries/ft_cd.c	/^char	*ft_joinwfree(char *s1, char *s2)$/
+ft_llen	src/utils/env.c	/^int	ft_llen(char *s1, char *s2)$/
+ft_map_types	src/parser/parse_command.c	/^t_node_type	ft_map_types(t_token_type type)$/
+ft_max	src/utils/env.c	/^size_t	ft_max(size_t s1, size_t s2)$/
+ft_open_file	src/executer/redirs.c	/^int	ft_open_file(char *name, t_node_type type, int/
+ft_open_tmp	src/utils/here_doc.c	/^char	*ft_open_tmp(void)$/
+ft_parse_quotes	src/lexer/parse_quotes.c	/^void	ft_parse_quotes(char **token)$/
+ft_printenv	src/binaries/ft_export.c	/^void	ft_printenv(char **env, int fd)$/
+ft_procaux	src/main.c	/^int	ft_procaux(int *l_pid, t_ast **tree)$/
+ft_process	src/main.c	/^int	ft_process(t_ast **tree)$/
+ft_process_env_vars	src/lexer/parse_env_vars.c	/^void	ft_process_env_vars(char **token, int i)$/
+ft_process_here_doc	src/utils/here_doc.c	/^int	ft_process_here_doc(t_ast **tree)$/
+ft_pwd	src/binaries/ft_pwd.c	/^void	ft_pwd(int fd)$/
+ft_read_input	src/utils/here_doc.c	/^void	ft_read_input(t_ast *node, char *name)$/
+ft_removevar	src/binaries/ft_unset.c	/^void	ft_removevar(char *data)$/
+ft_resize_tokens	src/lexer/utils.c	/^char	**ft_resize_tokens(int num, char **tokens)$/
+ft_return_cmd	src/executer/exec_utils.c	/^char	**ft_return_cmd(t_ast *node, char *cmd)$/
+ft_rm_here_doc	src/main.c	/^void	ft_rm_here_doc(t_ast **tree)$/
+ft_set_env_split	src/utils/env.c	/^void	ft_set_env_split(t_list *cpy, char **name, ch/
+ft_skip_spaces	src/lexer/utils.c	/^void	ft_skip_spaces(t_pstatus *status)$/
+ft_sorted	src/binaries/ft_export.c	/^int	ft_sorted(char **ev)$/
+ft_sortenv	src/binaries/ft_export.c	/^void	ft_sortenv(int fd)$/
+ft_status	src/main.c	/^void	ft_status(t_pstatus *status)$/
+ft_strjoin_path	src/executer/exec_utils.c	/^char	*ft_strjoin_path(char *path, char *cmd)$/
+ft_structure_tree	src/parser/parser.c	/^void	ft_structure_tree(t_list *tokens, t_ast **tre/
+ft_throw_err	src/parser/check_tokens.c	/^static int	ft_throw_err(t_list **cpy)$/
+ft_unset	src/binaries/ft_unset.c	/^void	ft_unset(t_ast *tree)$/
+ft_update	src/binaries/ft_cd.c	/^void	ft_update(char *var, char *path)$/
+ft_use_builtins	src/executer/builtin_utils.c	/^void	ft_use_builtins(t_ast *tree, int fd)$/
+ft_validate_quotes	src/lexer/classify_tokens.c	/^void	ft_validate_quotes(t_pstatus *status)$/
+ft_validate_redirs	src/lexer/classify_tokens.c	/^int	ft_validate_redirs(t_pstatus *status, int *sta/
+ft_write_here_doc	src/utils/here_doc.c	/^int	ft_write_here_doc(t_ast *node)$/
+get_name	src/utils/here_doc.c	/^char	*get_name(int i)$/
+my_prompt	src/utils/signals.c	/^void	my_prompt(int n)$/
+my_signal	src/utils/signals.c	/^void	my_signal(void)$/
+sig_child	src/utils/signals.c	/^void	sig_child(void)$/
+sig_here_doc	src/utils/signals.c	/^void	sig_here_doc(void)$/
+sig_ignore	src/utils/signals.c	/^void	sig_ignore(void)$/
+valid_builtins	src/executer/builtin_utils.c	/^int	valid_builtins(t_ast *tree)$/
