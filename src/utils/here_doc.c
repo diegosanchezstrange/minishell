@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/21 04:55:24 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/31 13:02:04 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ char	*ft_open_tmp(void)
 			break ;
 		else
 		{
+			close(fd);
 			free(name);
 			return (NULL);
 		}
 	}
+	close(fd);
 	return (name);
 }
 

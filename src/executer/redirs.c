@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:28:09 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/20 16:37:08 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:48:18 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_open_file(char *name, t_node_type type, int io, int old_fd)
 
 	fd = -1;
 	if (old_fd != -1)
-		close(fd);
+		close(old_fd);
 	if (type == T_OUT_NODE && io == 0)
 		fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (type == T_DOUBLE_OUT_NODE && io == 0)

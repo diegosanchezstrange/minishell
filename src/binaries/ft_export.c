@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/23 16:38:15 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:30:53 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	ft_addvar(char **data, char *tree_data)
 		if (ft_strnstr((*cpy)->next->content, data[0], ft_strlen(data[0])))
 		{
 			free((*cpy)->next->content);
-			ft_parse_quotes(&(tree_data));
 			(*cpy)->next->content = ft_strdup(tree_data);
 			free(cpy);
 			return ;

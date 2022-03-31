@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/30 20:24:59 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:22:22 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	ft_use_builtins(t_ast *tree, int fd);
 int		valid_builtins(t_ast *tree);
 void	ft_exec_builtin(t_ast *tree);
 
-int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
+int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd);
 
 // redirs.c
 int		ft_getredir(t_ast *tree, int io);
@@ -165,7 +165,7 @@ t_l_fd	*ft_exec_tree(t_ast *tree, int pipe, int *l_pid, t_l_fd *l_fd);
 void	ft_exec_command(t_ast *node);
 char	**ft_envmatrix(void);
 void	ft_dups(t_l_fd *l_fd, int fd[], t_l_fd *r_fd, t_ast *tree);
-int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[]);
+//int		ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd);
 int		valid_builtins(t_ast *tree);
 void	ft_dupschild(int fd[], t_l_fd *r_fd);
 

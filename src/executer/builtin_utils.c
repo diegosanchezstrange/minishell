@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/20 16:48:30 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/31 13:39:15 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_use_builtins(t_ast *tree, int fd)
 		ft_export(tree, fd);
 	else if (ft_strncmp(tree->data, "cd", 2) == 0)
 		ft_cd(tree->left);
+	if (fd > 2)
+		close(fd);
 }
 
 int	valid_builtins(t_ast *tree)
@@ -64,6 +66,8 @@ void	ft_exec_builtin(t_ast *tree)
 		g_env.l_cod = 1;
 		return ;
 	}
+	if (in_fd > 2)
+		close(in_fd);
 	fdesc = ft_getredir(tree->right->right, 0);
 	if (fdesc == -1)
 	{
@@ -75,10 +79,12 @@ void	ft_exec_builtin(t_ast *tree)
 	ft_use_builtins(tree, fdesc);
 }
 
-int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd, int fd[])
+int	ft_exec_cmd(t_ast *tree, t_l_fd *l_fd, t_l_fd *r_fd)
 {
 	int		pid;
+	int		fd[2];
 
+	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
