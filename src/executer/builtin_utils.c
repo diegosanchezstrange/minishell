@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/04/01 12:29:58 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:47:16 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	valid_builtins(t_ast *tree)
 		return (1);
 	if (!ft_strncmp(tree->data, "exit", 4))
 		return (1);
-	printf("HOLA : %s\n", tree->data);
 	return (0);
 }
 

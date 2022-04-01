@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:58:35 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/31 14:15:44 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:50:17 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ void	ft_extend_vars(char **token)
 	while ((*token)[i])
 	{
 		if ((*token)[i] == '$' && (state == P_NEUTRAL || state == P_D_QUOTE))
+		{
 			ft_process_env_vars(token, i);
+			continue ;
+		}
 		if ((*token)[i] == '\'' && state == P_NEUTRAL)
 			state = P_S_QUOTE;
 		else if ((*token)[i] == '\'' && state == P_S_QUOTE)
