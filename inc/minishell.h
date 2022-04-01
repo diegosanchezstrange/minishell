@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/04/01 12:25:42 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:07:46 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void	ft_echo(t_ast *tree, int fd);
 void	ft_exit(t_ast *node);
 void	ft_env(int fd);
 void	ft_unset(t_ast *tree);
+int		ft_valid_var_name(char *name);
 void	ft_export(t_ast *tree, int fd);
 
 #endif

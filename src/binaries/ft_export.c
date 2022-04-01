@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/04/01 12:38:56 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:10:00 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ void	ft_export(t_ast *tree, int fd)
 	while (node)
 	{
 		data = ft_split(node->data, '=');
-		ft_addvar(data, node->data);
+		if (ft_valid_var_name(data[0]))
+			ft_addvar(data, node->data);
+		else
+			printf("mini: export: `%s': not a valid identifier\n", data[0]);
 		ft_free_split(data);
 		node = node->right;
 	}
