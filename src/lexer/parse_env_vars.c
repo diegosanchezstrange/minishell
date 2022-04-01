@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:58:35 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/04/01 12:50:17 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 14:55:23 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ char	*ft_join_err_code(char *token, int i)
 	return (num);
 }
 
-void	ft_process_env_vars(char **token, int i)
+int	ft_process_env_vars(char **token, int i)
 {
 	int		num;
 	char	*aux;
 
 	num = 0;
 	if (!(*token)[i + 1])
-		return ;
+		return (1);
 	if ((*token)[i + 1] == '?')
 		*token = ft_join_err_code(*token, i);
 	else
@@ -89,8 +89,11 @@ void	ft_process_env_vars(char **token, int i)
 		aux = ft_get_env_var((*token) + i + 1, &num);
 		if (aux)
 			*token = ft_join_env_var(aux, *token, i, num);
+		else
+			return (0);
 		free(aux);
 	}
+	return (1);
 }
 
 void	ft_extend_vars(char **token)
@@ -104,7 +107,8 @@ void	ft_extend_vars(char **token)
 	{
 		if ((*token)[i] == '$' && (state == P_NEUTRAL || state == P_D_QUOTE))
 		{
-			ft_process_env_vars(token, i);
+			if (!ft_process_env_vars(token, i))
+				i++;
 			continue ;
 		}
 		if ((*token)[i] == '\'' && state == P_NEUTRAL)
