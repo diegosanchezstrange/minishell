@@ -6,13 +6,36 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 20:23:37 by mclerico          #+#    #+#             */
-/*   Updated: 2022/02/02 20:53:49 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:32:36 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_exit(void)
+int	ft_aredigits(char *nmbr)
 {
-	exit(0);
+	int	i;
+
+	i = 0;
+	if (*nmbr == '-')
+		i++;
+	while (nmbr[i])
+	{
+		if (!ft_isdigit(nmbr[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_exit(t_ast *node)
+{
+	unsigned char	num;
+
+	if (!node)
+		exit(0);
+	if (!ft_aredigits(node->data))
+		exit(0);
+	num = ft_atoi(node->data);
+	exit(num);
 }

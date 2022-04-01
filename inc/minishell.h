@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/31 12:22:22 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:25:42 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	ft_use_builtins(t_ast *tree, int fd);
 void	ft_pwd(int fd);
 void	ft_cd(t_ast *path);
 void	ft_echo(t_ast *tree, int fd);
-void	ft_exit(void);
+void	ft_exit(t_ast *node);
 void	ft_env(int fd);
 void	ft_unset(t_ast *tree);
 void	ft_export(t_ast *tree, int fd);

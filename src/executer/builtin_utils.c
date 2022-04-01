@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/31 13:39:15 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:29:58 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_use_builtins(t_ast *tree, int fd)
 	else if (ft_strncmp(tree->data, "echo", 4) == 0)
 		ft_echo(tree, fd);
 	else if (ft_strncmp(tree->data, "exit", 4) == 0)
-		ft_exit();
+		ft_exit(tree->left);
 	else if (ft_strncmp(tree->data, "env", 3) == 0)
 		ft_env(fd);
 	else if (ft_strncmp(tree->data, "unset", 5) == 0)
@@ -47,11 +47,12 @@ int	valid_builtins(t_ast *tree)
 		return (1);
 	if (!ft_strncmp(tree->data, "unset", 5))
 		return (1);
-	if ((!ft_strncmp(tree->data, "env", 3)
-			|| !ft_strncmp(tree->data, "exit", 4)) && !vars)
+	if (!ft_strncmp(tree->data, "env", 3) && !vars)
 		return (1);
-	else
-		return (0);
+	if (!ft_strncmp(tree->data, "exit", 4))
+		return (1);
+	printf("HOLA : %s\n", tree->data);
+	return (0);
 }
 
 void	ft_exec_builtin(t_ast *tree)
