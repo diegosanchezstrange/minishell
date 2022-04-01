@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:50:24 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/31 14:30:53 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/01 12:38:56 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	ft_addvar(char **data, char *tree_data)
 	t_list	**cpy;
 
 	cpy = ft_calloc(1, sizeof(void *));
+	if (!*g_env.env)
+	{
+		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(tree_data)));
+		return ;
+	}
 	*cpy = *(g_env.env);
 	while ((*cpy)->next)
 	{
@@ -108,12 +113,9 @@ void	ft_export(t_ast *tree, int fd)
 	node = tree->left;
 	while (node)
 	{
-		if (ft_strchr(node->data, '='))
-		{
-			data = ft_split(node->data, '=');
-			ft_addvar(data, node->data);
-			ft_free_split(data);
-		}
+		data = ft_split(node->data, '=');
+		ft_addvar(data, node->data);
+		ft_free_split(data);
 		node = node->right;
 	}
 }

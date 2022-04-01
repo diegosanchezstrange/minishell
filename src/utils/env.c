@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 20:10:50 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/30 20:11:07 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/03/30 21:17:04 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,25 @@ void	ft_set_env_split(t_list *cpy, char **name, char **content)
 void	ft_cloneenv(char **environ)
 {
 	int	i;
+	int	n;	
 
 	i = 0;
+	n = 0;
 	g_env.l_cod = 0;
 	g_env.env = (t_list **)ft_calloc(sizeof(t_list *), 1);
 	while (environ[i] != NULL)
-		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(environ[i++])));
+	{
+		if (ft_strncmp(environ[i], "SHLVL", 5) == 0)
+		{
+			n = ft_atoi(&(environ[i][6])) + 1;
+			ft_lstadd_back(g_env.env, ft_lstnew(ft_strjoin("SHLVL=",ft_itoa(n))));
+		}
+		else
+			ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup(environ[i])));
+		i++;
+	}
+	if (n == 0)
+		ft_lstadd_back(g_env.env, ft_lstnew(ft_strdup("SHLVL=1")));
 }
 
 char	*ft_getenv(char *name)
