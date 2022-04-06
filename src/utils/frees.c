@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 20:47:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/19 15:13:32 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:42:39 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	ft_free_tree(t_ast **tree)
 		ft_free_tree(&((*tree)->right));
 	if ((*tree)->left)
 		ft_free_tree(&((*tree)->left));
-	if ((*tree)->type == T_DOUBLE_IN_NODE)
-		free((*tree)->data);
 	free(*tree);
 }
 

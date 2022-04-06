@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:51:08 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/30 21:03:15 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:43:32 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ void	ft_rm_here_doc(t_ast **tree)
 		curr = (*tree)->right->left;
 		while (curr)
 		{
-			if (curr->type == T_DOUBLE_IN_NODE)
+			if (curr->type == T_DOUBLE_IN_NODE && access(curr->data, F_OK) == 0)
+			{
 				unlink(curr->data);
+				free(curr->data);
+			}
 			curr = curr->left;
 		}
 	}
@@ -63,12 +66,15 @@ int	ft_process(t_ast **tree)
 
 	l_pid = ft_calloc(1, sizeof(int));
 	if (ft_process_here_doc(tree))
+	{
+		ft_rm_here_doc(tree);
+		free(l_pid);
 		return (130);
+	}
 	ft_exec_tree(*tree, 0, l_pid, NULL);
 	if (*l_pid != 0)
 		return (ft_procaux(l_pid, tree));
 	ft_rm_here_doc(tree);
-	free(l_pid);
 	return (0);
 }
 
