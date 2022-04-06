@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:51:08 by mclerico          #+#    #+#             */
-/*   Updated: 2022/04/06 13:43:32 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:56:33 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	ft_process(t_ast **tree)
 	if (*l_pid != 0)
 		return (ft_procaux(l_pid, tree));
 	ft_rm_here_doc(tree);
+	free(l_pid);
 	return (0);
 }
 
