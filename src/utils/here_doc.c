@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/21 04:55:24 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/03/21 19:59:52 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_open_tmp(void)
 	char	*name;
 
 	i = 0;
+	fd = -1;
 	while (i++ < 1000)
 	{
 		name = get_name(i);
@@ -50,6 +51,7 @@ char	*ft_open_tmp(void)
 			return (NULL);
 		}
 	}
+	close(fd);
 	return (name);
 }
 
@@ -66,7 +68,8 @@ void	ft_read_input(t_ast *node, char *name)
 			&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
 		{
 			close(fd);
-			break ;
+			free(line);
+			return ;
 		}
 		ft_putendl_fd(line, fd);
 		free(line);

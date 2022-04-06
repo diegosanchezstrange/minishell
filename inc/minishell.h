@@ -6,7 +6,7 @@
 /*   By: dsanchez <dsanchez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:32:03 by dsanchez          #+#    #+#             */
-/*   Updated: 2022/03/30 20:24:59 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:02:19 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_prog
 {
 	t_list	**env;
 	int		l_cod;
-	int		l_read;
 }				t_prog;
 
 extern t_prog	g_env;
