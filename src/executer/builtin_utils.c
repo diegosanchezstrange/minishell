@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/20 16:48:30 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:21:04 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ int	valid_builtins(t_ast *tree)
 	t_ast	*vars;
 
 	vars = tree->left;
-	if (!ft_strncmp(tree->data, "echo", 4))
+	if (!ft_strncmp(tree->data, "echo", ft_strlen(tree->data)))
 		return (1);
-	if (!ft_strncmp(tree->data, "cd", 2))
+	if (!ft_strncmp(tree->data, "cd", ft_strlen(tree->data)))
 		return (1);
-	if (!ft_strncmp(tree->data, "pwd", 3))
+	if (!ft_strncmp(tree->data, "pwd", ft_strlen(tree->data)))
 		return (1);
-	if (!ft_strncmp(tree->data, "export", 6))
+	if (!ft_strncmp(tree->data, "export", ft_strlen(tree->data)))
 		return (1);
-	if (!ft_strncmp(tree->data, "unset", 5))
+	if (!ft_strncmp(tree->data, "unset", ft_strlen(tree->data)))
 		return (1);
-	if ((!ft_strncmp(tree->data, "env", 3)
-			|| !ft_strncmp(tree->data, "exit", 4)) && !vars)
+	if ((!ft_strncmp(tree->data, "env", ft_strlen(tree->data))
+			|| !ft_strncmp(tree->data, "exit", ft_strlen(tree->data))) && !vars)
 		return (1);
 	else
 		return (0);
