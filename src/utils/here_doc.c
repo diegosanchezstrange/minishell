@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/31 13:02:04 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:00:32 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_open_tmp(void)
 	char	*name;
 
 	i = 0;
+	fd = -1;
 	while (i++ < 1000)
 	{
 		name = get_name(i);
@@ -46,7 +47,6 @@ char	*ft_open_tmp(void)
 			break ;
 		else
 		{
-			close(fd);
 			free(name);
 			return (NULL);
 		}
