@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 19:51:08 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/30 21:03:15 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:47:02 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,26 @@ void	ft_status(t_pstatus *status)
 		add_history(status->data);
 	status->curr = 0;
 	status->error = 0;
+}
+
+void	ft_print_tokens_list(t_list **tokens)
+{
+	t_list	**pointer;
+
+	if (!tokens)
+		return ;
+	pointer = malloc(sizeof(void *));
+	if (!pointer)
+		return ;
+	*pointer = *tokens;
+	printf("------------------- TOKENS -------------------\n");
+	while (*pointer)
+	{
+		printf("data: %s , type: %d\n", ((t_token *)((*pointer)->content))->data, ((t_token *)((*pointer)->content))->type);
+		*pointer = (*pointer)->next;
+	}
+	printf("------------------- TOKENS -------------------\n");
+	free(pointer);
 }
 
 int	main(int argc, char **argv, char **envp)

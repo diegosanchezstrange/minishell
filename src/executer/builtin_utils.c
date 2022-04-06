@@ -6,27 +6,44 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:22 by mclerico          #+#    #+#             */
-/*   Updated: 2022/04/06 10:21:04 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:19:55 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static int	ft_strcmp(char *s1, char *s2)
+{
+	int	n;
+
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (-1);
+	n = ft_strlen(s1);
+	while (n != 0)
+	{
+		if (*s1 != *s2++)
+			return (*(unsigned char *)s1 - *(unsigned char *)(s2 - 1));
+		if (*s1++ == 0)
+			break ;
+		n--;
+	}
+	return (0);
+}
 void	ft_use_builtins(t_ast *tree, int fd)
 {
-	if (ft_strncmp(tree->data, "pwd", 3) == 0)
+	if (ft_strcmp(tree->data, "pwd") == 0)
 		ft_pwd(fd);
-	else if (ft_strncmp(tree->data, "echo", 4) == 0)
+	else if (ft_strcmp(tree->data, "echo") == 0)
 		ft_echo(tree, fd);
-	else if (ft_strncmp(tree->data, "exit", 4) == 0)
+	else if (ft_strcmp(tree->data, "exit") == 0)
 		ft_exit();
-	else if (ft_strncmp(tree->data, "env", 3) == 0)
+	else if (ft_strcmp(tree->data, "env") == 0)
 		ft_env(fd);
-	else if (ft_strncmp(tree->data, "unset", 5) == 0)
+	else if (ft_strcmp(tree->data, "unset") == 0)
 		ft_unset(tree);
-	else if (ft_strncmp(tree->data, "export", 5) == 0)
+	else if (ft_strcmp(tree->data, "export") == 0)
 		ft_export(tree, fd);
-	else if (ft_strncmp(tree->data, "cd", 2) == 0)
+	else if (ft_strcmp(tree->data, "cd") == 0)
 		ft_cd(tree->left);
 }
 
@@ -35,18 +52,18 @@ int	valid_builtins(t_ast *tree)
 	t_ast	*vars;
 
 	vars = tree->left;
-	if (!ft_strncmp(tree->data, "echo", ft_strlen(tree->data)))
+	if (!ft_strcmp(tree->data, "echo"))
 		return (1);
-	if (!ft_strncmp(tree->data, "cd", ft_strlen(tree->data)))
+	if (!ft_strcmp(tree->data, "cd"))
 		return (1);
-	if (!ft_strncmp(tree->data, "pwd", ft_strlen(tree->data)))
+	if (!ft_strcmp(tree->data, "pwd"))
 		return (1);
-	if (!ft_strncmp(tree->data, "export", ft_strlen(tree->data)))
+	if (!ft_strcmp(tree->data, "export"))
 		return (1);
-	if (!ft_strncmp(tree->data, "unset", ft_strlen(tree->data)))
+	if (!ft_strcmp(tree->data, "unset"))
 		return (1);
-	if ((!ft_strncmp(tree->data, "env", ft_strlen(tree->data))
-			|| !ft_strncmp(tree->data, "exit", ft_strlen(tree->data))) && !vars)
+	if ((!ft_strcmp(tree->data, "env")
+			|| !ft_strcmp(tree->data, "exit")) && !vars)
 		return (1);
 	else
 		return (0);
