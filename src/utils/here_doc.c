@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:53:30 by mclerico          #+#    #+#             */
-/*   Updated: 2022/04/06 14:00:32 by dsanchez         ###   ########.fr       */
+/*   Updated: 2022/04/09 15:26:19 by dsanchez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	ft_read_input(t_ast *node, char *name)
 			&& ft_strncmp(line, node->data, ft_strlen(line)) == 0)
 		{
 			close(fd);
-			break ;
+			free(line);
+			return ;
 		}
 		ft_putendl_fd(line, fd);
 		free(line);

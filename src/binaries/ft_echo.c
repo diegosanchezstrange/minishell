@@ -6,7 +6,7 @@
 /*   By: mclerico <mclerico@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:03:45 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/16 21:03:48 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:15:06 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	ft_echo(t_ast *tree, int fd)
 	}
 	if (ft_strncmp((tree->data), "-n", ft_strlen(tree->data)) == 0)
 	{
-		tree = tree->right;
-		if (tree)
-			nline = 0;
+		tree = tree-> right;
+		if (!tree)
+			return ;
 	}
 	while (tree)
 	{

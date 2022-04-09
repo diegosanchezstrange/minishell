@@ -51,9 +51,9 @@ RM		= rm -rf
 
 OS		:= $(shell uname -s)
 
-LIB_LNK	= -L ${LIBFT} -L ${HOME}/.brew/opt/readline/lib
+LIB_LNK	= -L ${LIBFT} -L /opt/homebrew/opt/readline/lib
 
-INCLUDES = -I${LIBFT}inc -Iinc -I${HOME}/.brew/opt/readline/include
+INCLUDES = -I${LIBFT}inc -Iinc -I/opt/homebrew/opt/readline/include
 
 all: ${NAME}
 

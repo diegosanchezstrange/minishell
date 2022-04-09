@@ -6,7 +6,7 @@
 /*   By: mclerico <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 20:09:56 by mclerico          #+#    #+#             */
-/*   Updated: 2022/03/30 20:09:59 by mclerico         ###   ########.fr       */
+/*   Updated: 2022/04/06 10:26:13 by mclerico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,11 @@ void	ft_cd(t_ast *path)
 	old = ft_getact("PWD");
 	ft_update("OLDPWD", old);
 	home = getcwd(0, 0);
+	if (!home)
+	{
+		ft_update("PWD", old); //mete el errno y q diga no such fie or dir
+		return ;	
+	}
 	ft_update("PWD", home);
 	free(home);
 }
